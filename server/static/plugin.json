@@ -1,0 +1,22 @@
+{
+  "name": "sample-plugin",
+  "title": "Sample Plugin",
+  "buildDate": "",
+  "releaseTimestamp": null,
+  "version": "1.0.0",
+  "wiki": "http://www.google.com",
+  "excerpt": "404 Not Found - the plugin you request is not known",
+  "iconDom": null,
+  "requiredCore": "1.6.125",
+  "developers": [
+    {
+      "name" : "Some Guy",
+      "email" : "some.guy@gmail.com"
+    }
+  ],
+  "labels": [
+    "sample",
+    "build"
+  ],
+  "dependencies": []
+}

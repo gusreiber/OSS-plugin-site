@@ -1,5 +1,6 @@
 /* eslint-disable no-console */ //This is because we are using console log for communications
 const
+  fs = require('fs'),
   express = require('express'),
   schedule = require('node-schedule'),
   request = require('request'),
@@ -77,8 +78,14 @@ rest.get('/labels', (req, res) => {
 rest.get('/plugin/:name', (req, res) => {
   var name = req.params && req.params.name ? req.params.name : null;
   setRestHeader(res);
-  const data = this.dbStore.entry(name);
-  res.send(data);
+  fs.readFile("./server/static/plugin.json", {encoding: 'utf8'}, (err, data) => {
+    if (err) {
+      console.error("ERROR ===== " + err);
+      res.json({error: err});
+    } else {
+      res.json(JSON.parse(data));
+    }
+  });
 });
 rest.get('/stats/:name', (req, res) => {
   var name = req.params && req.params.name ? req.params.name : null;
@@ -137,5 +144,3 @@ async.series([
   }
 
 });
-
-
