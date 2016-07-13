@@ -3,6 +3,7 @@ import {
   actions,
   totalSize,
   labels,
+  categories,
   isFetching,
   searchOptions,
   filterVisibleList,
@@ -21,6 +22,7 @@ export default class Application extends Component {
     const { location } = this.props;
     this.props.generatePluginData(location.query);
     this.props.generateLabelData();
+    this.props.generateCategoryData();
   }
 
   componentWillReceiveProps(nextProps) {
@@ -36,13 +38,16 @@ export default class Application extends Component {
       searchOptions,
       isFetching,
       labels,
+      categories,
       location,
     } = this.props;
-    if (!labels) return null;
+    if (!categories || !labels) return null;
+    console.log(categories);
     return (<div>
       <DevelopmentFooter />
       <Widget
         labels={labels}
+        categories={categories}
         searchOptions={searchOptions}
         location={location}
         router={this.context.router}
@@ -60,17 +65,19 @@ Application.propTypes = {
   generateLabelData: func.isRequired,
   filterVisibleList: any,
   labels: any.isRequired,
+  categories: any.isRequired,
   totalSize: any.isRequired,
   searchOptions: any.isRequired,
   isFetching: bool.isRequired,
 };
 
 const selectors = createSelector(
-  [ totalSize, isFetching, labels, filterVisibleList, searchOptions],
-  ( totalSize, isFetching, labels, filterVisibleList,  searchOptions) => ({
+  [ totalSize, isFetching, labels,categories, filterVisibleList, searchOptions],
+  ( totalSize, isFetching, labels,categories, filterVisibleList,  searchOptions) => ({
     totalSize,
     isFetching,
     labels,
+    categories,
     filterVisibleList,
     searchOptions
   })

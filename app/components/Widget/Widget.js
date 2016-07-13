@@ -25,6 +25,7 @@ export default class Widget extends PureComponent {
       searchOptions,
       getVisiblePlugins,
       labels,
+      categories,
       location
       } = this.props;
 
@@ -40,8 +41,10 @@ export default class Widget extends PureComponent {
     //<img src="http://stats.jenkins-ci.org/jenkins-stats/svg/total-jenkins.svg" />
     return (
       <div className={classNames(styles.ItemFinder, view, 'item-finder')}>
+        <h1>?????</h1>
         <div className={classNames(styles.CategoriesBox, 'categories-box col-md-2')}>
           <Categories
+            categories={categories}
             router={router}
             location={location}
           />

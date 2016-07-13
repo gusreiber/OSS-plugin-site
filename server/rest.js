@@ -75,8 +75,13 @@ rest.get('/labels', (req, res) => {
   res.send(this.dbStore.labels());
 });
 
-rest.get('/plugin/:name', (req, res) => {
-  var name = req.params && req.params.name ? req.params.name : null;
+rest.get('/newcategories', (req, res) => {
+  setRestHeader(res);
+  const data = {"docs":[{"value":{"hi":"bye"},"key":"android"},{},{"value":31,"key":"listview-column"},{"value":29,"key":"maven"},{"value":162,"key":"misc"},{"value":1,"key":"must-be-labeled"},{"value":89,"key":"notifier"},{"value":7,"key":"page-decorator"},{"value":26,"key":"parameter"},{"value":8,"key":"pipeline"},{"value":1,"key":"plugin-external"},{"value":2,"key":"plugin-misc"},{"value":1,"key":"plugin-post-build"},{"value":1,"key":"plugin-test"},{"value":87,"key":"post-build"},{"value":1,"key":"python"},{"value":142,"key":"report"},{"value":6,"key":"ruby"},{"value":3,"key":"runcondition"},{"value":1,"key":"scala"},{"value":52,"key":"scm"},{"value":36,"key":"scm-related"},{"value":10,"key":"security"},{"value":41,"key":"slaves"},{"value":1,"key":"spot"},{"value":1,"key":"spotinst"},{"value":2,"key":"test"},{"value":1,"key":"textfile"},{"value":52,"key":"trigger"},{"value":92,"key":"ui"},{"value":51,"key":"upload"},{"value":37,"key":"user"},{"value":2,"key":"view"}],"limit":50,"total":50,"end":50,"start":0,"page":1,"pages":1};
+  res.send(data);   
+});
+
+rest.get('/newplugins', (req, res) => {
   setRestHeader(res);
   fs.readFile("./server/static/plugin.json", {encoding: 'utf8'}, (err, data) => {
     if (err) {
@@ -85,7 +90,27 @@ rest.get('/plugin/:name', (req, res) => {
     } else {
       res.json(JSON.parse(data));
     }
-  });
+  });    
+});
+
+rest.get('/newplugin/:name', (req, res) => {
+	var name = req.params && req.params.name ? req.params.name : null;
+  setRestHeader(res);
+  fs.readFile("./server/static/plugin.json", {encoding: 'utf8'}, (err, data) => {
+    if (err) {
+      console.error("ERROR ===== " + err);
+      res.json({error: err});
+    } else {
+      res.json(JSON.parse(data));
+    }
+  });    
+});
+
+rest.get('/plugin/:name', (req, res) => {
+  var name = req.params && req.params.name ? req.params.name : null;
+  setRestHeader(res);
+  const data = this.dbStore.entry(name);
+  res.send(data);
 });
 rest.get('/stats/:name', (req, res) => {
   var name = req.params && req.params.name ? req.params.name : null;

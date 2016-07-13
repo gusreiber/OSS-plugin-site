@@ -71,7 +71,7 @@ export default class Categories extends PureComponent {
     router: PropTypes.object.isRequired,
     location: PropTypes.object.isRequired
   };
-
+  debugger;
   render() {
     const {location, router} = this.props;
     return (<ul className="list-group">

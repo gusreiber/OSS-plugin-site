@@ -2,7 +2,6 @@ import { createSelector } from 'reselect';
 import Immutable, { Record }from 'immutable';
 import keymirror from 'keymirror';
 import { api, logger } from './commons';
-
 import fetch from 'isomorphic-fetch';
 
 require('es6-promise').polyfill();
@@ -46,6 +45,7 @@ export const Plugin = Record({
   requiredCore: null,
   developers: [],
   labels: [],
+  categories:[],
   dependencies: [],
   stats: Stats,
 });
@@ -55,6 +55,7 @@ export const State = Record({
   plugin: Plugin,
   isFetching: false,
   labels: null,
+  categories:null,
   labelFilter: Record({//fixme: that should become label: search, sort: field
     field: 'title',
     searchField: null,
@@ -87,6 +88,7 @@ export const ACTION_TYPES = keymirror({
   CLEAR_PLUGIN_DATA: null,
   SET_LABEL_FILTER: null,
   SET_LABELS: null,
+  SET_CATEGORIES: null,
   SET_QUERY_INFO: null
 });
 
@@ -108,6 +110,9 @@ export const actionHandlers = {
   },
   [ACTION_TYPES.SET_LABELS](state, { payload }){
     return state.set('labels', payload);
+  },
+  [ACTION_TYPES.SET_CATEGORIES](state, { payload }){
+    return state.set('categories', payload);
   },
   [ACTION_TYPES.SET_QUERY_INFO](state, { payload }){
     return state.set('searchOptions', payload);
@@ -163,7 +168,20 @@ export const actions = {
       }
     };
   },
-
+  
+  generateCategoryData: () =>{
+    return (dispatch) => {
+      return api.getJSON('/newcategories', (error, data) => {
+        if (data && data.docs){
+          dispatch({
+            type: ACTION_TYPES.SET_CATEGORIES,
+            payload: Immutable.List(data.docs)
+          });
+        }
+      })
+    };
+  },
+  
   generateLabelData: () => {
     return (dispatch) => {
       return api.getJSON('/labels',(error, data) => {
@@ -180,7 +198,7 @@ export const actions = {
   generatePluginData(query={}) {
     return (dispatch) => {
       logger.log(query);
-      let PLUGINS_URL = `/plugins?page=${query.page}`;
+      let PLUGINS_URL = `/newplugins?page=${query.page}`;
      ['limit', 'q', 'sort', 'asc', 'category', 'labelFilter', 'latest']
         .filter(item => query[item])
         .map(item => PLUGINS_URL += `&${item}=${query[item]}`);
@@ -217,6 +235,7 @@ export const actions = {
 export const resources = state => state.resources;
 export const plugins = createSelector([resources], resources => resources.plugins);
 export const labels = createSelector([resources], resources => resources.labels);
+export const categories = createSelector([resources], resources => resources.categories);
 export const plugin = createSelector([resources], resources => resources.plugin);
 export const searchOptions = createSelector([resources], resources => resources.searchOptions);
 

@@ -20,6 +20,9 @@ new WebpackServer(webpack(config), {
   hot: true,
   historyApiFallback: true,
   proxy: {
+    '/newcategories': backend,
+    '/newplugins': backend,
+    '/newplugin*': backend,
     '/plugin*': backend,
     '/stats*': backend,
     '/latest*': backend,
