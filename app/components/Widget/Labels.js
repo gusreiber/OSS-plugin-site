@@ -15,7 +15,6 @@ export default class LabelWidget extends PureComponent {
       (label, nextLabel) => label.key.localeCompare(nextLabel.key));
 
     if (!sortedLabels.valueSeq) return null;
-
     return (
       <li className="nav-item btn-group">
         <button

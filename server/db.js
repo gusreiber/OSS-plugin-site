@@ -50,6 +50,8 @@ module.exports = flatDb = (filename, callback) => {
           parser.end();
           plugin.excerpt = extract.join(' ');
           plugin.category = getCategory(plugin);
+          plugin.trend = Math.floor(Math.random() * 100);
+          plugin.download = Math.floor(Math.random() * 100) * Math.floor(Math.random() * 100);
           return plugin;
         });
 

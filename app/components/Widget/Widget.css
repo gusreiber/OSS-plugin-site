@@ -100,6 +100,89 @@ nav form {
   padding:.25rem 1rem;
 }
 
+body .HomeHeader {
+  text-align:center;
+  border-radius:0;
+  margin:0;
+  transition: all .5s ease-in;
+  /*background:url(/css/voltron.png) no-repeat 15% center #eee;*/
+
+}
+
+.homeTite {zfont-family: 'zWalter Turncoat','zShadows Into Light', cursive; color:rgba(0,0,0,.8); margin-bottom:1rem}
+.SearchBox{
+  display:inline-block;
+  max-width:90%;
+  width:30rem;
+  position:relative;
+}
+
+.SearchBox > div,
+.SearchBox label,
+.SearchBox label input {
+    width:100% !important;
+    max-width:100% !important;
+    margin:0;
+}
+.navbar {display:inline-block; max-width:100%}
+.navbar fieldset {z-index:19; margin:.25rem; max-width:100%}
+.SearchBtn {width: 3rem !important}
+body .ShowFilter {text-decoration:none !important; cursor:pointer; vertical-align:middle; position:relative; width:6rem !important; padding-right:2rem;}
+.ShowFilter > span {margin-left:.25rem; font-size:.67rem; display:block; position:absolute; right:0; top:0; bottom:0; border-left:1px solid rgba(0,0,0,.1); padding:.375rem 0; line-height:1.5rem; width:1.5rem;}
+.filters{
+    text-align:left;
+    font-size:.85rem;
+    font-weight:200;
+    padding:5.5rem 1rem 1.5rem 1rem !important;
+    border-radius:3px;
+    border:1px solid  rgba(0,0,0,.2);
+    box-shadow:0 1px .5rem rgba(0,0,0,.15);
+    background:rgba(255,255,255,.95);
+    position:relative;
+    top:-4.5rem;
+}
+.FiltersBox {
+  position:absolute;
+  z-index:9;
+  left:0;
+  right:0;
+}
+.FiltersBox .Header {border-top:1px solid rgba(0,0,0,.1); padding:1rem}
+.FiltersBox .Footer {border-top:1px solid rgba(0,0,0,.1); padding-top:1rem}
+.filters fieldset {margin-bottom:1rem;}
+.filters legend {font-size:1rem}
+.filters label{display:block; float:none;}
+.filters li> label > input,
+.filters li> label > span{
+  display:inline-block;
+  margin-left:.25rem;
+}
+.Cols3{
+  -moz-column-count: 3;
+  -webkit-column-count: 3;
+  column-count: 3;
+}
+.Cols3,
+.Cols3 ul{
+  padding:0;
+  margin:0;
+  list-style:none;
+  vertical-align:middle;   
+}
+.Cols3 > li > label{
+  font-weight:bold;
+}
+.Cols3 > li > ul {
+  padding:0 0 1rem 0;
+}
+.Cols3>li{
+  -webkit-column-break-inside: avoid; /* Chrome, Safari */
+  page-break-inside: avoid;           /* Theoretically FF 20+ */
+  break-inside: avoid-column;         /* IE 11 */
+  display:table;                      /* Actually FF 20+ */
+}
+
+
 .CategoriesBox {
   background: #fff;
   box-shadow: 0 3px 2px rgba(0, 0, 0, .15)

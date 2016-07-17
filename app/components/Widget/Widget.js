@@ -2,7 +2,7 @@ import Entry from './Entry';
 import styles from './Widget.css';
 import LabelWidget from './Labels';
 import Pagination from './Pagination';
-import Categories from './Categories';
+import Filters from './Filters';
 import Sort from './Sort';
 import Views from './Views';
 import React, { PropTypes } from 'react';
@@ -13,12 +13,16 @@ import PureComponent from 'react-pure-render/component';
 export default class Widget extends PureComponent {
   constructor(properties) {
     super(properties);
-    this.state  = {
-      show: 'featured'
-    };
+    this.state  = {};
+    Object.keys(properties.location.query).map((key,item)=>{
+      this.state[key] = properties.location.query[key];
+    });
   }
+  
 
+  
   render() {
+  
     const {
       totalSize,
       isFetching,
@@ -37,81 +41,86 @@ export default class Widget extends PureComponent {
       toRange = searchOptions.limit * Number(searchOptions.page) <= Number(searchOptions.total) ?
       searchOptions.limit * Number(searchOptions.page) : Number(searchOptions.total),
       fromRange = (searchOptions.limit) * (Number(searchOptions.page) - 1);
-
+    
+    const sideFilter = this.state.showResults && this.state.showFilter;
+      
     //<img src="http://stats.jenkins-ci.org/jenkins-stats/svg/total-jenkins.svg" />
     return (
-      <div className={classNames(styles.ItemFinder, view, 'item-finder')}>
-        <h1>?????</h1>
-        <div className={classNames(styles.CategoriesBox, 'categories-box col-md-2')}>
-          <Categories
-            categories={categories}
-            router={router}
-            location={location}
-          />
-        </div>
-
-        <div className={classNames(styles.ItemsList, 'items-box col-md-10')}>
-
-          <nav id="cb-grid-toolbar"
-               className="navbar navbar-light bg-faded">
-            <ul className="nav navbar-nav">
-              <li className={`nav-item ${this.state.show === 'featured'?'active':''}`}>
-                <a className="nav-link" onClick={() => {
-                  this.setState({show: 'featured'});
-                  location.query={};
-                  router.replace(location);
-                }}>Featured</a>
-              </li>
-              <li className={`nav-item ${this.state.show === 'new' ? 'active' : ''}`}>
-                <a className="nav-link" onClick={() => {
-                  this.setState({show: 'new'});
-                  location.query= {latest: 'latest'};
-                  router.replace(location);
-                }}>New</a>
-              </li>
-
-              { totalSize > 0 && <LabelWidget
-                router={router}
-                location={location}
-                labels={labels}
-              /> }
-            </ul>
-
-            <ul className="pull-xs-right nav navbar-nav">
-              <Sort
-                router={router}
-                location={location}
-              />
-              <Views
-                router={router}
-                location={location}
-              />
-
-            </ul>
-          </nav>
-          <nav className="page-controls">
-            <ul className="nav navbar-nav">
-              <li className="nav-item filter">
-                <form
-                  className="form-inline pull-xs-right" action="#"
-                  onSubmit={event => {
+      <div className={classNames(styles.ItemFinder, this.state.showResults, view, 'item-finder')}>
+        <form action="#" className={classNames(styles.HomeHeader, 'HomeHeader jumbotron')}
+          onSubmit={event => {
                   event.preventDefault();
                   location.query.q = event.target[0].value;
                   location.query.limit = searchOptions.limit;
                   router.replace(location);
                 }}
                 >
-                  <input
-                    defaultValue={location.query.q}
-                    className={classNames(styles.SearchInput, 'form-control nav-link')}
-                    onChange={event => {
-                  location.query.q = event.target.value;
-                  location.query.limit = searchOptions.limit;
-                  router.replace(location);
-                }}
-                    placeholder="Filter..."
-                  />
-                </form>
+          <nav className={classNames(styles.navbar,"navbar")}>
+            <div className="nav navbar-nav">
+              <fieldset className={classNames(styles.SearchBox, 'form-inline SearchBox')}>
+            
+                <div className={classNames(styles.searchBox, 'form-group')}>
+                  <label className={classNames(styles.searchLabel, 'input-group')}>
+                    <a className={classNames(styles.ShowFilter, styles.Fish, 'input-group-addon ShowFilter')}
+                      onClick={(e) => {
+                        e.preventDefault();
+                        this.setState({ showFilter: !this.state.showFilter});
+                     }}
+                     >
+                      Filter
+                      <span>{this.state.showFilter ? "▼" : "◄" }</span>
+                    </a>
+                    <input
+                      defaultValue={location.query.q}
+                      className={classNames('form-control')}
+                      onChange={event => {
+                        this.setState({showResults:'showResults'});
+                        location.query.q = event.target.value;
+                        location.query.limit = searchOptions.limit;
+                        router.replace(location);
+                      }}
+                      placeholder="Find plugins..."
+                    />
+                    <div className={classNames(styles.SearchBtn, 'input-group-addon SearchBtn')}><i className={classNames('icon-search')}></i></div>
+                  </label>
+                </div>
+              </fieldset>
+              
+              <Views
+                router={router}
+                location={location}
+              />
+            
+            </div>
+          </nav>
+          { this.state.showFilter && !sideFilter ? 
+            <Filters
+              categories={categories}
+              router={router}
+              location={location}
+              sideFilter={sideFilter}
+            />: 
+            null 
+          }
+        </form>
+        {sideFilter ?
+          <div className="col-md-2">
+            <Filters
+              categories={categories}
+              router={router}
+              location={location}
+              sideFilter={sideFilter}
+            />
+          </div>
+          :null
+        }
+        <div className={classNames(styles.ItemsList, 'items-box col-md-'+ (sideFilter? '10':'12') )}>
+
+          
+          <nav className="page-controls">
+            <ul className="nav navbar-nav">
+              <li className="nav-item filter">
+                
               </li>
               <li className="nav-item page-picker">
                 {!isFetching && totalSize > 0 &&

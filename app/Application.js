@@ -20,9 +20,13 @@ export default class Application extends Component {
 
   componentWillMount() {
     const { location } = this.props;
-    this.props.generatePluginData(location.query);
+
+    if(location.query.category || location.query.q || location.query.labelFilter) {
+      this.props.generatePluginData(location.query);
+    }
     this.props.generateLabelData();
     this.props.generateCategoryData();
+    
   }
 
   componentWillReceiveProps(nextProps) {
@@ -63,6 +67,7 @@ Application.propTypes = {
   location: object.isRequired,
   generatePluginData: func.isRequired,
   generateLabelData: func.isRequired,
+  generateCategoryData: func.isRequired,
   filterVisibleList: any,
   labels: any.isRequired,
   categories: any.isRequired,

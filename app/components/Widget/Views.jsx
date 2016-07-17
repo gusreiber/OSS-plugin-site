@@ -11,9 +11,9 @@ export class View extends PureComponent {
   };
 
   render() {
-    const { title, onClick } = this.props;
-    return (<a className="dropdown-item"
-               onClick={onClick}>{title}</a>
+    const { title, onClick, isActive } = this.props;
+    return (<button className={"btn btn-secondary " + isActive}
+               onClick={onClick}>x</button>
     );
   }
 }
@@ -27,26 +27,19 @@ export default class Views extends PureComponent {
   render() {
     const {location, router} = this.props;
     const {view = 'Tiles'} = location.query;
-    return (<li className="nav-item dropdown">
-        <button
-          className="nav-link  dropdown-toggle"
-          type="button"
-          data-toggle="dropdown"
-          aria-haspopup="true"
-          aria-expanded="false">
-          view: <b>{view}</b>
-        </button>
-        <div className="dropdown-menu">
+    return (<fieldset className='btn-group'>
+
           { items.map((item, index) => {
+            const isActive = (item === location.query.view)?'active':'';
             return (<View key={index}
+                          isActive={isActive}
                           title={item}
                           onClick={()=> {
              location.query.view = item;
              router.replace(location);
             }}/>);
           })}
-        </div>
-      </li>
+      </fieldset>
     );
   }
 

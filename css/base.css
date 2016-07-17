@@ -1,3 +1,18 @@
+body .showResults.item-finder > .HomeHeader{
+  padding:.25rem .5rem;
+}
+body .showResults.item-finder > .HomeHeader > .navbar {width:100%; padding:0 9rem 0 0;}
+body .showResults.item-finder > .HomeHeader > .navbar > .nav ,
+body .showResults.item-finder > .HomeHeader > .navbar > .nav > .SearchBox {width:100%}
+body .showResults.item-finder > .HomeHeader > .navbar > .nav > .btn-group {position:absolute; right:0; top:0}
+body .showResults.item-finder > .HomeHeader > .navbar > .nav > .SearchBox .ShowFilter {width:18% !important;}
+body .showResults.item-finder .filters {top:0; padding-top:1rem !important; margin-top:-1px; border-radius:0; box-shadow:none}
+body .showResults.item-finder .filters .row {border:none; padding:0}
+body .showResults.item-finder .filters .Cols3 {column-count:1}
+
+/*----old-stuff-------*/
+
+
 #ji-toolbar {
     position: fixed;
     top: 0;

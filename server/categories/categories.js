@@ -2,7 +2,7 @@ const knowLabelsToCategories = require('./knownLabelsToCategory');
 const kownPluginsToCategories = require('./knownPluginsToCategory');
 
 module.exports = (plugin) => {
-  var category = 'other';
+  var category = 'junk';
   if (kownPluginsToCategories[plugin.name]) {
     category = kownPluginsToCategories[plugin.name];
   } else if (plugin.labels && plugin.labels[0] && knowLabelsToCategories[plugin.labels[0]]) {
