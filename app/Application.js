@@ -46,7 +46,6 @@ export default class Application extends Component {
       location,
     } = this.props;
     if (!categories || !labels) return null;
-    console.log(categories);
     return (<div>
       <DevelopmentFooter />
       <Widget

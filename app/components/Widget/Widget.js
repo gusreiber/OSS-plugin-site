@@ -43,18 +43,15 @@ export default class Widget extends PureComponent {
       fromRange = (searchOptions.limit) * (Number(searchOptions.page) - 1);
     
     const sideFilter = this.state.showResults && this.state.showFilter;
+    
+
       
     //<img src="http://stats.jenkins-ci.org/jenkins-stats/svg/total-jenkins.svg" />
     return (
       <div className={classNames(styles.ItemFinder, this.state.showResults, view, 'item-finder')}>
-        <form action="#" className={classNames(styles.HomeHeader, 'HomeHeader jumbotron')}
-          onSubmit={event => {
-                  event.preventDefault();
-                  location.query.q = event.target[0].value;
-                  location.query.limit = searchOptions.limit;
-                  router.replace(location);
-                }}
-                >
+        <form action="#" className={classNames(styles.HomeHeader, 'HomeHeader jumbotron')} onSubmit={(e)=>{
+          e.preventDefault(); return false;
+        }}>
           <nav className={classNames(styles.navbar,"navbar")}>
             <div className="nav navbar-nav">
               <fieldset className={classNames(styles.SearchBox, 'form-inline SearchBox')}>
@@ -74,6 +71,7 @@ export default class Widget extends PureComponent {
                       defaultValue={location.query.q}
                       className={classNames('form-control')}
                       onChange={event => {
+                      debugger;
                         this.setState({showResults:'showResults'});
                         location.query.q = event.target.value;
                         location.query.limit = searchOptions.limit;
@@ -95,6 +93,7 @@ export default class Widget extends PureComponent {
           </nav>
           { this.state.showFilter && !sideFilter ? 
             <Filters
+              state={this.state}
               categories={categories}
               router={router}
               location={location}
