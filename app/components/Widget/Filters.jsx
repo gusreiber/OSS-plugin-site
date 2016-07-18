@@ -8,9 +8,43 @@ import PureComponent from 'react-pure-render/component';
 
 
 export default class Filters extends PureComponent {
+  constructor(properties) {
+    super(properties);
+    this.state  = properties.state;
+  }
+  
+  applyFilters(e,parent){
+    
+    var location = parent.props.location;
+    var router = parent.props.router;
+    var trg = e.target;
+    var formVals = $(trg).closest('form').serializeArray();
+    var oldValuesToRest = $.extend({},parent.props.state);
+    var newLocation = {};
+    
+    location.query = {category:'',labelFilter:''};
+    
+    formVals.map((field,i)=>{     
+      if (newLocation[field.name])
+          newLocation[field.name].push(field.value);
+      else
+        newLocation[field.name] = new Array(field.value);
 
+      location.query[field.name] = newLocation[field.name].join();
+    });
+    if(trg.name === 'all'){
+      var clears = trg.value.split(',');
+      clears.map((val)=>{
+        location.query[val] = '';
+      });
+    }
+    router.replace(location);
+    parent.setState(location.query);
+    
+  }
+  
   render() {
-    const {categories, router, location, sideFilter} = this.props;
+    const {categories, router, location, sideFilter, state} = this.props;
     return (
         <div className={classNames(styles.FiltersBox)}>
         <div className={classNames(styles.filters, 'filters', ((sideFilter)? null :'container'))}>
@@ -18,7 +52,7 @@ export default class Filters extends PureComponent {
             <div className={(sideFilter)?'col-md-12':'col-md-3'}>
               <fieldset>
                 <legend>Sort</legend>
-                <label><input type="radio" name="sort" value="rel" defaultChecked /> Relevance</label>
+                <label><input type="radio" name="sort" value="name" defaultChecked /> Relevance</label>
                 <label><input type="radio" name="sort" value="trend"  /> Trend</label>
                 <label><input type="radio" name="sort" value="download"  /> Downloads</label>
                 <label><input type="radio" name="sort" value="title"  /> Title</label>
@@ -42,6 +76,9 @@ export default class Filters extends PureComponent {
             </div>
             <div className={(sideFilter)?'col-md-12':'col-md-9'}>
               <Categories
+                state={state}
+                parent={this}
+                applyFilters={this.applyFilters}
                 categories={categories}
                 router={router}
                 location={location}
@@ -51,7 +88,10 @@ export default class Filters extends PureComponent {
           </div>
           <div className={classNames(styles.Footer,'row')}>
             <div className={classNames('col-md-12')}>
-              <button className={classNames('pull-xs-right btn')}>Go</button>
+              <button className={classNames('pull-xs-right btn')}
+                onClick={(e)=>{
+                  this.applyFilters(e,this);
+                }}>Go</button>
             </div>
           </div>
         </div>
