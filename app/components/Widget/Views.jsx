@@ -11,9 +11,9 @@ export class View extends PureComponent {
   };
 
   render() {
-    const { title, onClick, isActive } = this.props;
+    const { title, onClick, isActive,icon } = this.props;
     return (<button className={"btn btn-secondary " + isActive}
-               onClick={onClick}>x</button>
+               onClick={onClick}><i className={icon}></i></button>
     );
   }
 }
@@ -31,7 +31,11 @@ export default class Views extends PureComponent {
 
           { items.map((item, index) => {
             const isActive = (item === location.query.view)?'active':'';
+            const icon = (item === 'Tiles')? 'icon-grid-alt':
+              (item === 'List')? 'icon-menu3' :
+                (item === 'Table')? 'icon-list2':'';        
             return (<View key={index}
+                          icon={icon}
                           isActive={isActive}
                           title={item}
                           onClick={()=> {

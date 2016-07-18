@@ -26,7 +26,9 @@ export class Category extends PureComponent {
     const { id, active, title, tooltip, labels, parent, applyFilters } = this.props;
     
     this.checkState = function(prop,id){
-      var value = this.state[prop];
+      var value = (this.state)? 
+          this.state[prop]:
+            this.props.parent.props[prop];
       if (typeof value !== 'string') return false;
       if (value.indexOf(',') < 0 )
         return value === id;
@@ -34,8 +36,7 @@ export class Category extends PureComponent {
         return value.indexOf(id) > -1;
     }
     
-    return (<li key={id} className={classNames(styles[id], id)}
-    title={tooltip}>
+    return (<li key={id} className={classNames(styles[id], id)} title={tooltip}>
       <label className={classNames(active)}>
         <input type="checkbox" name="category" value={id}
           onChange={(e)=>{ 
