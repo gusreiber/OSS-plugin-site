@@ -11,7 +11,7 @@ api.init({
 });
 
 export const SearchOptions = Record({
-  limit: 100,
+  limit: 50,
   page: 1,
   pages: 0,
   total: 0
@@ -41,6 +41,8 @@ export const Plugin = Record({
   wiki: null,
   excerpt: null,
   iconDom: null,
+  download:null,
+  trend:null,
   category: null,
   requiredCore: null,
   developers: [],

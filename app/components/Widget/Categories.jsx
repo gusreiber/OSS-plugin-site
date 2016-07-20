@@ -23,7 +23,7 @@ export class Category extends PureComponent {
   };
 
   render() {
-    const { id, active, title, tooltip, labels, parent, applyFilters } = this.props;
+    const { id, active, title, tooltip, labels, parent, applyFilters,noLabels } = this.props;
     
     this.checkState = function(prop,id){
       var value = (this.state)? 
@@ -46,22 +46,24 @@ export class Category extends PureComponent {
         /> 
         <span>{title}</span> 
       </label>
-      <ul>
-        {labels.map((label,index) => {
-          return(
-            <li key={label.id} >
-              <label>
-                <input type="checkbox" name="labelFilter" value={label.id} 
-                checked={this.checkState('labelFilter',label.id)}
-                onChange={(e)=>{ 
-                  applyFilters(e,parent);
-                }}
-              /> 
-                <span>{label.title}</span>
-              </label>
-            </li>);
-        })}
-      </ul>
+      {(!noLabels)?
+        <ul>
+          {labels.map((label,index) => {
+            return(
+              <li key={label.id} >
+                <label>
+                  <input type="checkbox" name="labelFilter" value={label.id} 
+                  checked={this.checkState('labelFilter',label.id)}
+                  onChange={(e)=>{ 
+                    applyFilters(e,parent);
+                  }}
+                /> 
+                  <span>{label.title}</span>
+                </label>
+              </li>);
+          })}
+        </ul>
+      :null}
     </li>);
   }
 }
@@ -78,19 +80,23 @@ export default class Categories extends PureComponent {
   };
   
   render() {
-    const {location, categories, applyFilters, state, parent} = this.props;
+    const {location, categories, applyFilters, state, parent, noLabels} = this.props;
     const sortedCategories = categories.valueSeq();
     return (
-      <fieldset className={classNames(styles.Categories, "categories")}>
-      <legend>
-        Categories 
-        <button className={classNames('btn btn-secondary btn-sm')}
-          name="all"
-          value="category,labelFilter"
-            onClickCapture={(e)=>{
-            applyFilters(e,parent);
-        }}>Show all</button>
-      </legend>
+      <fieldset className={classNames(styles.Categories, (noLabels?'noLabels':''), "Categories")}>
+      {(!noLabels)?
+        <legend>
+          Categories 
+          <button className={classNames('btn btn-secondary btn-sm')}
+            name="all"
+            value="category,labelFilter"
+              onClickCapture={(e)=>{
+              applyFilters(e,parent);
+          }}>Show all</button>
+        </legend>
+      :
+        <legend>Topical categories</legend>
+      }
       <ul className={classNames(styles.Cols3, "Cols3")}>
       
       {sortedCategories.map(
@@ -101,6 +107,7 @@ export default class Categories extends PureComponent {
               state={state}
               parent={parent}
               applyFilters={applyFilters}
+              noLabels={noLabels}
               key={item.id}
               title={item.title}
               tooltip={item.description}

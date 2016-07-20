@@ -1,14 +1,22 @@
 body .showResults.item-finder > .HomeHeader{
   padding:.25rem .5rem;
 }
-body .showResults.item-finder > .HomeHeader > .navbar {width:100%; padding:0 9rem 0 0;}
+body .showResults.item-finder > .HomeHeader > .navbar {width:100%; padding:0 10.5rem 0 0;}
 body .showResults.item-finder > .HomeHeader > .navbar > .nav ,
 body .showResults.item-finder > .HomeHeader > .navbar > .nav > .SearchBox {width:100%}
+body .item-finder > .HomeHeader > .navbar > .nav > .btn-group > button > i {line-height:1.5rem}
 body .showResults.item-finder > .HomeHeader > .navbar > .nav > .btn-group {position:absolute; right:0; top:0}
-body .showResults.item-finder > .HomeHeader > .navbar > .nav > .SearchBox .ShowFilter {width:18% !important;}
-body .showResults.item-finder .filters {top:0; padding-top:1rem !important; margin-top:-1px; border-radius:0; box-shadow:none}
+body .showResults.item-finder > .HomeHeader > .navbar > .nav > .SearchBox .ShowFilter {width:18% !important; max-width: 10rem !important;}
+body .showResults.item-finder .filters {top:5; padding-top:1rem !important; margin-top:-1px; border-radius:0; box-shadow:-.25rem 0 #fff; border-left:none; border-top:none; left:.25rem}
 body .showResults.item-finder .filters .row {border:none; padding:0}
 body .showResults.item-finder .filters .Cols3 {column-count:1}
+
+body #grid-box .item-finder > .NoLabels {padding: 2rem 0; background:#fff}
+body #grid-box .item-finder > .NoLabels .Cols3 {font-size:.85rem}
+body #grid-box .item-finder > .NoLabels .Cols3 label > span {margin-left:.5rem}
+body #grid-box .item-finder .NoLabels .Entry-box {display:block;    padding: 0.25rem 0;
+    line-height: 1rem; font-size:.85rem}
+body #grid-box .item-finder .NoLabels legend {font-size:1.1rem; }
 
 /*----old-stuff-------*/
 
@@ -48,7 +56,7 @@ body .item-finder.Tiles a.item,
   display: block;
   border: .1rem solid #ccc;
   font-size: .85rem;
-  height: 17rem;
+  height: 16.5rem;
   width:13rem;
   box-sizing: border-box;
   padding: .67rem;
@@ -76,11 +84,15 @@ body .item-finder.Tiles a.item .Title:hover h4,
 
 body .item-finder.Tiles a.item .Icon,
 .Tile .Icon {
-  text-align: center;
-  margin: .5rem 0 0;
+  position:absolute;
+  bottom:0;
+  right:.75rem;
   display:block;
+  opacity:.75
 }
-
+body .item-finder.Tiles a.item:hover .Icon {
+  opacity:1
+}
 body .item-finder.Tiles a.item .Icon>i,
 .Tile .Icon>i {
   display: inline-block;
@@ -88,7 +100,7 @@ body .item-finder.Tiles a.item .Icon>i,
   color: #fff;
   height: 3rem;
   width: 3rem;
-  border-radius: 50%;
+  border-radius: 3px;
   line-height: 3rem;
   font-style: normal;
   margin: -1px 0 0 -1px;
@@ -107,11 +119,16 @@ body .item-finder a.item .Score>.scr_4:after,
   display: block;
   text-align: center;
 }
-body .item-finder.Tiles a.item .Version,
-.Tile .Version {
+body .item-finder a.item .Downloads,
+.Tile .Downloads {
   font-size: .75rem;
-  margin: -.5rem 0 .5rem;
+  margin: 0;
   color: #999;
+}
+body .item-finder.Tiles a.item .Labels,
+.Tile .Labels {
+  margin-bottom:.25rem;
+  min-height:2rem;
 }
 body .item-finder.Tiles a.item .Version span,
 .Tile .Version span {
@@ -132,11 +149,11 @@ body .item-finder.Tiles a.item .Excerpt,
 .Tile .Excerpt {
   white-space: normal;
   line-height: 1.1rem;
-  height: 3.3rem;
+  height: 4.4rem;
   overflow: hidden;
   text-overflow: ellipsis;
   position: relative;
-  margin: 0 0 .67rem;
+  margin: 0;
 }
 
 body .item-finder.Tiles a.item .Excerpt p,
@@ -160,8 +177,9 @@ body .item-finder.Tiles a.item .Excerpt:after,
 body .item-finder a.item h4,
 .Tile h4 {
   font-size: 1rem;
-  margin: 0 0 .5rem;
+  margin: 0 0 .25rem;
   line-height: 1.1rem;
+
   max-height: 2.2rem;
   overflow: hidden;
   font-weight: normal;
@@ -169,15 +187,27 @@ body .item-finder a.item h4,
   font-weight: normal;
   position: relative;
 }
+body .item-finder.Tiles a.item h4 {min-height:2.2rem;}
+body .item-finder.Tiles a.item .Version,
+body .item-finder.Tiles a.item .Labels>span,
 body .item-finder.Tiles a.item .Authors>div,
+body .item-finder.List a.item .Version,
+body .item-finder.List a.item .Labels>span,
+body .item-finder.List a.item .Authors>div,
 .Tile .Authors>div {
   font-size: .75rem;
-  display: block;
   color: #59a;
-  margin-right: .25rem;
+  margin-right: .5rem;
   line-height: 1rem;
 }
-
+body .item-finder.List a.item .Version,
+body .item-finder.List a.item .Labels>span,
+body .item-finder.List a.item .Authors>div{
+  
+}
+body .item-finder.Tiles a.item .Authors{
+  position:absolute; bottom:1rem;
+}
 .VirtualScroll>div>div {
   display: inline-block;
   height: auto !important;
@@ -217,6 +247,9 @@ spinner .double-bounce1, .spinner .double-bounce2 {
   -webkit-animation: sk-bounce 2.0s infinite ease-in-out;
   animation: sk-bounce 2.0s infinite ease-in-out;
 }
+.results.row{height:0; overflow:hidden; transition:all 0.5s ease}
+.showResults .results.row {height:auto;}
+.showResults.Tiles .results.row {min-height:40rem;}
 
 .double-bounce2 {
   -webkit-animation-delay: -1.0s;
@@ -269,8 +302,7 @@ body .item-finder.List a.Entry,
     width: auto;
     padding: .5rem .5rem .5rem 6rem;
     text-align: left;}
-body .item-finder.List a.Entry .Version,
-.list > .item > .Tile > .Version {margin-bottom:.25rem}
+
 body .item-finder.List a.Entry .Score,
 body .item-finder.List a.Entry .Icon,
 .list > .item > .Tile > .Score,
@@ -278,7 +310,7 @@ body .item-finder.List a.Entry .Icon,
 body .item-finder.List a.Entry .Score,
 .list > .item > .Tile > .Score {top:4rem;}
 body .item-finder.List a.Entry .Excerpt,
-.list > .item > .Tile > .Excerpt {height:auto; max-height:3.3rem; margin-bottom:.25rem}
+.list > .item > .Tile > .Excerpt {height:auto; max-height:3.3rem; margin:.5rem 0}
 body .item-finder.List a.Entry .Authors,
 .list > .item > .Tile > .Authors {margin:0}
 body .item-finder.List a.Entry .Authors > div,

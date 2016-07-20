@@ -14,7 +14,7 @@ export default class Filters extends PureComponent {
   }
   
   applyFilters(e,parent){
-    
+
     var location = parent.props.location;
     var router = parent.props.router;
     var trg = e.target;
@@ -40,6 +40,7 @@ export default class Filters extends PureComponent {
     }
     router.replace(location);
     parent.setState(location.query);
+    parent.props.showResults(location.query);
     
   }
   
@@ -47,9 +48,9 @@ export default class Filters extends PureComponent {
     const {categories, router, location, sideFilter, state} = this.props;
     return (
         <div className={classNames(styles.FiltersBox)}>
-        <div className={classNames(styles.filters, 'filters', ((sideFilter)? null :'container'))}>
+        <div className={classNames(styles.filters, 'filters', ((state.showResults)? 'col-md-2' :'container'))}>
           <div className={classNames(styles.Header,'row')}>
-            <div className={(sideFilter)?'col-md-12':'col-md-3'}>
+            <div className={(state.showResults)?'col-md-12':'col-md-3'}>
               <fieldset>
                 <legend>Sort</legend>
                 <label><input type="radio" name="sort" value="name" defaultChecked /> Relevance</label>
@@ -74,7 +75,7 @@ export default class Filters extends PureComponent {
                 />
               </fieldset>                
             </div>
-            <div className={(sideFilter)?'col-md-12':'col-md-9'}>
+            <div className={(state.showResults)?'col-md-12':'col-md-9'}>
               <Categories
                 state={state}
                 parent={this}
