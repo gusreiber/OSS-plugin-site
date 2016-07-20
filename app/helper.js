@@ -6,6 +6,30 @@ export function getScoreClassName(score) {
   score = score || '4';
   return `i scr_${score}`;
 }
+export function getCategories(items,itemIndex){
+  const categories = [];
+  if (!items) return;
+  for (let i=0; i < items.length; i++){
+    const keyIndex = `${itemIndex}_${i}`;
+    const itemTitle = items[i];
+    categories.push(
+      <span key={keyIndex}>{itemTitle} </span> 
+    );
+  }
+  return categories;
+}
+export function getLabels(items,itemIndex){
+  const labels = [];
+  if (!items) return;
+  for (let i=0; i < items.length; i++){
+    const keyIndex = `${itemIndex}_${i}`;
+    const itemTitle = items[i];
+    labels.push(
+      <span key={keyIndex}>{itemTitle} </span> 
+    );
+  }
+  return labels;
+}
 
 export function getMaintainers(devs,itemIndex) {
   const maintainers = [];
@@ -41,7 +65,7 @@ export function getMaintainersLinked(developers) {
   return maintainers;
 }
 
-export function getLabels(rawLabels) {
+export function getLabels_obs(rawLabels) {
   const labels = rawLabels.map((item, index) => {
     return (<div key={index}>
       <Icon icon="label"/>

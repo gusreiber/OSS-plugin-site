@@ -5,6 +5,7 @@ import Pagination from './Pagination';
 import Filters from './Filters';
 import Sort from './Sort';
 import Views from './Views';
+import Categories from './Categories';
 import React, { PropTypes } from 'react';
 import Spinner from '../../commons/spinner';
 import classNames from 'classnames';
@@ -18,8 +19,31 @@ export default class Widget extends PureComponent {
       this.state[key] = properties.location.query[key];
     });
   }
-  
 
+  showResults(locationQuery){
+    if(typeof locationQuery === 'boolean' && locationQuery){ 
+      this.state.showResults = true;
+      return 'showResults';
+    } 
+    const lq = locationQuery || this.props.location.query;
+    if(lq.q || lq.labelFilter || lq.category ){
+      this.state.showResults = true;
+      return 'showResults';
+    }
+    return false;
+  }
+  
+  sortList(valSeq,attr,func){
+    func = func ||
+      function(itemA,itemB){
+          if(itemA.category === 'junk') return 1; 
+          var dateA = new Date(itemA[attr]);
+          var dateB = new Date(itemB[attr]);
+          return (dateA > dateB)? -1:
+            (dateA < dateB)? 1: 0;
+        };
+    return valSeq.sort(func);
+  }
   
   render() {
   
@@ -42,13 +66,9 @@ export default class Widget extends PureComponent {
       searchOptions.limit * Number(searchOptions.page) : Number(searchOptions.total),
       fromRange = (searchOptions.limit) * (Number(searchOptions.page) - 1);
     
-    const sideFilter = this.state.showResults && this.state.showFilter;
     
-
-      
-    //<img src="http://stats.jenkins-ci.org/jenkins-stats/svg/total-jenkins.svg" />
     return (
-      <div className={classNames(styles.ItemFinder, this.state.showResults, view, 'item-finder')}>
+      <div className={classNames(styles.ItemFinder, this.showResults(), view, 'item-finder')}>
         <form action="#" className={classNames(styles.HomeHeader, 'HomeHeader jumbotron')} onSubmit={(e)=>{
           e.preventDefault(); return false;
         }}>
@@ -71,11 +91,10 @@ export default class Widget extends PureComponent {
                       defaultValue={location.query.q}
                       className={classNames('form-control')}
                       onChange={event => {
-                      debugger;
-                        this.setState({showResults:'showResults'});
                         location.query.q = event.target.value;
                         location.query.limit = searchOptions.limit;
                         router.replace(location);
+                        this.showResults(location.query);
                       }}
                       placeholder="Find plugins..."
                     />
@@ -91,29 +110,22 @@ export default class Widget extends PureComponent {
             
             </div>
           </nav>
-          { this.state.showFilter && !sideFilter ? 
+          { this.state.showFilter ? 
             <Filters
+              showResults={this.showResults}
               state={this.state}
               categories={categories}
               router={router}
               location={location}
-              sideFilter={sideFilter}
-            />: 
-            null 
-          }
-        </form>
-        {sideFilter ?
-          <div className="col-md-2">
-            <Filters
-              categories={categories}
-              router={router}
-              location={location}
-              sideFilter={sideFilter}
             />
-          </div>
-          :null
-        }
-        <div className={classNames(styles.ItemsList, 'items-box col-md-'+ (sideFilter? '10':'12') )}>
+          : null }
+        </form>
+        <div className="row results">
+          {this.state.showFilter && this.state.showResults?
+            <div className="col-md-2"></div>
+            :null
+          }
+          <div className={classNames(styles.ItemsList, 'items-box col-md-'+ (this.state.showFilter && this.state.showResults? '10':'12') )}>
 
           
           <nav className="page-controls">
@@ -161,8 +173,80 @@ export default class Widget extends PureComponent {
 
           <div className="clearfix"></div>
 
+          </div>
         </div>
-
+        <div className="NoLabels">
+        <div className="container">
+          <div className="row">
+            <div className={classNames(styles.NoLabels,"col-md-3 NoLabels")}>
+              <Categories
+                parent={this}
+                noLabels={true}
+                applyFilters={function(){alert('?');}}
+                categories={categories}
+                router={router}
+                location={location}
+              />
+            </div>
+            <div className="col-md-3">
+              <fieldset>
+                <legend>Most downloaded</legend>
+                {totalSize > 0 && getVisiblePlugins.valueSeq().sortBy(plugin => plugin.download)
+                  .map((plugin,i) => {
+                    if(i>9) return false;
+                    return (
+                      <Entry
+                        className="Entry"
+                        linkOnly={true}
+                        key={plugin.name}
+                        plugin={plugin}
+                      />
+                    );
+                })}
+              </fieldset>             
+            </div>
+            <div className="col-md-3">
+              <fieldset>
+                <legend>Recently updated</legend>
+                {totalSize > 0 && 
+                  this.sortList(getVisiblePlugins.valueSeq(),'releaseTimestamp')
+                    .map((plugin,i) => {
+                      if(i>9) return false;
+                      return (
+                      <Entry
+                        className="Entry"
+                        linkOnly={true}
+                        key={plugin.name}
+                        plugin={plugin}
+                      />
+                    );
+                })}
+              </fieldset>
+            </div>
+            
+            <div className="col-md-3">
+              <fieldset>
+                <legend>Rapidly adopted</legend>            
+                {totalSize > 0 && 
+                  this.sortList(getVisiblePlugins.valueSeq(),'trend')
+                    .map((plugin,i) => {
+                      if(i>9) return false;
+                      return (
+                      <Entry
+                        className="Entry"
+                        linkOnly={true}
+                        key={plugin.name}
+                        plugin={plugin}
+                      />
+                    );
+                })}                      
+              </fieldset>
+            </div>
+            
+            
+          </div>
+        </div>
+      </div>
       </div>
     );
   }

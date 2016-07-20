@@ -21,9 +21,7 @@ export default class Application extends Component {
   componentWillMount() {
     const { location } = this.props;
 
-    if(location.query.category || location.query.q || location.query.labelFilter) {
-      this.props.generatePluginData(location.query);
-    }
+    this.props.generatePluginData(location.query);
     this.props.generateLabelData();
     this.props.generateCategoryData();
     

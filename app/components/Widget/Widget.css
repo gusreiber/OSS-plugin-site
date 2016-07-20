@@ -147,6 +147,7 @@ body .ShowFilter {text-decoration:none !important; cursor:pointer; vertical-alig
   z-index:9;
   left:0;
   right:0;
+  height:0;
 }
 .FiltersBox .Header {border-top:1px solid rgba(0,0,0,.1); padding:1rem}
 .FiltersBox .Footer {border-top:1px solid rgba(0,0,0,.1); padding-top:1rem}
@@ -272,13 +273,8 @@ body div.Table .GridBox>.Grid>div>a>div {
   font-size:.8rem;
   border-bottom:1px solid #ccc;
 }
-body z .GridBox>.Grid>div>a>div.Icon,
-body z .GridBox>.Grid>div>a>div.Wiki {display:none}
-body z .GridBox>.Grid>div>a>div.Score {white-space:nowrap; font-size:.8rem}
-body z .GridBox>.Grid>div>a>div.Title {width:20%}
-body z .GridBox>.Grid>div>a>div.Title>h4 {font-size:.85rem; font-weight:bold; color:#5ac; min-height:2.2rem}
 
-
+.NoLabels .Categories .Cols3 {column-count:1}
 
 body .Item{
   display:block;
@@ -291,7 +287,6 @@ body .Tile{
     padding: .5rem 1rem .5rem 7rem;
     text-align: left;
     min-height:6rem;
-    max-width:60rem
 }
 body .Tile > .Score, 
 body .Tile > .Icon {
@@ -303,12 +298,10 @@ body .Tile > .Score {
   top: 4rem;
   font-size:1rem;
 }
-body .Tile > .Version {
-    margin-bottom: .25rem;
-}
+
 body .Tile > .Excerpt {
     height: auto;
-    max-height: 3.3rem;
+    max-height: 4.4rem;
     margin-bottom: .25rem;
     min-height:.5rem
 }
@@ -381,11 +374,7 @@ body .Tile > .Excerpt {
   text-align: center;
 }
 
-.Tile .Version {
-  font-size: .75rem;
-  margin: -.5rem 0 .5rem;
-  color: #999;
-}
+
 
 .Tile .Version span {
   margin-right: .25rem
