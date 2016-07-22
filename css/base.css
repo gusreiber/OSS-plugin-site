@@ -11,12 +11,40 @@ body .showResults.item-finder .filters {top:5; padding-top:1rem !important; marg
 body .showResults.item-finder .filters .row {border:none; padding:0}
 body .showResults.item-finder .filters .Cols3 {column-count:1}
 
+.NoLabels > .Categories label > input {display:none}
+.NoLabels > .Categories label > span {margin-left:0 !important; color:#0275d8; cursor:pointer}
+
 body #grid-box .item-finder > .NoLabels {padding: 2rem 0; background:#fff}
 body #grid-box .item-finder > .NoLabels .Cols3 {font-size:.85rem}
 body #grid-box .item-finder > .NoLabels .Cols3 label > span {margin-left:.5rem}
 body #grid-box .item-finder .NoLabels .Entry-box {display:block;    padding: 0.25rem 0;
     line-height: 1rem; font-size:.85rem}
 body #grid-box .item-finder .NoLabels legend {font-size:1.1rem; }
+
+.container-fluid.padded {padding:3rem 4rem}
+.modalview > .dialog .gutter {background:#eee; padding:2rem }
+.modalview > .dialog .gutter > .btn { display:block; text-align:left; padding:.5rem 1rem .75rem 3.5rem; position:relative; margin-bottom:1rem}
+.modalview > .dialog .gutter > .btn i {font-size:2.25rem; position:absolute; left:.75rem; top:.5rem}
+.modalview > .dialog .gutter > .btn > span {font-size:1.1rem; line-height:1.3rem; font-weight:500}
+.modalview > .dialog .gutter > .btn > .v {display:block; font-weight:200; font-size:.85rem}
+.modalview > .dialog .gutter .lbl {display:inline-block; margin-right:.5rem}
+.modalview > .dialog {width:95% !important; margin:0 1.5%; top:0 !important;}
+.modalview > .dialog .download {margin:2rem 0 2rem -.5rem;}
+.modalview > .dialog > .header {font-size:1rem !important;padding:.5rem 1rem !important; height:auto; min-height:0 !important;cursor:pointer}
+.modalview > .dialog > .header > .back:before{content:'\2B05'; margin-right:.5rem;}
+.modalview > .dialog > .header > a {font-size:1rem !important; position:static !important; float:right; }
+.modalview > .dialog > .content {padding:0 !important; max-height:100% !important;}
+.modalview > .dialog > .content .title {margin-bottom:2rem; vertical-align:top}
+
+.row.flex {display:flex}
+
+h1.title .v {color:#999; font-size:1rem; font-weight:200; margin:0 0 0 .5rem; position:relative; top:.25rem; vertical-align:top}
+h1.title .sub {display:block; font-weight:normal; font-size:1rem; color:#999; margin-top:.25rem}
+.markdown-body .anchor {display:none}
+.markdown-body h1 {font-size:2rem; margin:4rem 0 1rem;}
+.markdown-body h2 {font-size:1.5rem; margin-top:2rem;}
+.markdown-body h3 {font-size:1.25rem;}
+.markdown-body h4 {font-size:1.1rem;}
 
 /*----old-stuff-------*/
 
@@ -60,7 +88,6 @@ body .item-finder.Tiles a.item,
   width:13rem;
   box-sizing: border-box;
   padding: .67rem;
-  box-shadow: 0 2px 3px rgba(0,0,0,.25);
   color: #666;
   text-decoration: none !important;
   background: #fff;
@@ -75,11 +102,12 @@ body .item-finder.Tiles a.item:hover,
 .Tile:hover {
   border: .1rem solid #999;
   opacity: 1;
+  box-shadow: 0 2px 3px rgba(0,0,0,.25);
+  text-decoration:none;
 }
 body .item-finder.Tiles a.item .Title:hover h4,
 .Tile:hover h4 {
   color: #069;
-  text-decoration: underline;
 }
 
 body .item-finder.Tiles a.item .Icon,
@@ -247,7 +275,7 @@ spinner .double-bounce1, .spinner .double-bounce2 {
   -webkit-animation: sk-bounce 2.0s infinite ease-in-out;
   animation: sk-bounce 2.0s infinite ease-in-out;
 }
-.results.row{height:0; overflow:hidden; transition:all 0.5s ease}
+.results.row {overflow:hidden; height:0}
 .showResults .results.row {height:auto;}
 .showResults.Tiles .results.row {min-height:40rem;}
 
@@ -338,8 +366,7 @@ nav.page-controls {text-align:center; padding:.25rem 1rem; font-size:.85rem; ver
     clear: both;
     width: 100%; min-height:2.75rem}
 nav.page-controls .nav-item.filter {float:left}
-nav.page-controls .nav-item.page-picker {float:none; display:inline-block; padding-right:5rem}
-nav.page-controls .nav-item.count {float:right}
+nav.page-controls .nav-item.page-picker {float:none; display:inline-block; padding-right:6rem}
 nav .pagination {margin:.25rem;}
 nav .pagination .page-link {
   padding: .25rem;

@@ -323,27 +323,24 @@ body .Tile > .Excerpt {
   width:13rem;
   box-sizing: border-box;
   padding: .67rem;
-  box-shadow: 0 8px 2px -4px rgba(0,0,0,.15);
   color: #666;
   text-decoration: none !important;
   background: #fff;
   opacity: .85;
   border-radius: 3px;
   text-align:left;
-  ztransition: all .05s ease-out;
   position:relative;
 }
 
 .Tile:hover {
   border: .1rem solid #999;
   opacity: 1;
-  ztransform: scale(1.03);
+  transform: scale(1.01);
   z-index:2;
 }
 
 .Tile:hover h4 {
   color: #069;
-  text-decoration: underline;
 }
 
 .Tile .Icon {

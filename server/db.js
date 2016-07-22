@@ -85,7 +85,18 @@ module.exports = flatDb = (filename, callback) => {
             pages: 1
           };
         };
-
+        dbStore.detail = (name) => {
+          var detail = fs.readFile("./server/static/plugin.json", {encoding: 'utf8'}, (err, data) => {
+              if (err) {
+                console.error("ERROR ===== " + err);
+                res.json({error: err});
+              } else {
+                res.json(JSON.parse(data));
+              }
+          });
+          return detail;
+        };
+        
         dbStore.entry = (name) => {
           var plugin = dbStore.filter(
             (plugin) => {

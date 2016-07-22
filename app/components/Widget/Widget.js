@@ -21,7 +21,7 @@ export default class Widget extends PureComponent {
   }
 
   showResults(locationQuery){
-    if(typeof locationQuery === 'boolean' && locationQuery){ 
+    if(this.state.showResults === true ||(typeof locationQuery === 'boolean' && locationQuery)){ 
       this.state.showResults = true;
       return 'showResults';
     } 
@@ -130,8 +130,13 @@ export default class Widget extends PureComponent {
           
           <nav className="page-controls">
             <ul className="nav navbar-nav">
-              <li className="nav-item filter">
-                
+              <li className="nav-item count">
+                {totalSize > 0 &&
+                <span className="nav-link">
+                {fromRange} to&nbsp;
+                  {toRange} of {totalSize}
+              </span>
+                }
               </li>
               <li className="nav-item page-picker">
                 {!isFetching && totalSize > 0 &&
@@ -142,14 +147,7 @@ export default class Widget extends PureComponent {
                   page={Number(searchOptions.page)}
                 />}
               </li>
-              <li className="nav-item count">
-                {totalSize > 0 &&
-                <span className="nav-link">
-                {fromRange} to&nbsp;
-                  {toRange} of {totalSize}
-              </span>
-                }
-              </li>
+
 
             </ul>
 

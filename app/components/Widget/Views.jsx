@@ -32,8 +32,8 @@ export default class Views extends PureComponent {
           { items.map((item, index) => {
             const isActive = (item === location.query.view)?'active':'';
             const icon = (item === 'Tiles')? 'icon-grid-alt':
-              (item === 'List')? 'icon-menu3' :
-                (item === 'Table')? 'icon-list2':'';        
+              (item === 'List')? 'icon-list2' :
+                (item === 'Table')? 'icon-menu3':'';        
             return (<View key={index}
                           icon={icon}
                           isActive={isActive}
