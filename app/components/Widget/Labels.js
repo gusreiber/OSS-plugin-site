@@ -4,7 +4,6 @@ import PureComponent from 'react-pure-render/component';
 
 export default class LabelWidget extends PureComponent {
   handleClick(data) {
-    debugger;
     this.props.location.query.labelFilter = data;
     this.props.router.replace(this.props.location);
   }

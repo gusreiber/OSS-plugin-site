@@ -118,6 +118,19 @@ rest.get('/plugin/:name', (req, res) => {
   const data = this.dbStore.entry(name);
   res.send(data);
 });
+
+rest.get('/detail/:name', (req, res) => {
+  var name = req.params && req.params.name ? req.params.name : null;
+  fs.readFile("./server/static/detail.json", {encoding: 'utf8'}, (err, data) => {
+    if (err) {
+          console.error("ERROR ===== " + err);
+          res.json({error: err});
+        } else {
+      res.json(JSON.parse(data));
+    }
+  });
+});
+
 rest.get('/stats/:name', (req, res) => {
   var name = req.params && req.params.name ? req.params.name : null;
   setRestHeader(res);

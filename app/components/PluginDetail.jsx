@@ -44,6 +44,8 @@ export class PluginDetail extends PureComponent {
           title,
           name,
           excerpt,
+          download,
+          trend,
           developers,
           sha1,
           version,
@@ -61,192 +63,79 @@ export class PluginDetail extends PureComponent {
             },
           wiki,
           requiredCore,
+          detail
           },
         },
       } = this;
     const afterClose = () => {
       router.goBack();
     };
-    let total = 0;
-    const installationData = Object.keys(installations).map((entry, index) => {
-      const installation = installations[entry];
-      total += installation;
-      const slice = {x: parseInt(entry) / 1000000000000, y: installation};
-      return slice;
-    });
-    const versionData = Object.keys(installationsPerVersion).map((entry, index) => {
-      const installation = installationsPerVersion[entry];
-      const slice = {x: `${entry}`, y: installation, label: installation};
-      return slice;
-    });
-    const formatedTotal = numeral(total).format('0.0 a');
-    const scmEntry = /github.com$/.test(scm) ? {
-        url: `http://${scm}/jenkinsci/${name}-plugin`,
-        icon: 'github-circle',
-        footer: 'scm',
-        label: scm,
-      } : {
-        url: `http://${scm}`,
-        icon: 'dnd_forwardslash',
-        footer: 'scm',
-        label: scm,
-    };
-    const boxes = [
-      {
-        icon: 'perm_identity',
-        footer: `v. ${version}`,
-        label: name,
-      },
-      scmEntry,
-      {
-        url: wiki,
-        icon: 'help',
-        footer: 'HELP',
-        label: 'Wiki',
-      },
-      {
-        icon: 'play_install',
-        footer: 'Total Installs',
-        label: formatedTotal,
-      },
-    ];
 
-    const boxesButtons = [
-      {
-        url: url,
-        icon: 'file_download',
-        footer: `${moment(releaseTimestamp).format('MMM Do YYYY')}`,
-        label: 'latest',
-      },
-      {
-        url: `http://updates.jenkins-ci.org/download/plugins/${name}/`,
-        icon: 'launch',
-        footer: `${moment(previousTimestamp).fromNow()}: v. ${previousVersion} `,
-        label: 'archives',
-      },
-      {
-        url: `http://updates.jenkins-ci.org/download/war/${requiredCore}/jenkins.war`,
-        icon: 'file_download',
-        footer: 'Required Core',
-        label: requiredCore,
-      },
-    ];
-    const developerMap = getMaintainersLinked(developers, sha1).map((item, index) => {
-      return (<div className="formFooter__section" key={index}>
-        <div className="formFooter__item">
-          {item}
-        </div>
-      </div>)
-    });
-    const labelMap = getLabels(labels);
-    const dependenciesMap = getDependencies(dependencies);
     return (<ModalView hideOnOverlayClicked isVisible {...{afterClose}}>
       <Header>
-        <h2>{title}</h2>
+        <div className="back" onClick={afterClose}>Plugin detail</div>
       </Header>
       <Body>
-      <div>
-        <div className="cardGroup">
-          { boxes.map((box, index)=> {
-            const assign = Object.assign({}, {key: index}, box);
-            if (box.url) {
-              return (<a
-                key={index}
-                className="card cardGroup__card"
-                target="_blank"
-                href={box.url}>
-                <Box {...assign} />
-              </a>);
-            } else {
-              return (<div key={index} className="card cardGroup__card">
-                <Box {...assign} />
-              </div>);
-            }
-          })}
-        </div>
-        <div className="featureListItem"  title="Category">
-          <div className="featureListItem__icon">
-            <Icon
-              size={50}
-              icon="business"// Icon to use
-            />
-          </div>
-          <div className="featureListItem__description">
-            <div className="formFooter" style={{alignItems: 'center'}}>
-              {categories[category].name} - {categories[category].description}
+        <div>
+          <div className="row flex">
+            <div className="col-md-9 main">
+              <div className="container-fluid padded">
+                <h1 className="title">
+                  {title}
+                  <span className="v">{version}</span>
+                  <span className="sub">Required minimum Jenkins: {requiredCore}</span>
+                </h1>
+                <div className="row flex">
+                  <div className="col-md-4">
+                    <p>
+                    Installs: {download}<br />
+                    Trend: {trend}<br/>
+                    Last released: {moment(releaseTimestamp).fromNow()}<br/>
+                    </p>
+                    
+                  </div>
+                  <div className="col-md-4">
+                    <h5>Maintainers</h5>
+                    {developers.map(
+                        (dev,i)=>{
+                          return(<div key={'dev_'+i}><a href="">{(dev.name && dev.name.length > 0)? dev.name : dev.developerId}</a></div>);
+                        }
+                    )}
+                  </div>
+                  <div className="col-md-4">
+                    <h5>Dependencies</h5>
+                    {(dependencies)?
+                      dependencies.map(
+                        (dep,i)=>{
+                          return(<div key={'dep_'+i}><a href="">{dep.name}</a></div>);
+                        })
+                      :"None"
+                    }
+                  </div>
+                </div>
+                <a href="" className="btn btn-primary btn-lg download"><i className="icon-download"></i> Installation instructions</a>
+                <div className="content" dangerouslySetInnerHTML={{__html: detail}}></div>
+              </div>
+            </div>
+            <div className="col-md-3 gutter">
+            <a href="" className="btn btn-primary"><i className="icon-download"></i> 
+              <span>Download</span>
+              <span className="v">{title} {version}</span>
+            </a>
+            
+            <a href="" className="btn btn-secondary"><i className="icon-box"></i> 
+              <span>Archives</span>
+              <span className="v">Get past versions</span>
+            </a>
+            
+            <h5>Labels</h5>
+            {labels.map(
+                (label,i) => {return(<a className="lbl" key={'label_'+i}>{label}</a>)}
+            )}
             </div>
           </div>
+          
         </div>
-        <div className="featureListItem featureListItem--reverse" title="Labels">
-          <div className="featureListItem__icon">
-            <Icon
-              size={50}
-              icon="label_outline"// Icon to use
-            />
-          </div>
-          <div className="featureListItem__description">
-            <div className="formFooter" style={{alignItems: 'center'}}>
-              { labelMap }
-            </div>
-          </div>
-        </div>
-        <div className="featureListItem"  title="Maintainer(s)">
-          <div className="featureListItem__icon">
-            <Icon
-              size={50}
-              icon="account_circle"// Icon to use
-            />
-          </div>
-          <div className="featureListItem__description">
-            <div className="formFooter" style={{alignItems: 'center'}}>
-              { developerMap }
-            </div>
-          </div>
-        </div>
-        <div className="featureListItem featureListItem--reverse" title="Description">
-          <div className="featureListItem__icon" >
-            <Icon
-              size={50}
-              icon="subject"// Icon to use
-            />
-          </div>
-          <div
-            className="featureListItem__description"
-            dangerouslySetInnerHTML={{ __html: excerpt }}/>
-        </div>
-        <div className="featureListItem" title="Dependencies">
-          <div className="featureListItem__icon">
-            <Icon
-              size={50}
-              icon="bookmark"// Icon to use
-            />
-          </div>
-          <div className="featureListItem__description">
-            <div className="formFooter" style={{alignItems: 'center'}}>
-              { dependenciesMap }
-            </div>
-          </div>
-        </div>
-        <div className="cardGroup">
-          { boxesButtons.map((box, index)=> {
-            const assign = Object.assign({}, {key: index}, box);
-            if (box.url) {
-              return (<a
-                key={index}
-                className="card cardGroup__card"
-                target="_blank"
-                href={box.url}>
-                <Box {...assign} />
-              </a>);
-            } else {
-              return (<div key={index} className="card cardGroup__card">
-                <Box {...assign} />
-              </div>);
-            }
-          })}
-        </div>
-
-      </div>
       </Body>
     </ModalView>);
   }

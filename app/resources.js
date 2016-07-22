@@ -50,6 +50,7 @@ export const Plugin = Record({
   categories:[],
   dependencies: [],
   stats: Stats,
+  detail:null,
 });
 
 export const State = Record({
@@ -136,35 +137,35 @@ export const actions = {
       if (plugins) {
         plugin = plugins.filter((plugin) => plugin.name === name);
       }
-      const urlStats = `/stats/${name}`;
+      const urlDetail = `/detail/${name}`;
       if(!plugins || !plugin || plugin.size === 0) {
         const url = `/plugin/${name}`;
         return fetch(url, fetchOptions)
           .then(checkStatus)
           .then(parseJSON)
           .then(data => {
-            return fetch(urlStats, fetchOptions)
+            return fetch(urlDetail, fetchOptions)
               .then(checkStatus)
               .then(parseJSON)
-              .then(statsData => {
-                const stats = new Stats (statsData);
+              .then(detailData => {
+                const detail = detailData.details;
                 const record = new Plugin(data);
                 dispatch({
                   type: ACTION_TYPES.SET_PLUGIN_DATA,
-                  payload: record.set('stats', stats),
+                  payload: record.set('detail', detail),
                 });
               });
           });
       } else {
         const record = plugin.toArray()[0];
-        return fetch(urlStats, fetchOptions)
+        return fetch(urlDetail, fetchOptions)
           .then(checkStatus)
           .then(parseJSON)
-          .then(statsData => {
-            const stats = new Stats (statsData);
+          .then(detailData => {
+            const detail = detailData.details;
             dispatch({
               type: ACTION_TYPES.SET_PLUGIN_DATA,
-              payload: record.set('stats', stats),
+              payload: record.set('detail', detail),
             });
           });
       }

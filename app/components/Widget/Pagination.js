@@ -35,18 +35,21 @@ export default class Pagination extends PureComponent {
     return (
 
         <ul className="pagination">
+          {(current > 3)?
           <li className="page-item">
             <a className="page-link" onClick={handleClick.bind(null, start)} aria-label="start">
               <span aria-hidden="true">&laquo;&laquo;</span>
             </a>
           </li>
-
+          :null}
+          {(current > 2)?
           <li className="page-item">
             <a className="page-link" onClick={handleClick.bind(null, previous)} aria-label="previous">
               <span aria-hidden="true">&laquo;</span>
             </a>
           </li>
-          {cn4 > 0 && current + 1 > pages && <li className="page-item">
+          :null}
+        {cn4 > 0 && current + 1 > pages && <li className="page-item">
           <a className="page-link" onClick={handleClick.bind(null, cn4)} aria-label="next">
             {cn4}
           </a>
@@ -99,18 +102,20 @@ export default class Pagination extends PureComponent {
             {c4}
           </a>
         </li>}
-
-          {current < next && next <=pages && <li className="page-item">
+          {(current < end -2)?
+          <li className="page-item">
             <a className="page-link" onClick={handleClick.bind(null, next)} aria-label="next">
               <span aria-hidden="true">&raquo;</span>
             </a>
-          </li>}
-
-          {current < end && <li className="page-item">
+          </li>
+          :null}
+          {(pages > 6 && current < end - 3)?
+          <li className="page-item">
             <a className="page-link" onClick={handleClick.bind(null, end)} aria-label="end">
               <span aria-hidden="true">&raquo;&raquo;</span>
             </a>
-          </li>}
+          </li>
+          :null}
         </ul>);
   }
 }

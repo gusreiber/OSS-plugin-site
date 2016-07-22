@@ -24,6 +24,7 @@ new WebpackServer(webpack(config), {
     '/newplugins': backend,
     '/newplugin*': backend,
     '/plugin*': backend,
+    '/detail*': backend,
     '/stats*': backend,
     '/latest*': backend,
     '/labels*': backend,
