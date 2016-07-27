@@ -178,7 +178,7 @@ export const actions = {
         if (data && data.categories){
           dispatch({
             type: ACTION_TYPES.SET_CATEGORIES,
-            payload: Immutable.List(data.docs)
+            payload: Immutable.List(data.categories)
           });
         }
       })
