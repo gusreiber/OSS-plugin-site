@@ -10,26 +10,65 @@ import React, { PropTypes } from 'react';
 import Spinner from '../../commons/spinner';
 import classNames from 'classnames';
 import PureComponent from 'react-pure-render/component';
+import { findDOMNode } from 'react-dom';
 
 export default class Widget extends PureComponent {
   constructor(properties) {
     super(properties);
     this.state  = {};
+    const que = properties.location.query;
     Object.keys(properties.location.query).map((key,item)=>{
-      this.state[key] = properties.location.query[key];
+      this.state[key] = que[key];
     });
+    
+    if(que.q || que.category || que.labelFilter)
+      this.state.showResults = 'showResults';
   }
+  
+  formSubmit(e){
+    const clicked = e.currentTarget;
+    const router = this.context.router;
+    const form = document.getElementById('plugin-search-form');
+    const elems = findDOMNode(form).elements;
+    const state = this.state;
 
-  showResults(locationQuery){
-    if(this.state.showResults === true ||(typeof locationQuery === 'boolean' && locationQuery)){ 
-      this.state.showResults = true;
-      return 'showResults';
-    } 
-    const lq = locationQuery || this.props.location.query;
-    if(lq.q || lq.labelFilter || lq.category ){
-      this.state.showResults = true;
-      return 'showResults';
+    let newLocationQuery = {};
+    location.query = {};
+    router.replace({});
+    //delete state.showResults;
+    e.preventDefault();
+    
+    function handleCheckboxes(elem,query){
+      let name = elem.name;
+      let value = elem.value;
+      let uncheck = (clicked.name === 'clear')?clicked.value:'';
+      if(name && uncheck.indexOf(name) === -1){
+        if(elem.type === 'checkbox' || elem.type === 'radio'){
+          if(typeof newLocationQuery[name] === 'string' ) return;
+          if(elem.checked){
+            if(newLocationQuery[name])
+              newLocationQuery[name].push(value);
+            else
+              newLocationQuery[name] = [value];
+            if(elem.type !== 'radio') state.showResults = 'showResults';
+            location.query[name] = newLocationQuery[name].join();
+          }          
+        }
+        else if (elem.name === 'clear' || value === ''){
+          return;
+        }
+        else{
+          state.showResults = 'showResults';
+          location.query[name] = value;
+        }
+      }
+      
     }
+    
+    for(var i = 0; i < elems.length; i++){
+      handleCheckboxes(elems[i],location.query);
+    }
+    router.replace(location);
     return false;
   }
   
@@ -68,10 +107,8 @@ export default class Widget extends PureComponent {
     
     
     return (
-      <div className={classNames(styles.ItemFinder, this.showResults(), view, 'item-finder')}>
-        <form action="#" className={classNames(styles.HomeHeader, 'HomeHeader jumbotron')} onSubmit={(e)=>{
-          e.preventDefault(); return false;
-        }}>
+      <div className={classNames(styles.ItemFinder, view, this.state.showResults, 'item-finder')}>
+        <form ref="form" action="#" id="plugin-search-form" className={classNames(styles.HomeHeader, 'HomeHeader jumbotron')} onSubmit={(e)=>{console.log(e);this.formSubmit(e);}}>
           <nav className={classNames(styles.navbar,"navbar")}>
             <div className="nav navbar-nav">
               <fieldset className={classNames(styles.SearchBox, 'form-inline SearchBox')}>
@@ -88,14 +125,10 @@ export default class Widget extends PureComponent {
                       <span>{this.state.showFilter ? "▼" : "◄" }</span>
                     </a>
                     <input
+                      name="q"
                       defaultValue={location.query.q}
                       className={classNames('form-control')}
-                      onChange={event => {
-                        location.query.q = event.target.value;
-                        location.query.limit = searchOptions.limit;
-                        router.replace(location);
-                        this.showResults(location.query);
-                      }}
+                      onBlur={this.formSubmit.bind(this)}
                       placeholder="Find plugins..."
                     />
                     <div className={classNames(styles.SearchBtn, 'input-group-addon SearchBtn')}><i className={classNames('icon-search')}></i></div>
@@ -112,11 +145,11 @@ export default class Widget extends PureComponent {
           </nav>
           { this.state.showFilter ? 
             <Filters
-              showResults={this.showResults}
-              state={this.state}
+              labels={labels}
               categories={categories}
-              router={router}
               location={location}
+              showResults={this.state.showResults}
+              handleChecks={this.formSubmit}
             />
           : null }
         </form>
@@ -177,14 +210,14 @@ export default class Widget extends PureComponent {
         <div className="container">
           <div className="row">
             <div className={classNames(styles.NoLabels,"col-md-3 NoLabels")}>
-              <Categories
-                parent={this}
-                noLabels={true}
-                applyFilters={function(){alert('?');}}
-                categories={categories}
-                router={router}
-                location={location}
-              />
+              <fieldset>
+                <legend>Browse categories</legend>
+                {categories.map((cat,i) => {
+                  return(
+                   <div key={"cat-id-"+cat.id}>{cat.title}</div>
+                   );
+                })}
+              </fieldset>
             </div>
             <div className="col-md-3">
               <fieldset>

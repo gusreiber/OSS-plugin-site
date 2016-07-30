@@ -129,7 +129,7 @@ export const actions = {
 
   fetchPluginData: () => ({ type: ACTION_TYPES.FETCH_PLUGINS_DATA }),
 
-  getPlugin(name) {
+  getPlugin: (name) => {
     return (dispatch, getState) => {
       dispatch({ type: ACTION_TYPES.CLEAR_PLUGIN_DATA });
       const plugins = getState().resources.plugins;
@@ -138,6 +138,11 @@ export const actions = {
         plugin = plugins.filter((plugin) => plugin.name === name);
       }
       const urlDetail = `/detail/${name}`;
+      alert('TODO: API for details returns HTML not JSON for '+name);
+      debugger;
+      return false;
+      /*TODO: API for details returns HTML not JSON*/
+      
       if(!plugins || !plugin || plugin.size === 0) {
         const url = `/plugin/${name}`;
         return fetch(url, fetchOptions)
@@ -171,7 +176,7 @@ export const actions = {
       }
     };
   },
-
+  
   generateCategoryData: () =>{
     return (dispatch) => {
       return api.getJSON('/categories', (error, data) => {
@@ -191,7 +196,7 @@ export const actions = {
         if (data && data.labels) {
           dispatch({
             type: ACTION_TYPES.SET_LABELS,
-            payload: Immutable.List(data.docs)
+            payload: Immutable.List(data.labels)
           });
         }
       });
