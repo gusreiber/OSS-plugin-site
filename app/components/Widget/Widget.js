@@ -20,11 +20,11 @@ export default class Widget extends PureComponent {
     Object.keys(properties.location.query).map((key,item)=>{
       this.state[key] = que[key];
     });
-    
+
     if(que.q || que.category || que.labelFilter)
       this.state.showResults = 'showResults';
   }
-  
+
   formSubmit(e){
     const clicked = e.currentTarget;
     const router = this.context.router;
@@ -37,7 +37,7 @@ export default class Widget extends PureComponent {
     router.replace({});
     //delete state.showResults;
     e.preventDefault();
-    
+
     function handleCheckboxes(elem,query){
       let name = elem.name;
       let value = elem.value;
@@ -52,7 +52,7 @@ export default class Widget extends PureComponent {
               newLocationQuery[name] = [value];
             if(elem.type !== 'radio') state.showResults = 'showResults';
             location.query[name] = newLocationQuery[name].join();
-          }          
+          }
         }
         else if (elem.name === 'clear' || value === ''){
           return;
@@ -62,20 +62,20 @@ export default class Widget extends PureComponent {
           location.query[name] = value;
         }
       }
-      
+
     }
-    
+
     for(var i = 0; i < elems.length; i++){
       handleCheckboxes(elems[i],location.query);
     }
     router.replace(location);
     return false;
   }
-  
+
   sortList(valSeq,attr,func){
     func = func ||
       function(itemA,itemB){
-          if(itemA.category === 'junk') return 1; 
+          if(itemA.category === 'junk') return 1;
           var dateA = new Date(itemA[attr]);
           var dateB = new Date(itemB[attr]);
           return (dateA > dateB)? -1:
@@ -83,9 +83,9 @@ export default class Widget extends PureComponent {
         };
     return valSeq.sort(func);
   }
-  
+
   render() {
-  
+
     const {
       totalSize,
       isFetching,
@@ -103,16 +103,16 @@ export default class Widget extends PureComponent {
     const
       toRange = searchOptions.limit * Number(searchOptions.page) <= Number(searchOptions.total) ?
       searchOptions.limit * Number(searchOptions.page) : Number(searchOptions.total),
-      fromRange = (searchOptions.limit) * (Number(searchOptions.page) - 1);
-    
-    
+      fromRange = ((searchOptions.limit) * (Number(searchOptions.page)) - (searchOptions.limit - 1));
+
+
     return (
       <div className={classNames(styles.ItemFinder, view, this.state.showResults, 'item-finder')}>
         <form ref="form" action="#" id="plugin-search-form" className={classNames(styles.HomeHeader, 'HomeHeader jumbotron')} onSubmit={(e)=>{console.log(e);this.formSubmit(e);}}>
           <nav className={classNames(styles.navbar,"navbar")}>
             <div className="nav navbar-nav">
               <fieldset className={classNames(styles.SearchBox, 'form-inline SearchBox')}>
-            
+
                 <div className={classNames(styles.searchBox, 'form-group')}>
                   <label className={classNames(styles.searchLabel, 'input-group')}>
                     <a className={classNames(styles.ShowFilter, styles.Fish, 'input-group-addon ShowFilter')}
@@ -135,15 +135,15 @@ export default class Widget extends PureComponent {
                   </label>
                 </div>
               </fieldset>
-              
+
               <Views
                 router={router}
                 location={location}
               />
-            
+
             </div>
           </nav>
-          { this.state.showFilter ? 
+          { this.state.showFilter ?
             <Filters
               labels={labels}
               categories={categories}
@@ -160,7 +160,7 @@ export default class Widget extends PureComponent {
           }
           <div className={classNames(styles.ItemsList, 'items-box col-md-'+ (this.state.showFilter && this.state.showResults? '10':'12') )}>
 
-          
+
           <nav className="page-controls">
             <ul className="nav navbar-nav">
               <li className="nav-item count">
@@ -234,12 +234,12 @@ export default class Widget extends PureComponent {
                       />
                     );
                 })}
-              </fieldset>             
+              </fieldset>
             </div>
             <div className="col-md-3">
               <fieldset>
                 <legend>Recently updated</legend>
-                {totalSize > 0 && 
+                {totalSize > 0 &&
                   this.sortList(getVisiblePlugins.valueSeq(),'releaseTimestamp')
                     .map((plugin,i) => {
                       if(i>9) return false;
@@ -254,11 +254,11 @@ export default class Widget extends PureComponent {
                 })}
               </fieldset>
             </div>
-            
+
             <div className="col-md-3">
               <fieldset>
-                <legend>Rapidly adopted</legend>            
-                {totalSize > 0 && 
+                <legend>Rapidly adopted</legend>
+                {totalSize > 0 &&
                   this.sortList(getVisiblePlugins.valueSeq(),'trend')
                     .map((plugin,i) => {
                       if(i>9) return false;
@@ -270,11 +270,11 @@ export default class Widget extends PureComponent {
                         plugin={plugin}
                       />
                     );
-                })}                      
+                })}
               </fieldset>
             </div>
-            
-            
+
+
           </div>
         </div>
       </div>
