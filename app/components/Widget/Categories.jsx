@@ -15,38 +15,38 @@ export class Category extends PureComponent {
     title: PropTypes.any.isRequired,
     location: PropTypes.object.isRequired
   };
-  
+
   getResults(e){
-    document.getElementById('plugin-search-form').dispatchEvent(new Event("submit"));  
+    document.getElementById('plugin-search-form').dispatchEvent(new Event("submit"));
   }
-  
+
   checkState(name,value){
     const q = this.props.location.query;
     const qName = q[name];
     if(!q || !qName) return false;
     return qName.split(',').indexOf(value) > -1;
   }
-  
+
   render() {
     const { id, title, tooltip, labels, location } = this.props;
-    
+
     return (<li key={id} className={classNames(styles[id], id)} title={tooltip}>
       <label>
-        <input type="checkbox" name="category" value={id}
+        <input type="checkbox" name="categories" value={id}
           checked={this.checkState('category',id)}
           onChange={this.getResults}
-        /> 
-        <span>{title}</span> 
+        />
+        <span>{title}</span>
       </label>
         <ul>
           {labels.map((label,index) => {
             return(
               <li key={label.id} >
                 <label>
-                  <input type="checkbox" name="labelFilter" value={label.id} 
+                  <input type="checkbox" name="labelFilter" value={label.id}
                   checked={this.checkState('labelFilter',label.id)}
                   onChange={this.getResults}
-                /> 
+                />
                   <span>{label.title}</span>
                 </label>
               </li>);
@@ -66,21 +66,21 @@ export default class Categories extends PureComponent {
     labels: PropTypes.object.isRequired,
     location: PropTypes.object.isRequired
   };
-  
+
   render() {
     const {categories,labels, location, handleChecks} = this.props;
     const sortedCategories = categories.valueSeq();
     return (
       <fieldset className={classNames(styles.Categories, "Categories")}>
         <legend>
-          Categories 
+          Categories
           <button className={classNames('btn btn-secondary btn-sm')}
             name="clear"
             value="category,labelFilter"
               onClickCapture={handleChecks.bind(this)}>Show all</button>
         </legend>
       <ul className={classNames(styles.Cols3, "Cols3")}>
-      
+
       {sortedCategories.map(
         (item, index) => {
           if (item.id === 'junk') return null;

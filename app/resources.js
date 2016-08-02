@@ -142,7 +142,7 @@ export const actions = {
       debugger;
       return false;
       /*TODO: API for details returns HTML not JSON*/
-      
+
       if(!plugins || !plugin || plugin.size === 0) {
         const url = `/plugin/${name}`;
         return fetch(url, fetchOptions)
@@ -176,7 +176,7 @@ export const actions = {
       }
     };
   },
-  
+
   generateCategoryData: () =>{
     return (dispatch) => {
       return api.getJSON('/categories', (error, data) => {
@@ -208,7 +208,7 @@ export const actions = {
       logger.log(query);
       let page = query.page || 1;
       let PLUGINS_URL = `/plugins?page=${page}`;
-     ['limit', 'q', 'sort', 'asc', 'category', 'labelFilter', 'latest']
+     ['limit', 'q', 'sort', 'asc', 'categories', 'labelFilter']
         .filter(item => query[item])
         .map(item => PLUGINS_URL += `&${item}=${query[item]}`);
       logger.log(query, PLUGINS_URL);
