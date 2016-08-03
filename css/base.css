@@ -50,7 +50,7 @@ h1.title .sub {display:block; font-weight:normal; font-size:1rem; color:#999; ma
 .filters .mask li {opacity:.5; position:relative;}
 .filters .mask li label:before {content:''; font-size:0; display:block; height:.5rem; width:.5rem; margin:.25rem .4rem; background:#168BB9; position:absolute;}
 .filters .mask li input[type=checkbox]{visibility: hidden;}
-
+.filters label {cursor:pointer}
 /*----old-stuff-------*/
 
 

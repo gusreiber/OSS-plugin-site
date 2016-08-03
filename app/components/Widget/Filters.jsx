@@ -11,9 +11,9 @@ export default class Filters extends PureComponent {
   constructor(properties) {
     super(properties);
     this.state = properties.location.query;
-    this.handleChangeSort = this.handleChangeSort.bind(this);
+    this.handleChange = this.handleChange.bind(this);
   }
-  handleChangeSort(e){
+  handleChange(e){
     const val = e.currentTarget.value;
     const name = e.currentTarget.name;
     this.setState({[name]:val});
@@ -28,7 +28,7 @@ export default class Filters extends PureComponent {
             <div className={(showResults)?'col-md-12':'col-md-3'}>
               <fieldset>
                 <legend>Sort {location.query.sort}</legend>
-                <label><input type="radio" name="sort" value="name" checked = {this.state.sort === 'name'} onChange={this.handleChange} /> Relevance</label>
+                <label><input type="radio" name="sort" value="name" checked = {this.state.sort === 'name' || !this.state.sort} onChange={this.handleChange} /> Relevance</label>
                 <label><input type="radio" name="sort" value="trend" checked = {this.state.sort === 'trend'} onChange={this.handleChange}  /> Trend</label>
                 <label><input type="radio" name="sort" value="installed" checked = {this.state.sort === 'installed'} onChange={this.handleChange}  /> Installed</label>
                 <label><input type="radio" name="sort" value="title" checked = {this.state.sort === 'title'} onChange={this.handleChange}  /> Title</label>
