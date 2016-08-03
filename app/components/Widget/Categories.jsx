@@ -7,6 +7,7 @@ import PureComponent from 'react-pure-render/component';
 export class Category extends PureComponent {
   constructor(properties) {
     super(properties);
+    this.state = properties.location.query
   }
 
   static propTypes = {
@@ -16,7 +17,18 @@ export class Category extends PureComponent {
     location: PropTypes.object.isRequired
   };
 
-  getResults(e){
+  handleChange(e){
+    //TODO: this is setup for juggling the checkbox states for parents of labels...
+    /*
+    const target = e.target;
+    const val = target.value;
+    const name = target.name;
+    const parent = target.getAttribute('data-parent');
+    const children = this.props.labels;
+    let categories = (this.state.categories)?this.state.categories.split(','):[];
+    let labels = (this.state.labels)?this.state.labels.split(','):[];
+    */
+
     document.getElementById('plugin-search-form').dispatchEvent(new Event("submit"));
   }
 
@@ -33,8 +45,8 @@ export class Category extends PureComponent {
     return (<li key={id} className={classNames(styles[id], id)} title={tooltip}>
       <label>
         <input type="checkbox" name="categories" value={id}
-          checked={this.checkState('category',id)}
-          onChange={this.getResults}
+          checked={this.checkState('categories',id)}
+          onChange={this.handleChange.bind(this)}
         />
         <span>{title}</span>
       </label>
@@ -43,9 +55,9 @@ export class Category extends PureComponent {
             return(
               <li key={label.id} >
                 <label>
-                  <input type="checkbox" name="labelFilter" value={label.id}
-                  checked={this.checkState('labelFilter',label.id)}
-                  onChange={this.getResults}
+                  <input type="checkbox" name="labels" value={label.id} data-parent={id}
+                  checked={this.checkState('labels',label.id)}
+                  onChange={this.handleChange.bind(this)}
                 />
                   <span>{label.title}</span>
                 </label>

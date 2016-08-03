@@ -65,23 +65,6 @@ export function getMaintainersLinked(developers) {
   return maintainers;
 }
 
-export function getLabels_obs(rawLabels) {
-  const labels = rawLabels.map((item, index) => {
-    return (<div key={index}>
-      <Icon icon="label"/>
-      <Link to={`/?labelFilter=${item}`} >{item}</Link>
-    </div>);
-  });
-  if(!labels || labels.length === 0) {
-    labels.push(<div key={1}>
-      <Icon icon="label"/>
-      none
-    </div>);
-  }
-  return labels;
-}
-
-
 export function getDependencies(rawdependencies) {
   const dependencies = rawdependencies
     .sort((a, b) => a.optional === b.optional ? 0: a.optional? 1 : -1)

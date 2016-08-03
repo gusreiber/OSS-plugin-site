@@ -205,10 +205,9 @@ export const actions = {
 
   generatePluginData(query={}) {
     return (dispatch) => {
-      logger.log(query);
       let page = query.page || 1;
       let PLUGINS_URL = `/plugins?page=${page}`;
-     ['limit', 'q', 'sort', 'asc', 'categories', 'labelFilter']
+     ['limit', 'q', 'sort', 'asc', 'categories', 'labels']
         .filter(item => query[item])
         .map(item => PLUGINS_URL += `&${item}=${query[item]}`);
       logger.log(query, PLUGINS_URL);

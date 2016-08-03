@@ -1,6 +1,5 @@
 import Entry from './Entry';
 import styles from './Widget.css';
-import LabelWidget from './Labels';
 import Pagination from './Pagination';
 import Filters from './Filters';
 import Sort from './Sort';
@@ -21,7 +20,7 @@ export default class Widget extends PureComponent {
       this.state[key] = que[key];
     });
 
-    if(que.q || que.category || que.labelFilter)
+    if(que.q || que.categories || que.labels)
       this.state.showResults = 'showResults';
   }
 
@@ -35,10 +34,10 @@ export default class Widget extends PureComponent {
     let newLocationQuery = {};
     location.query = {};
     router.replace({});
-    //delete state.showResults;
     e.preventDefault();
 
     function handleCheckboxes(elem,query){
+      debugger;
       let name = elem.name;
       let value = elem.value;
       let uncheck = (clicked.name === 'clear')?clicked.value:'';
