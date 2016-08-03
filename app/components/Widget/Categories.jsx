@@ -18,18 +18,12 @@ export class Category extends PureComponent {
   };
 
   handleChange(e){
-    //TODO: this is setup for juggling the checkbox states for parents of labels...
-    /*
-    const target = e.target;
-    const val = target.value;
-    const name = target.name;
-    const parent = target.getAttribute('data-parent');
-    const children = this.props.labels;
-    let categories = (this.state.categories)?this.state.categories.split(','):[];
-    let labels = (this.state.labels)?this.state.labels.split(','):[];
-    */
-
-    document.getElementById('plugin-search-form').dispatchEvent(new Event("submit"));
+    //TODO:FIXME: seems hacky to toss the original target and the related child labels into the event like this... 
+    //but I am doing it, so hold your nose...
+    let myEvent = new Event("submit");
+    myEvent.orgTarget = e.currentTarget;
+    myEvent.children = this.props.labels;
+    document.getElementById('plugin-search-form').dispatchEvent(myEvent);
   }
 
   checkState(name,value){
@@ -42,7 +36,7 @@ export class Category extends PureComponent {
   render() {
     const { id, title, tooltip, labels, location } = this.props;
 
-    return (<li key={id} className={classNames(styles[id], id)} title={tooltip}>
+    return (<li key={id} className={classNames(styles[id], id, (this.checkState('categories',id))?'mask':'')} title={tooltip}>
       <label>
         <input type="checkbox" name="categories" value={id}
           checked={this.checkState('categories',id)}
@@ -83,7 +77,7 @@ export default class Categories extends PureComponent {
     const {categories,labels, location, handleChecks} = this.props;
     const sortedCategories = categories.valueSeq();
     return (
-      <fieldset className={classNames(styles.Categories, "Categories")}>
+      <fieldset className={classNames(styles.Categories)}>
         <legend>
           Categories
           <button className={classNames('btn btn-secondary btn-sm')}

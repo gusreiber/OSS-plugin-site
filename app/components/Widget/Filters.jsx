@@ -10,26 +10,33 @@ import PureComponent from 'react-pure-render/component';
 export default class Filters extends PureComponent {
   constructor(properties) {
     super(properties);
+    this.state = properties.location.query;
+    this.handleChangeSort = this.handleChangeSort.bind(this);
   }
-  
+  handleChangeSort(e){
+    const val = e.currentTarget.value;
+    const name = e.currentTarget.name;
+    this.setState({[name]:val});
+    document.getElementById('plugin-search-form').dispatchEvent(new Event("submit"));
+  }
   render() {
-    const {categories, labels, location, handleChecks, showResults} = this.props;
+    const {categories, labels, location, handleChecks, router, showResults} = this.props;
     return (
         <div className={classNames(styles.FiltersBox)}>
         <div className={classNames(styles.filters, 'filters', ((showResults)? 'col-md-2' :'container'))}>
           <div className={classNames(styles.Header,'row')}>
             <div className={(showResults)?'col-md-12':'col-md-3'}>
               <fieldset>
-                <legend>Sort</legend>
-                <label><input type="radio" name="sort" value="name" defaultChecked /> Relevance</label>
-                <label><input type="radio" name="sort" value="trend"  /> Trend</label>
-                <label><input type="radio" name="sort" value="download"  /> Downloads</label>
-                <label><input type="radio" name="sort" value="title"  /> Title</label>
-                <label><input type="radio" name="sort" value="updated"  /> Updated date</label>
-                <label><input type="radio" name="sort" value="created"  /> Created date</label>
+                <legend>Sort {location.query.sort}</legend>
+                <label><input type="radio" name="sort" value="name" checked = {this.state.sort === 'name'} onChange={this.handleChange} /> Relevance</label>
+                <label><input type="radio" name="sort" value="trend" checked = {this.state.sort === 'trend'} onChange={this.handleChange}  /> Trend</label>
+                <label><input type="radio" name="sort" value="installed" checked = {this.state.sort === 'installed'} onChange={this.handleChange}  /> Installed</label>
+                <label><input type="radio" name="sort" value="title" checked = {this.state.sort === 'title'} onChange={this.handleChange}  /> Title</label>
+                <label><input type="radio" name="sort" value="updated" checked = {this.state.sort === 'updated'} onChange={this.handleChange}  /> Updated date</label>
+                <label><input type="radio" name="sort" value="created" checked = {this.state.sort === 'created'}  onChange={this.handleChange}  /> Created date</label>
               </fieldset>
               <fieldset>
-                <legend>Filters <button className={classNames('btn btn-secondary btn-sm')}>Clear all</button></legend>
+                <legend>Filters <button onClickCapture={this.handleChange} name="clear" value="core,maintainers" className={classNames('btn btn-secondary btn-sm')}>Clear all</button></legend>
                 <Autocomplete
                   label="Maintainers"
                   name="maintainers"

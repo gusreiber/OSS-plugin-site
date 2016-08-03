@@ -25,19 +25,45 @@ export default class Widget extends PureComponent {
   }
 
   formSubmit(e){
-    const clicked = e.currentTarget;
-    const router = this.context.router;
+    //TODO: FIXME: These are attributes that need to come from label and category click events to check the parent-child rules their selection.
+    // would be better for readability if their optional attributes were passed directly into this function.
+    const clicked = e.nativeEvent.orgTarget || e.currentTarget;
+    const parent = clicked.getAttribute('data-parent');
+    const childred =e.nativeEvent.children || [];
+
+    // These constant elements are pieces that will be used to reconcile the state of the form with the state and results of the app
+    const router = this.router || this.context.router || this.props.router;
     const form = document.getElementById('plugin-search-form');
-    const elems = findDOMNode(form).elements;
+    const formElems = findDOMNode(form).elements;
     const state = this.state;
 
+    // reset the application state in preparation for evaluating the form settings...
     let newLocationQuery = {};
     location.query = {};
     router.replace({});
     e.preventDefault();
-
-    function handleCheckboxes(elem,query){
-      debugger;
+    
+    // Because selection is redundant with selection of its child labels, we need the UI to reflect that truth back to the user.
+    // This helper function will look at each checked element and see if it still makes sense, given whatever was last clicked 
+    // and the parent category / child label relationship. It will return true if this checked element is redundant with latest clicked.   
+    function disqualifyByParentRules(checkedElem){
+      if(checkedElem === clicked || !clicked.checked) return;
+      const name = checkedElem.name;
+      const value = checkedElem.value;
+      const affectedLabels = childred;
+      const affectedCategory = null;
+      if(clicked.name === 'categories' && name === 'labels'){
+       for(var i = 0; i < affectedLabels.length; i++){
+         if(affectedLabels[i].id === value) return true;
+       }
+      }
+      if(clicked.name === 'labels' && name === 'categories'){
+        if(parent === value) return true;
+      }
+    }
+    
+    // function checks each form element and translates its state into the router's query sting...
+    function checkElements(elem,query){
       let name = elem.name;
       let value = elem.value;
       let uncheck = (clicked.name === 'clear')?clicked.value:'';
@@ -45,6 +71,7 @@ export default class Widget extends PureComponent {
         if(elem.type === 'checkbox' || elem.type === 'radio'){
           if(typeof newLocationQuery[name] === 'string' ) return;
           if(elem.checked){
+            if(disqualifyByParentRules(elem)) return;
             if(newLocationQuery[name])
               newLocationQuery[name].push(value);
             else
@@ -61,11 +88,11 @@ export default class Widget extends PureComponent {
           location.query[name] = value;
         }
       }
-
     }
 
-    for(var i = 0; i < elems.length; i++){
-      handleCheckboxes(elems[i],location.query);
+    // now lets check-em...
+    for(let i = 0; i < formElems.length; i++){
+      checkElements(formElems[i],location.query);
     }
     router.replace(location);
     return false;
@@ -107,7 +134,7 @@ export default class Widget extends PureComponent {
 
     return (
       <div className={classNames(styles.ItemFinder, view, this.state.showResults, 'item-finder')}>
-        <form ref="form" action="#" id="plugin-search-form" className={classNames(styles.HomeHeader, 'HomeHeader jumbotron')} onSubmit={(e)=>{console.log(e);this.formSubmit(e);}}>
+        <form ref="form" action="#" id="plugin-search-form" className={classNames(styles.HomeHeader, 'HomeHeader jumbotron')} onSubmit={(e)=>{this.formSubmit(e);}}>
           <nav className={classNames(styles.navbar,"navbar")}>
             <div className="nav navbar-nav">
               <fieldset className={classNames(styles.SearchBox, 'form-inline SearchBox')}>
@@ -147,6 +174,7 @@ export default class Widget extends PureComponent {
               labels={labels}
               categories={categories}
               location={location}
+              router = {router}
               showResults={this.state.showResults}
               handleChecks={this.formSubmit}
             />
