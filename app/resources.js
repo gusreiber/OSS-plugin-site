@@ -137,14 +137,11 @@ export const actions = {
       if (plugins) {
         plugin = plugins.filter((plugin) => plugin.name === name);
       }
-      const urlDetail = `/detail/${name}`;
-      alert('TODO: API for details returns HTML not JSON for '+name);
-      debugger;
-      return false;
-      /*TODO: API for details returns HTML not JSON*/
+
+      const url = `/plugin/${name}`;
 
       if(!plugins || !plugin || plugin.size === 0) {
-        const url = `/plugin/${name}`;
+        
         return fetch(url, fetchOptions)
           .then(checkStatus)
           .then(parseJSON)
@@ -163,7 +160,7 @@ export const actions = {
           });
       } else {
         const record = plugin.toArray()[0];
-        return fetch(urlDetail, fetchOptions)
+        return fetch(url, fetchOptions)
           .then(checkStatus)
           .then(parseJSON)
           .then(detailData => {

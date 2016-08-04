@@ -21,7 +21,7 @@ new WebpackServer(webpack(config), {
   historyApiFallback: true,
   proxy: {
     '/developers': backend,
-    '/plugin': backend,
+    '/plugin/*': backend,
     '/plugins': backend,
     '/plugins/downloaded': backend,
     '/plugins/updated': backend,
