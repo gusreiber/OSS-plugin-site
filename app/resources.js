@@ -137,26 +137,28 @@ export const actions = {
       if (plugins) {
         plugin = plugins.filter((plugin) => plugin.name === name);
       }
-
-      const url = `/plugin/${name}`;
-      
+      const urlDetail = `/detail/${name}`;
       if(!plugins || !plugin || plugin.size === 0) {
+        const url = `/plugin/${name}`;
         return fetch(url, fetchOptions)
           .then(checkStatus)
           .then(parseJSON)
-
+          .then(data => {
+            return fetch(urlDetail, fetchOptions)
+              .then(checkStatus)
+              .then(parseJSON)
               .then(detailData => {
                 const detail = detailData.details;
-                const record = new Plugin(detailData);
+                const record = new Plugin(data);
                 dispatch({
                   type: ACTION_TYPES.SET_PLUGIN_DATA,
                   payload: record.set('detail', detail),
                 });
-         
+              });
           });
       } else {
         const record = plugin.toArray()[0];
-        return fetch(url, fetchOptions)
+        return fetch(urlDetail, fetchOptions)
           .then(checkStatus)
           .then(parseJSON)
           .then(detailData => {
