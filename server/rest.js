@@ -75,43 +75,6 @@ rest.get('/labels', (req, res) => {
   res.send(this.dbStore.labels());
 });
 
-rest.get('/newcategories', (req, res) => {
-  setRestHeader(res);
-  fs.readFile("./server/static/categories.json", {encoding: 'utf8'}, (err, data) => {
-    if (err) {
-      console.error("ERROR ===== " + err);
-      res.json({error: err});
-    } else {
-      res.json(JSON.parse(data));
-    }
-  }); 
-});
-
-rest.get('/newplugins', (req, res) => {
-  setRestHeader(res);
-  fs.readFile("./server/static/plugin.json", {encoding: 'utf8'}, (err, data) => {
-    if (err) {
-      console.error("ERROR ===== " + err);
-      res.json({error: err});
-    } else {
-      res.json(JSON.parse(data));
-    }
-  });    
-});
-
-rest.get('/newplugin/:name', (req, res) => {
-	var name = req.params && req.params.name ? req.params.name : null;
-  setRestHeader(res);
-  fs.readFile("./server/static/plugin.json", {encoding: 'utf8'}, (err, data) => {
-    if (err) {
-      console.error("ERROR ===== " + err);
-      res.json({error: err});
-    } else {
-      res.json(JSON.parse(data));
-    }
-  });    
-});
-
 rest.get('/plugin/:name', (req, res) => {
   var name = req.params && req.params.name ? req.params.name : null;
   setRestHeader(res);

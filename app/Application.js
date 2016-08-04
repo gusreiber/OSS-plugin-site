@@ -20,11 +20,12 @@ export default class Application extends Component {
 
   componentWillMount() {
     const { location } = this.props;
-
-    this.props.generatePluginData(location.query);
+    const q = location.query;
+    if(q.labels || q.q || q.categories || q.maintainers || q.cores)
+      this.props.generatePluginData(location.query);
     this.props.generateLabelData();
     this.props.generateCategoryData();
-    
+
   }
 
   componentWillReceiveProps(nextProps) {
