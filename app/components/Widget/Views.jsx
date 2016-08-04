@@ -26,7 +26,7 @@ export default class Views extends PureComponent {
 
   render() {
     const {location, router} = this.props;
-    const {view = 'Tiles'} = location.query.view;
+    const {view = 'Tiles'} = location.query;
     return (<fieldset className='btn-group'>
 
           { items.map((item, index) => {
