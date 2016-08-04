@@ -100,7 +100,6 @@ export const actionHandlers = {
     return state.set('plugin', null);
   },
   [ACTION_TYPES.SET_PLUGIN_DATA](state, { payload: record }){
-    debugger;
     return state.set('plugin', record);
   },
   [ACTION_TYPES.CLEAR_PLUGINS_DATA](state) {
