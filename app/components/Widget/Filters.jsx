@@ -10,58 +10,33 @@ import PureComponent from 'react-pure-render/component';
 export default class Filters extends PureComponent {
   constructor(properties) {
     super(properties);
-    this.state  = properties.state;
+    this.state = properties.location.query;
+    this.handleChange = this.handleChange.bind(this);
   }
-  
-  applyFilters(e,parent){
-
-    var location = parent.props.location;
-    var router = parent.props.router;
-    var trg = e.target;
-    var formVals = $(trg).closest('form').serializeArray();
-    var oldValuesToRest = $.extend({},parent.props.state);
-    var newLocation = {};
-    
-    location.query = {category:'',labelFilter:''};
-    
-    formVals.map((field,i)=>{     
-      if (newLocation[field.name])
-          newLocation[field.name].push(field.value);
-      else
-        newLocation[field.name] = new Array(field.value);
-
-      location.query[field.name] = newLocation[field.name].join();
-    });
-    if(trg.name === 'all'){
-      var clears = trg.value.split(',');
-      clears.map((val)=>{
-        location.query[val] = '';
-      });
-    }
-    router.replace(location);
-    parent.setState(location.query);
-    parent.props.showResults(location.query);
-    
+  handleChange(e){
+    const val = e.currentTarget.value;
+    const name = e.currentTarget.name;
+    this.setState({[name]:val});
+    document.getElementById('plugin-search-form').dispatchEvent(new Event("submit"));
   }
-  
   render() {
-    const {categories, router, location, sideFilter, state} = this.props;
+    const {categories, labels, location, handleChecks, router, showResults} = this.props;
     return (
         <div className={classNames(styles.FiltersBox)}>
-        <div className={classNames(styles.filters, 'filters', ((state.showResults)? 'col-md-2' :'container'))}>
+        <div className={classNames(styles.filters, 'filters', ((showResults)? 'col-md-2' :'container'))}>
           <div className={classNames(styles.Header,'row')}>
-            <div className={(state.showResults)?'col-md-12':'col-md-3'}>
+            <div className={(showResults)?'col-md-12':'col-md-3'}>
               <fieldset>
-                <legend>Sort</legend>
-                <label><input type="radio" name="sort" value="name" defaultChecked /> Relevance</label>
-                <label><input type="radio" name="sort" value="trend"  /> Trend</label>
-                <label><input type="radio" name="sort" value="download"  /> Downloads</label>
-                <label><input type="radio" name="sort" value="title"  /> Title</label>
-                <label><input type="radio" name="sort" value="updated"  /> Updated date</label>
-                <label><input type="radio" name="sort" value="created"  /> Created date</label>
+                <legend>Sort {location.query.sort}</legend>
+                <label><input type="radio" name="sort" value="name" checked = {this.state.sort === 'name' || !this.state.sort} onChange={this.handleChange} /> Relevance</label>
+                <label><input type="radio" name="sort" value="trend" checked = {this.state.sort === 'trend'} onChange={this.handleChange}  /> Trend</label>
+                <label><input type="radio" name="sort" value="installed" checked = {this.state.sort === 'installed'} onChange={this.handleChange}  /> Installed</label>
+                <label><input type="radio" name="sort" value="title" checked = {this.state.sort === 'title'} onChange={this.handleChange}  /> Title</label>
+                <label><input type="radio" name="sort" value="updated" checked = {this.state.sort === 'updated'} onChange={this.handleChange}  /> Updated date</label>
+                <label><input type="radio" name="sort" value="created" checked = {this.state.sort === 'created'}  onChange={this.handleChange}  /> Created date</label>
               </fieldset>
               <fieldset>
-                <legend>Filters <button className={classNames('btn btn-secondary btn-sm')}>Clear all</button></legend>
+                <legend>Filters <button onClickCapture={this.handleChange} name="clear" value="core,maintainers" className={classNames('btn btn-secondary btn-sm')}>Clear all</button></legend>
                 <Autocomplete
                   label="Maintainers"
                   name="maintainers"
@@ -75,25 +50,15 @@ export default class Filters extends PureComponent {
                 />
               </fieldset>                
             </div>
-            <div className={(state.showResults)?'col-md-12':'col-md-9'}>
+            <div className={(showResults)?'col-md-12':'col-md-9'}>
               <Categories
-                state={state}
-                parent={this}
-                applyFilters={this.applyFilters}
                 categories={categories}
-                router={router}
+                labels={labels}
                 location={location}
+                handleChecks={handleChecks}
               />
             </div>
 
-          </div>
-          <div className={classNames(styles.Footer,'row')}>
-            <div className={classNames('col-md-12')}>
-              <button className={classNames('pull-xs-right btn')}
-                onClick={(e)=>{
-                  this.applyFilters(e,this);
-                }}>Go</button>
-            </div>
           </div>
         </div>
       </div>

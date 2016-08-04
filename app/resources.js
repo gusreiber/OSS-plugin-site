@@ -129,7 +129,7 @@ export const actions = {
 
   fetchPluginData: () => ({ type: ACTION_TYPES.FETCH_PLUGINS_DATA }),
 
-  getPlugin(name) {
+  getPlugin: (name) => {
     return (dispatch, getState) => {
       dispatch({ type: ACTION_TYPES.CLEAR_PLUGIN_DATA });
       const plugins = getState().resources.plugins;
@@ -138,6 +138,11 @@ export const actions = {
         plugin = plugins.filter((plugin) => plugin.name === name);
       }
       const urlDetail = `/detail/${name}`;
+      alert('TODO: API for details returns HTML not JSON for '+name);
+      debugger;
+      return false;
+      /*TODO: API for details returns HTML not JSON*/
+
       if(!plugins || !plugin || plugin.size === 0) {
         const url = `/plugin/${name}`;
         return fetch(url, fetchOptions)
@@ -171,27 +176,27 @@ export const actions = {
       }
     };
   },
-  
+
   generateCategoryData: () =>{
     return (dispatch) => {
-      return api.getJSON('/newcategories', (error, data) => {
-        if (data && data.docs){
+      return api.getJSON('/categories', (error, data) => {
+        if (data && data.categories){
           dispatch({
             type: ACTION_TYPES.SET_CATEGORIES,
-            payload: Immutable.List(data.docs)
+            payload: Immutable.List(data.categories)
           });
         }
       })
     };
   },
-  
+
   generateLabelData: () => {
     return (dispatch) => {
       return api.getJSON('/labels',(error, data) => {
-        if (data && data.docs) {
+        if (data && data.labels) {
           dispatch({
             type: ACTION_TYPES.SET_LABELS,
-            payload: Immutable.List(data.docs)
+            payload: Immutable.List(data.labels)
           });
         }
       });
@@ -200,9 +205,9 @@ export const actions = {
 
   generatePluginData(query={}) {
     return (dispatch) => {
-      logger.log(query);
-      let PLUGINS_URL = `/plugins?page=${query.page}`;
-     ['limit', 'q', 'sort', 'asc', 'category', 'labelFilter', 'latest']
+      let page = query.page || 1;
+      let PLUGINS_URL = `/plugins?page=${page}`;
+     ['limit', 'q', 'sort', 'asc', 'categories', 'labels']
         .filter(item => query[item])
         .map(item => PLUGINS_URL += `&${item}=${query[item]}`);
       logger.log(query, PLUGINS_URL);
@@ -218,7 +223,7 @@ export const actions = {
             total: data.total
           });
 
-          const items = data.docs.map(item => new Plugin(item));
+          const items = data.plugins.map(item => new Plugin(item));
           const recordsMap = Immutable.OrderedSet(items);
           dispatch({
             type: ACTION_TYPES.SET_PLUGINS_DATA,
