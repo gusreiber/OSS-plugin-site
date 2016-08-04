@@ -20,15 +20,13 @@ new WebpackServer(webpack(config), {
   hot: true,
   historyApiFallback: true,
   proxy: {
-    '/newcategories': backend,
-    '/newplugins': backend,
-    '/newplugin*': backend,
-    '/plugin*': backend,
-    '/detail*': backend,
-    '/stats*': backend,
-    '/latest*': backend,
-    '/labels*': backend,
-    '/getCategories*': backend
+    '/developers': backend,
+    '/plugin/*': backend,
+    '/plugins': backend,
+    '/plugins/downloaded': backend,
+    '/plugins/updated': backend,
+    '/labels': backend,
+    '/categories*': backend
   }
 }).listen(portClient, ip, (err) => {
   if (err) {
