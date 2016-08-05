@@ -1,5 +1,5 @@
 import React from 'react';
-import {Line as LineChart} from 'react-chartjs';
+import {Line } from 'react-chartjs';
 import moment from 'moment';
 
 function chartData(labels,data) {
@@ -77,15 +77,15 @@ class LineChart extends React.Component {
         a = a.timestamp;
         b = b.timestamp;
         return a < b ? -1 : (a > b ? 1 : 0);
-      });   
+      });
       insts = insts.slice(insts.length - 12, insts.length);
-      
+
       insts.map((inst,i)=>{
         labels.push(moment(inst.timestamp).format('MMM'));
         data.push(inst.total);
       });
     }
-  
+
     this.state = {
       data: chartData(labels,data),
       height:height
@@ -95,7 +95,7 @@ class LineChart extends React.Component {
   render() {
     return (
       <div style={styles.graphContainer}>
-        <LineChart data={this.state.data}
+        <Line data={this.state.data}
           options={options}
           height={this.state.height}/>
       </div>
