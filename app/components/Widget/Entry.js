@@ -52,13 +52,13 @@ export default class Entry extends PureComponent {
         className={classNames(styles.Item,'Entry-box')}
       >
 
-        
+
           {(linkOnly)?
-            <Link to={`/${plugin.name}`} className="titleOnly">  
+            <Link to={`/${plugin.name}`} className="titleOnly">
               {cleanTitle(plugin.get('title'))}
             </Link>
            :
-            <Link to={`/${plugin.name}`} className={classNames('item','Entry',styles.Tile)}>  
+            <Link to={`/${plugin.name}`} className={classNames('item','Entry',styles.Tile)}>
             <div className={classNames(styles.Icon,'Icon')}>
               <Icon title={plugin.get('title')} />
             </div>
@@ -67,20 +67,20 @@ export default class Entry extends PureComponent {
             </div>
 
             <div className={classNames(styles.Wiki,'Wiki')}>
-              {plugin.get('wiki')}
+              {plugin.get('wiki.url')}
             </div>
 
             <div className={classNames(styles.Downloads,'Downloads')}>
               Downloads: {plugin.download} {plugin.trend}
             </div>
-          
+
             <div className={classNames(styles.Version,'Version')}>
               <span className={classNames(styles.v,'v')}>{plugin.get('version')}</span>
               <span className="jc">
                 <span className="j">Jenkins</span>
                 <span className="c">{plugin.get('requiredCore')}+</span>
               </span>
-            </div>          
+            </div>
             <div className={classNames(styles.Labels,'Labels')}>
               {getLabels(plugin.get('labels'),plugin.get('sha1'))}
             </div>

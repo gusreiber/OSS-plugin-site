@@ -92,7 +92,7 @@ export class PluginDetail extends PureComponent {
                     Trend: {trend}<br/>
                     Last released: {moment(releaseTimestamp).fromNow()}<br/>
                     </p>
-                    
+
                   </div>
                   <div className="col-md-4">
                     <h5>Maintainers</h5>
@@ -114,16 +114,16 @@ export class PluginDetail extends PureComponent {
                   </div>
                 </div>
                 <a href="" className="btn btn-primary btn-lg download"><i className="icon-download"></i> Installation instructions</a>
-                <div className="content" dangerouslySetInnerHTML={{__html: detail}}></div>
+                <div className="content" dangerouslySetInnerHTML={{__html: wiki.content}}></div>
               </div>
             </div>
             <div className="col-md-3 gutter">
-            <a href="" className="btn btn-primary"><i className="icon-download"></i> 
+            <a href="" className="btn btn-primary"><i className="icon-download"></i>
               <span>Download</span>
               <span className="v">{title} {version}</span>
             </a>
-            
-            <a href="" className="btn btn-secondary"><i className="icon-box"></i> 
+
+            <a href="" className="btn btn-secondary"><i className="icon-box"></i>
               <span>Archives</span>
               <span className="v">Get past versions</span>
             </a>
@@ -137,7 +137,7 @@ export class PluginDetail extends PureComponent {
             )}
             </div>
           </div>
-          
+
         </div>
       </Body>
     </ModalView>);
