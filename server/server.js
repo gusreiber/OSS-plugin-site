@@ -1,8 +1,6 @@
 // Only a couple of es6 feature are supported!!!
 /* eslint-disable no-console */ //This is because we are using console log for communications
 
-//require('./rest');
-
 const ip = 'localhost';
 const portClient = 5000;
 const portBackend = 8080;
