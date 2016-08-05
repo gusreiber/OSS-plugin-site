@@ -38,7 +38,7 @@ export const Plugin = Record({
   scm: null,
   url: null,
   sha1: null,
-  wiki: null,
+  wiki: Wiki,
   excerpt: null,
   iconDom: null,
   download:null,
@@ -51,6 +51,11 @@ export const Plugin = Record({
   dependencies: [],
   stats: Stats,
   detail:null,
+});
+
+export const Wiki = Record({
+  content: null,
+  url: null
 });
 
 export const State = Record({
@@ -140,37 +145,16 @@ export const actions = {
 
       const url = `/plugin/${name}`;
 
-      if(!plugins || !plugin || plugin.size === 0) {
-        
-        return fetch(url, fetchOptions)
-          .then(checkStatus)
-          .then(parseJSON)
-          .then(data => {
-            return fetch(urlDetail, fetchOptions)
-              .then(checkStatus)
-              .then(parseJSON)
-              .then(detailData => {
-                const detail = detailData.details;
-                const record = new Plugin(data);
-                dispatch({
-                  type: ACTION_TYPES.SET_PLUGIN_DATA,
-                  payload: record.set('detail', detail),
-                });
-              });
+      return fetch(url, fetchOptions)
+        .then(checkStatus)
+        .then(parseJSON)
+        .then(data => {
+          const record = new Plugin(data);
+          dispatch({
+            type: ACTION_TYPES.SET_PLUGIN_DATA,
+            payload: record,
           });
-      } else {
-        const record = plugin.toArray()[0];
-        return fetch(url, fetchOptions)
-          .then(checkStatus)
-          .then(parseJSON)
-          .then(detailData => {
-            const detail = detailData.details;
-            dispatch({
-              type: ACTION_TYPES.SET_PLUGIN_DATA,
-              payload: record.set('detail', detail),
-            });
-          });
-      }
+        });
     };
   },
 
