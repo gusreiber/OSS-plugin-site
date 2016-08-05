@@ -1,8 +1,7 @@
 import PureComponent from 'react-pure-render/component';
 import React, { PropTypes } from 'react';
 import ModalView, {Body, Header} from 'react-header-modal';
-import {Icon} from 'react-material-icons-blue';
-import Box from './Box';
+import LineChart from './LineChart'
 import { categories } from './Widget/Categories';
 import moment from 'moment';
 import numeral from 'numeral';
@@ -60,6 +59,7 @@ export class PluginDetail extends PureComponent {
           stats: {
             installations,
             installationsPerVersion,
+            lifetime
             },
           wiki,
           requiredCore,
@@ -88,7 +88,7 @@ export class PluginDetail extends PureComponent {
                 <div className="row flex">
                   <div className="col-md-4">
                     <p>
-                    Installs: {download}<br />
+                    Installs: {lifetime}<br />
                     Trend: {trend}<br/>
                     Last released: {moment(releaseTimestamp).fromNow()}<br/>
                     </p>
@@ -127,7 +127,10 @@ export class PluginDetail extends PureComponent {
               <span>Archives</span>
               <span className="v">Get past versions</span>
             </a>
-            
+            <LineChartExample
+              total={lifetime}
+              installations={installations}
+            />
             <h5>Labels</h5>
             {labels.map(
                 (label,i) => {return(<a className="lbl" key={'label_'+i}>{label}</a>)}

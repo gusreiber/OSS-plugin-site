@@ -146,7 +146,7 @@ export const actions = {
           .then(checkStatus)
           .then(parseJSON)
           .then(data => {
-            return fetch(urlDetail, fetchOptions)
+            return fetch(url, fetchOptions)
               .then(checkStatus)
               .then(parseJSON)
               .then(detailData => {
