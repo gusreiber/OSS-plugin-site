@@ -5,13 +5,7 @@ const calledRoutes = {};
 
 const api = {
 
-  app: {
-    settings: {}
-  },
-
   init: function (options) {
-    this.host = options.host;
-    this.app = options.app;
     this.options = options;
   },
 
@@ -62,6 +56,7 @@ const api = {
     }
 
     if (route.indexOf('/:') < 0) {
+      route = env.REST_API_URL + route;
       if (env.debug && this.options.latency) {
         setTimeout(() => {
           finished(null, route);

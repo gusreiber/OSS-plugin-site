@@ -2,9 +2,7 @@ import Entry from './Entry';
 import styles from './Widget.css';
 import Pagination from './Pagination';
 import Filters from './Filters';
-import Sort from './Sort';
 import Views from './Views';
-import Categories from './Categories';
 import React, { PropTypes } from 'react';
 import Spinner from '../../commons/spinner';
 import classNames from 'classnames';
@@ -16,7 +14,7 @@ export default class Widget extends PureComponent {
     super(properties);
     this.state  = {};
     const que = properties.location.query;
-    Object.keys(properties.location.query).map((key,item)=>{
+    Object.keys(properties.location.query).map((key)=>{
       this.state[key] = que[key];
     });
 
@@ -38,20 +36,19 @@ export default class Widget extends PureComponent {
     const state = this.state;
 
     // reset the application state in preparation for evaluating the form settings...
-    let newLocationQuery = {};
+    const newLocationQuery = {};
     location.query = {};
     router.replace({});
     e.preventDefault();
-    
+
     // Because selection is redundant with selection of its child labels, we need the UI to reflect that truth back to the user.
-    // This helper function will look at each checked element and see if it still makes sense, given whatever was last clicked 
-    // and the parent category / child label relationship. It will return true if this checked element is redundant with latest clicked.   
+    // This helper function will look at each checked element and see if it still makes sense, given whatever was last clicked
+    // and the parent category / child label relationship. It will return true if this checked element is redundant with latest clicked.
     function disqualifyByParentRules(checkedElem){
       if(checkedElem === clicked || !clicked.checked) return;
       const name = checkedElem.name;
       const value = checkedElem.value;
       const affectedLabels = childred;
-      const affectedCategory = null;
       if(clicked.name === 'categories' && name === 'labels'){
        for(var i = 0; i < affectedLabels.length; i++){
          if(affectedLabels[i].id === value) return true;
@@ -61,12 +58,12 @@ export default class Widget extends PureComponent {
         if(parent === value) return true;
       }
     }
-    
+
     // function checks each form element and translates its state into the router's query sting...
-    function checkElements(elem,query){
-      let name = elem.name;
-      let value = elem.value;
-      let uncheck = (clicked.name === 'clear')?clicked.value:'';
+    function checkElements(elem){
+      const name = elem.name;
+      const value = elem.value;
+      const uncheck = (clicked.name === 'clear') ? clicked.value : '';
       if(name && uncheck.indexOf(name) === -1){
         if(elem.type === 'checkbox' || elem.type === 'radio'){
           if(typeof newLocationQuery[name] === 'string' ) return;
@@ -100,7 +97,7 @@ export default class Widget extends PureComponent {
 
   sortList(valSeq,attr,func){
     func = func ||
-      function(itemA,itemB){
+      function (itemA,itemB){
           if(itemA.category === 'junk') return 1;
           var dateA = new Date(itemA[attr]);
           var dateB = new Date(itemB[attr]);
@@ -135,7 +132,7 @@ export default class Widget extends PureComponent {
     return (
       <div className={classNames(styles.ItemFinder, view, this.state.showResults, 'item-finder')}>
         <form ref="form" action="#" id="plugin-search-form" className={classNames(styles.HomeHeader, 'HomeHeader jumbotron')} onSubmit={(e)=>{this.formSubmit(e);}}>
-          <nav className={classNames(styles.navbar,"navbar")}>
+          <nav className={classNames(styles.navbar,'navbar')}>
             <div className="nav navbar-nav">
               <fieldset className={classNames(styles.SearchBox, 'form-inline SearchBox')}>
 
@@ -148,7 +145,7 @@ export default class Widget extends PureComponent {
                      }}
                      >
                       Filter
-                      <span>{this.state.showFilter ? "▼" : "◄" }</span>
+                      <span>{this.state.showFilter ? '▼' : '◄' }</span>
                     </a>
                     <input
                       name="q"
@@ -157,7 +154,9 @@ export default class Widget extends PureComponent {
                       onBlur={this.formSubmit.bind(this)}
                       placeholder="Find plugins..."
                     />
-                    <div className={classNames(styles.SearchBtn, 'input-group-addon SearchBtn')}><i className={classNames('icon-search')}></i></div>
+                    <div className={classNames(styles.SearchBtn, 'input-group-addon SearchBtn')}>
+                      <i className={classNames('icon-search')}/>
+                    </div>
                   </label>
                 </div>
               </fieldset>
@@ -181,11 +180,8 @@ export default class Widget extends PureComponent {
           : null }
         </form>
         <div className="row results">
-          {this.state.showFilter && this.state.showResults?
-            <div className="col-md-2"></div>
-            :null
-          }
-          <div className={classNames(styles.ItemsList, 'items-box col-md-'+ (this.state.showFilter && this.state.showResults? '10':'12') )}>
+          {this.state.showFilter && this.state.showResults ? <div className="col-md-2"/> : null}
+          <div className={classNames(styles.ItemsList, `items-box col-md-${this.state.showFilter && this.state.showResults ? '10' : '12'}` )}>
 
 
           <nav className="page-controls">
@@ -229,19 +225,19 @@ export default class Widget extends PureComponent {
             </div>
           </div>
 
-          <div className="clearfix"></div>
+          <div className="clearfix"/>
 
           </div>
         </div>
         <div className="NoLabels">
         <div className="container">
           <div className="row">
-            <div className={classNames(styles.NoLabels,"col-md-3 NoLabels")}>
+            <div className={classNames(styles.NoLabels,'col-md-3 NoLabels')}>
               <fieldset>
                 <legend>Browse categories</legend>
-                {categories.map((cat,i) => {
+                {categories.map((cat) => {
                   return(
-                   <div key={"cat-id-"+cat.id}>{cat.title}</div>
+                   <div key={`cat-id-${cat.id}`}>{cat.title}</div>
                    );
                 })}
               </fieldset>
@@ -255,7 +251,7 @@ export default class Widget extends PureComponent {
                     return (
                       <Entry
                         className="Entry"
-                        linkOnly={true}
+                        linkOnly
                         key={plugin.name}
                         plugin={plugin}
                       />
@@ -273,7 +269,7 @@ export default class Widget extends PureComponent {
                       return (
                       <Entry
                         className="Entry"
-                        linkOnly={true}
+                        linkOnly
                         key={plugin.name}
                         plugin={plugin}
                       />
@@ -292,7 +288,7 @@ export default class Widget extends PureComponent {
                       return (
                       <Entry
                         className="Entry"
-                        linkOnly={true}
+                        linkOnly
                         key={plugin.name}
                         plugin={plugin}
                       />

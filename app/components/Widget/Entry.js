@@ -84,7 +84,7 @@ export default class Entry extends PureComponent {
             <div className={classNames(styles.Labels,'Labels')}>
               {getLabels(plugin.get('labels'),plugin.get('sha1'))}
             </div>
-            <div className={classNames(styles.Excerpt,'Excerpt')} dangerouslySetInnerHTML={{__html:plugin.get('excerpt')}} />
+            <div className={classNames(styles.Excerpt,'Excerpt')} dangerouslySetInnerHTML={{__html: plugin.get('excerpt')}} />
 
             <div className={classNames(styles.Authors,'Authors')}>
               {getMaintainers(plugin.get('developers'),plugin.get('sha1'))}

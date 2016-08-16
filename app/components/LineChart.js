@@ -20,15 +20,15 @@ function chartData(labels,data) {
         strokeColor: 'rgba(0,0,0,0)',
         pointColor: 'rgba(0,0,0,0)',
         pointStrokeColor: 'rgba(0,0,0,0)',
-        label:'',
-        data:[0]
+        label: '',
+        data: [0]
       },
       {
-        label:'',
-        data:[10000]
+        label: '',
+        data: [10000]
       }
     ]
-  }
+  };
 }
 
 const options = {
@@ -50,13 +50,13 @@ const options = {
   datasetStrokeWidth: 2,
   datasetFill: true,
   legendTemplate: '<ul class=\"<%=name.toLowerCase()%>-legend\"><% for (var i=0; i<datasets.length; i++){%><li><span style=\"background-color:<%=datasets[i].strokeColor%>\"></span><%if(datasets[i].label){%><%=datasets[i].label%><%}%></li><%}%></ul>',
-}
+};
 
 const styles = {
   graphContainer: {
     padding: '0'
   }
-}
+};
 
 class LineChart extends React.Component {
 
@@ -64,32 +64,31 @@ class LineChart extends React.Component {
     super(props);
     const life = props.total;
     let insts = props.installations;
-    let labels = [];
-    let data = [];
+    const labels = [];
+    const data = [];
     let height = 150;
     if(life > 100000) height = 275;
     else if (life > 50000) height = 250;
     else if (life > 25000) height = 225;
     else if (life > 10000) height = 200;
     else if (life > 5000) height = 175;
-    if(insts){
-      insts.sort(function(a,b){
+    if(insts) {
+      insts.sort((a,b) => {
         a = a.timestamp;
         b = b.timestamp;
         return a < b ? -1 : (a > b ? 1 : 0);
-      });   
+      });
       insts = insts.slice(insts.length - 12, insts.length);
-      
-      insts.map((inst,i)=>{
+      insts.map((inst) => {
         labels.push(moment(inst.timestamp).format('MMM'));
         data.push(inst.total);
       });
     }
-  
+
     this.state = {
       data: chartData(labels,data),
-      height:height
-    }
+      height: height
+    };
   }
 
   render() {
@@ -99,8 +98,13 @@ class LineChart extends React.Component {
           options={options}
           height={this.state.height}/>
       </div>
-    )
+    );
   }
 }
+
+LineChart.propTypes = {
+  total: React.PropTypes.number,
+  installations: React.PropTypes.array
+};
 
 export default LineChart;

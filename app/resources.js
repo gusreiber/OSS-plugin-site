@@ -2,7 +2,6 @@ import { createSelector } from 'reselect';
 import Immutable, { Record }from 'immutable';
 import keymirror from 'keymirror';
 import { api, logger } from './commons';
-import fetch from 'isomorphic-fetch';
 
 require('es6-promise').polyfill();
 
@@ -41,16 +40,16 @@ export const Plugin = Record({
   wiki: Wiki,
   excerpt: null,
   iconDom: null,
-  download:null,
-  trend:null,
+  download: null,
+  trend: null,
   category: null,
   requiredCore: null,
   developers: [],
   labels: [],
-  categories:[],
+  categories: [],
   dependencies: [],
   stats: Stats,
-  detail:null,
+  detail: null,
 });
 
 export const Wiki = Record({
@@ -63,7 +62,7 @@ export const State = Record({
   plugin: Plugin,
   isFetching: false,
   labels: null,
-  categories:null,
+  categories: null,
   labelFilter: Record({//fixme: that should become label: search, sort: field
     field: 'title',
     searchField: null,
@@ -72,21 +71,6 @@ export const State = Record({
   }),
   searchOptions: SearchOptions,
 });
-
-// fetch helper
-const fetchOptions = { credentials: 'same-origin' };
-function checkStatus(response) {
-  if (response.status >= 300 || response.status < 200) {
-    const error = new Error(response.statusText);
-    error.response = response;
-    throw error;
-  }
-  return response;
-}
-
-function parseJSON(response) {
-  return response.json();
-}
 
 export const ACTION_TYPES = keymirror({
   CLEAR_PLUGINS_DATA: null,
@@ -135,26 +119,18 @@ export const actions = {
   fetchPluginData: () => ({ type: ACTION_TYPES.FETCH_PLUGINS_DATA }),
 
   getPlugin: (name) => {
-    return (dispatch, getState) => {
+    return (dispatch) => {
       dispatch({ type: ACTION_TYPES.CLEAR_PLUGIN_DATA });
-      const plugins = getState().resources.plugins;
-      let plugin;
-      if (plugins) {
-        plugin = plugins.filter((plugin) => plugin.name === name);
-      }
-
       const url = `/plugin/${name}`;
-
-      return fetch(url, fetchOptions)
-        .then(checkStatus)
-        .then(parseJSON)
-        .then(data => {
+      return api.getJSON(url, (error, data) => {
+        if (data) {
           const record = new Plugin(data);
           dispatch({
             type: ACTION_TYPES.SET_PLUGIN_DATA,
             payload: record,
           });
-        });
+        }
+      });
     };
   },
 
@@ -167,7 +143,7 @@ export const actions = {
             payload: Immutable.List(data.categories)
           });
         }
-      })
+      });
     };
   },
 
@@ -186,7 +162,7 @@ export const actions = {
 
   generatePluginData(query={}) {
     return (dispatch) => {
-      let page = query.page || 1;
+      const page = query.page || 1;
       let PLUGINS_URL = `/plugins?page=${page}`;
      ['limit', 'q', 'sort', 'asc', 'categories', 'labels']
         .filter(item => query[item])
