@@ -1,5 +1,5 @@
 import React from 'react';
-import {Line as LineChart} from 'react-chartjs';
+import { Line } from 'react-chartjs';
 import moment from 'moment';
 
 function chartData(labels,data) {
@@ -32,12 +32,12 @@ function chartData(labels,data) {
 }
 
 const options = {
-  responsive:true,
-  maintainAspectRatio:false,
+  responsive: true,
+  maintainAspectRatio: false,
   scaleShowGridLines: true,
   scaleGridLineColor: 'rgba(0,0,0,.05)',
   scaleGridLineWidth: 1,
-  scaleFontSize:9,
+  scaleFontSize: 9,
   scaleShowHorizontalLines: true,
   scaleShowVerticalLines: true,
   bezierCurve: true,
@@ -94,7 +94,7 @@ class LineChart extends React.Component {
   render() {
     return (
       <div style={styles.graphContainer}>
-        <LineChart data={this.state.data}
+        <Line data={this.state.data}
           options={options}
           height={this.state.height}/>
       </div>
