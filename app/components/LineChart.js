@@ -32,12 +32,12 @@ function chartData(labels,data) {
 }
 
 const options = {
-    fontSize:10,
   responsive:true,
   maintainAspectRatio:false,
   scaleShowGridLines: true,
   scaleGridLineColor: 'rgba(0,0,0,.05)',
   scaleGridLineWidth: 1,
+  scaleFontSize:9,
   scaleShowHorizontalLines: true,
   scaleShowVerticalLines: true,
   bezierCurve: true,

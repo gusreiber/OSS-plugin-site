@@ -1,3 +1,5 @@
+img {max-width:100%}
+
 body .showResults.item-finder > .HomeHeader{
   padding:.25rem .5rem;
 }
