@@ -14,6 +14,6 @@ if (env.isBrowser && window.appSettings) {
 // revision info is gathered during webpack build and set to "process.env" (display this in development footer)
 env.revisionInfo = process.env.buildRevisionInfo;
 
-env.REST_API_URL = process.env.REST_API_URL || 'http://localhost:8080'
+env.REST_API_URL = process.env.REST_API_URL || 'http://localhost:8080';
 
 export default env;
