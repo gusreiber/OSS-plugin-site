@@ -127,7 +127,7 @@ export class PluginDetail extends PureComponent {
               <span>Archives</span>
               <span className="v">Get past versions</span>
             </a>
-            <LineChart
+            <LineChartExample
               total={lifetime}
               installations={installations}
             />
