@@ -13,3 +13,7 @@ tmp
 .npmcache
 npmcache
 dist
+
+css/voltron.png
+
+server/static/detail.json
