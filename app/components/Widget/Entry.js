@@ -97,5 +97,6 @@ export default class Entry extends PureComponent {
 }
 
 Entry.propTypes = {
-  plugin: PropTypes.any.isRequired
+  plugin: PropTypes.any.isRequired,
+  linkOnly: PropTypes.bool
 };

@@ -319,4 +319,5 @@ Widget.propTypes = {
   searchOptions: PropTypes.any.isRequired,
   isFetching: PropTypes.bool.isRequired,
   getVisiblePluginsLabels: PropTypes.any,
+  categories: PropTypes.any.isRequired
 };

@@ -105,7 +105,7 @@ const config = {
     publicPath: '/'
   },
   plugins: plugins,
-  postcss: function() {
+  postcss: function () {
     return [cssnext];
   },
   resolve: {
