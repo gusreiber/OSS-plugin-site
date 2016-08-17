@@ -1,5 +1,6 @@
 const webpack = require('webpack');
 const path = require('path');
+const cssnext = require('postcss-cssnext');
 
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
@@ -104,6 +105,9 @@ const config = {
     publicPath: '/'
   },
   plugins: plugins,
+  postcss: function() {
+    return [cssnext];
+  },
   resolve: {
     extensions: ['', '.js', '.jsx']
   }

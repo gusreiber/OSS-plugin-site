@@ -4,7 +4,6 @@ import ModalView, {Body, Header} from 'react-header-modal';
 import LineChart from './LineChart'
 import { categories } from './Widget/Categories';
 import moment from 'moment';
-import numeral from 'numeral';
 import { actions, plugin as pluginSelector, createSelector, connect } from '../resources';
 
 import { getMaintainersLinked, getLabels, getDependencies } from '../helper';
