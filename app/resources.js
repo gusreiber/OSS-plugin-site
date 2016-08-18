@@ -47,6 +47,7 @@ export const Plugin = Record({
   developers: [],
   labels: [],
   categories: [],
+  installed: [],
   dependencies: [],
   stats: Stats,
   detail: null,
@@ -63,6 +64,7 @@ export const State = Record({
   isFetching: false,
   labels: null,
   categories: null,
+  installed: null,
   labelFilter: Record({//fixme: that should become label: search, sort: field
     field: 'title',
     searchField: null,
@@ -81,6 +83,7 @@ export const ACTION_TYPES = keymirror({
   SET_LABEL_FILTER: null,
   SET_LABELS: null,
   SET_CATEGORIES: null,
+  SET_INSTALLED:null,
   SET_QUERY_INFO: null
 });
 
@@ -105,6 +108,9 @@ export const actionHandlers = {
   },
   [ACTION_TYPES.SET_CATEGORIES](state, { payload }){
     return state.set('categories', payload);
+  },
+  [ACTION_TYPES.SET_INSTALLED](state, { payload }){
+    return state.set('installed', payload);
   },
   [ACTION_TYPES.SET_QUERY_INFO](state, { payload }){
     return state.set('searchOptions', payload);
@@ -159,6 +165,19 @@ export const actions = {
       });
     };
   },
+  
+  generateInstalledData: () => {
+    return (dispatch) => {
+      return api.getJSON('/plugins/installed',(error, data) => {
+        if (data && data.plugins) {
+          dispatch({
+            type: ACTION_TYPES.SET_INSTALLED,
+            payload: Immutable.OrderedSet(data.plugins)
+          });
+        }
+      });
+    };
+  },
 
   generatePluginData(query={}) {
     return (dispatch) => {
@@ -201,6 +220,7 @@ export const resources = state => state.resources;
 export const plugins = createSelector([resources], resources => resources.plugins);
 export const labels = createSelector([resources], resources => resources.labels);
 export const categories = createSelector([resources], resources => resources.categories);
+export const installed = createSelector([resources], resources => resources.installed);
 export const plugin = createSelector([resources], resources => resources.plugin);
 export const searchOptions = createSelector([resources], resources => resources.searchOptions);
 

@@ -116,6 +116,7 @@ export default class Widget extends PureComponent {
       getVisiblePlugins,
       labels,
       categories,
+      installed,
       location
       } = this.props;
 
@@ -244,15 +245,14 @@ export default class Widget extends PureComponent {
             </div>
             <div className="col-md-3">
               <fieldset>
-                <legend>Most downloaded</legend>
-                {totalSize > 0 && getVisiblePlugins.valueSeq().sortBy(plugin => plugin.download)
-                  .map((plugin,i) => {
-                    if(i>9) return false;
+                <legend>Most installed</legend>
+                {installed.valueSeq()
+                  .map((plugin) => {
                     return (
                       <Entry
                         className="Entry"
                         linkOnly
-                        key={plugin.name}
+                        setKey={'installed_'+plugin.name}
                         plugin={plugin}
                       />
                     );

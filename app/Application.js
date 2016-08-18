@@ -4,6 +4,7 @@ import {
   totalSize,
   labels,
   categories,
+  installed,
   isFetching,
   searchOptions,
   filterVisibleList,
@@ -23,6 +24,9 @@ export default class Application extends Component {
     const q = location.query;
     if(q.labels || q.q || q.categories || q.maintainers || q.cores)
       this.props.generatePluginData(q);
+    else{
+      this.props.generateInstalledData();
+    }
     this.props.generateLabelData();
     this.props.generateCategoryData();
   }
@@ -41,14 +45,16 @@ export default class Application extends Component {
       isFetching,
       labels,
       categories,
+      installed,
       location,
     } = this.props;
-    if (!categories || !labels) return null;
+    if (!categories || !labels || !installed) return null;
     return (<div>
       <DevelopmentFooter />
       <Widget
         labels={labels}
         categories={categories}
+        installed={installed}
         searchOptions={searchOptions}
         location={location}
         router={this.context.router}
@@ -68,18 +74,20 @@ Application.propTypes = {
   filterVisibleList: any,
   labels: any.isRequired,
   categories: any.isRequired,
+  installed: any.isRequired,
   totalSize: any.isRequired,
   searchOptions: any.isRequired,
   isFetching: bool.isRequired,
 };
 
 const selectors = createSelector(
-  [ totalSize, isFetching, labels,categories, filterVisibleList, searchOptions],
-  ( totalSize, isFetching, labels,categories, filterVisibleList,  searchOptions) => ({
+  [ totalSize, isFetching, labels,categories,installed, filterVisibleList, searchOptions],
+  ( totalSize, isFetching, labels,categories,installed, filterVisibleList,  searchOptions) => ({
     totalSize,
     isFetching,
     labels,
     categories,
+    installed,
     filterVisibleList,
     searchOptions
   })
