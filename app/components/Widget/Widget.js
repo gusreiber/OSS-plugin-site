@@ -132,8 +132,14 @@ export default class Widget extends PureComponent {
 
 
     return (
-      <div className={classNames(styles.ItemFinder, view, this.state.showResults, 'item-finder')}>
+      <div className={classNames(styles.ItemFinder, view, (this.state.showResults || 'cover' ), 'item-finder')}>
         <form ref="form" action="#" id="plugin-search-form" className={classNames(styles.HomeHeader, 'HomeHeader jumbotron')} onSubmit={(e)=>{this.formSubmit(e);}}>
+          <div className="overlay1"></div>
+          <div className="overlay2"></div>
+          <div className="overlay3"></div>
+          <div className="headline">
+            <h1 className="display-4">Extend Jenkins with CloudBees certified plugins</h1>
+          </div>
           <nav className={classNames(styles.navbar,'navbar')}>
             <div className="nav navbar-nav">
               <fieldset className={classNames(styles.SearchBox, 'form-inline SearchBox')}>
@@ -146,7 +152,7 @@ export default class Widget extends PureComponent {
                         this.setState({ showFilter: !this.state.showFilter});
                      }}
                      >
-                      Filter
+                      Browse
                       <span>{this.state.showFilter ? '▼' : '◄' }</span>
                     </a>
                     <input
@@ -170,6 +176,7 @@ export default class Widget extends PureComponent {
 
             </div>
           </nav>
+          <p className="info">The universe of Jenkins plugins with reviews and notices provided by CloudBees</p>
           { this.state.showFilter ?
             <Filters
               labels={labels}
