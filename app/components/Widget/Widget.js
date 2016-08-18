@@ -117,6 +117,7 @@ export default class Widget extends PureComponent {
       labels,
       categories,
       installed,
+      updated,
       location
       } = this.props;
 
@@ -238,7 +239,16 @@ export default class Widget extends PureComponent {
                 <legend>Browse categories</legend>
                 {categories.map((cat) => {
                   return(
-                   <div key={`cat-id-${cat.id}`}>{cat.title}</div>
+                      <div className='Entry-box'>
+                        <a onClick={e=>{
+                          location.query.categories = cat.id;
+                          router.replace(location); 
+                          this.setState({showResults: 'showResults'});
+                         }} 
+                         key={`cat-id-${cat.id}`}>
+                           {cat.title}
+                       </a>
+                     </div>
                    );
                 })}
               </fieldset>
@@ -246,12 +256,13 @@ export default class Widget extends PureComponent {
             <div className="col-md-3">
               <fieldset>
                 <legend>Most installed</legend>
-                {installed.valueSeq()
+                {installed && installed.valueSeq()
                   .map((plugin) => {
                     return (
                       <Entry
                         className="Entry"
                         linkOnly
+                        key={'installed_entry_'+plugin.name}
                         setKey={'installed_'+plugin.name}
                         plugin={plugin}
                       />
@@ -262,15 +273,14 @@ export default class Widget extends PureComponent {
             <div className="col-md-3">
               <fieldset>
                 <legend>Recently updated</legend>
-                {totalSize > 0 &&
-                  this.sortList(getVisiblePlugins.valueSeq(),'releaseTimestamp')
-                    .map((plugin,i) => {
-                      if(i>9) return false;
-                      return (
+                {updated && updated.valueSeq()
+                  .map((plugin) => {
+                    return (
                       <Entry
                         className="Entry"
                         linkOnly
-                        key={plugin.name}
+                        key={'updated_entry_'+plugin.name}
+                        setKey={'updated_'+plugin.name}
                         plugin={plugin}
                       />
                     );

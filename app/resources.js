@@ -48,6 +48,7 @@ export const Plugin = Record({
   labels: [],
   categories: [],
   installed: [],
+  updated: [],
   dependencies: [],
   stats: Stats,
   detail: null,
@@ -65,6 +66,7 @@ export const State = Record({
   labels: null,
   categories: null,
   installed: null,
+  updated: null,
   labelFilter: Record({//fixme: that should become label: search, sort: field
     field: 'title',
     searchField: null,
@@ -83,7 +85,8 @@ export const ACTION_TYPES = keymirror({
   SET_LABEL_FILTER: null,
   SET_LABELS: null,
   SET_CATEGORIES: null,
-  SET_INSTALLED:null,
+  SET_INSTALLED: null,
+  SET_UPDATED: null,
   SET_QUERY_INFO: null
 });
 
@@ -112,6 +115,9 @@ export const actionHandlers = {
   [ACTION_TYPES.SET_INSTALLED](state, { payload }){
     return state.set('installed', payload);
   },
+  [ACTION_TYPES.SET_UPDATED](state, { payload }){
+    return state.set('updated', payload);
+  },  
   [ACTION_TYPES.SET_QUERY_INFO](state, { payload }){
     return state.set('searchOptions', payload);
   }
@@ -178,6 +184,19 @@ export const actions = {
       });
     };
   },
+  
+  generateUpdatedData: () => {
+    return (dispatch) => {
+      return api.getJSON('/plugins/updated',(error, data) => {
+        if (data && data.plugins) {
+          dispatch({
+            type: ACTION_TYPES.SET_UPDATED,
+            payload: Immutable.OrderedSet(data.plugins)
+          });
+        }
+      });
+    };
+  },
 
   generatePluginData(query={}) {
     return (dispatch) => {
@@ -221,6 +240,7 @@ export const plugins = createSelector([resources], resources => resources.plugin
 export const labels = createSelector([resources], resources => resources.labels);
 export const categories = createSelector([resources], resources => resources.categories);
 export const installed = createSelector([resources], resources => resources.installed);
+export const updated = createSelector([resources], resources => resources.updated);
 export const plugin = createSelector([resources], resources => resources.plugin);
 export const searchOptions = createSelector([resources], resources => resources.searchOptions);
 
