@@ -45,17 +45,17 @@ Icon.propTypes = {
 
 export default class Entry extends PureComponent {
   render() {
-    const {plugin, linkOnly} = this.props;
+    const {plugin, linkOnly, setKey} = this.props;
     return (
       <div
-        key={plugin.get('sha1')}
+        key={(linkOnly)? setKey : plugin.get('sha1')}
         className={classNames(styles.Item,'Entry-box')}
       >
 
 
           {(linkOnly)?
             <Link to={`/${plugin.name}`} className="titleOnly">
-              {cleanTitle(plugin.get('title'))}
+              {cleanTitle(plugin.title)}
             </Link>
            :
             <Link to={`/${plugin.name}`} className={classNames('item','Entry',styles.Tile)}>
@@ -98,5 +98,6 @@ export default class Entry extends PureComponent {
 
 Entry.propTypes = {
   plugin: PropTypes.any.isRequired,
-  linkOnly: PropTypes.bool
+  linkOnly: PropTypes.bool,
+  setKey:PropTypes.string
 };

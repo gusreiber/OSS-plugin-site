@@ -53,6 +53,12 @@ h1.title .sub {display:block; font-weight:normal; font-size:1rem; color:#999; ma
 .filters .mask li label:before {content:''; font-size:0; display:block; height:.5rem; width:.5rem; margin:.25rem .4rem; background:#168BB9; position:absolute;}
 .filters .mask li input[type=checkbox]{visibility: hidden;}
 .filters label {cursor:pointer}
+
+.modalview .content .content h1{font-size:1.67rem; margin:4rem 0 .5rem}
+.modalview .content .content h2{font-size:1.33rem; margin:3rem 0 .5rem}
+.modalview .content .content h3{font-size:1.25rem; margin:2rem 0 .5rem}
+.modalview .content .content h4{font-size:1.1rem; margin:1.5rem 0 .5rem}
+.modalview .content .content h5{font-size:1rem; margin:1.5rem 0 .5rem}
 /*----old-stuff-------*/
 
 

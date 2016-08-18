@@ -4,6 +4,8 @@ import {
   totalSize,
   labels,
   categories,
+  installed,
+  updated,
   isFetching,
   searchOptions,
   filterVisibleList,
@@ -23,8 +25,13 @@ export default class Application extends Component {
     const q = location.query;
     if(q.labels || q.q || q.categories || q.maintainers || q.cores)
       this.props.generatePluginData(q);
+    else{
+      this.props.generateInstalledData();
+      this.props.generateUpdatedData();
+    }
     this.props.generateLabelData();
     this.props.generateCategoryData();
+    
   }
 
   componentWillReceiveProps(nextProps) {
@@ -41,14 +48,18 @@ export default class Application extends Component {
       isFetching,
       labels,
       categories,
+      installed,
+      updated,
       location,
     } = this.props;
-    if (!categories || !labels) return null;
+    if (!categories || !labels || (!installed && !filterVisibleList) || (!updated && !filterVisibleList)) return null;
     return (<div>
       <DevelopmentFooter />
       <Widget
         labels={labels}
         categories={categories}
+        installed={installed}
+        updated={updated}
         searchOptions={searchOptions}
         location={location}
         router={this.context.router}
@@ -66,20 +77,24 @@ Application.propTypes = {
   generateLabelData: func.isRequired,
   generateCategoryData: func.isRequired,
   filterVisibleList: any,
-  labels: any.isRequired,
-  categories: any.isRequired,
+  labels: any,
+  categories: any,
+  installed: any,
+  updated: any,
   totalSize: any.isRequired,
   searchOptions: any.isRequired,
   isFetching: bool.isRequired,
 };
 
 const selectors = createSelector(
-  [ totalSize, isFetching, labels,categories, filterVisibleList, searchOptions],
-  ( totalSize, isFetching, labels,categories, filterVisibleList,  searchOptions) => ({
+  [ totalSize, isFetching, labels,categories,installed,updated, filterVisibleList, searchOptions],
+  ( totalSize, isFetching, labels,categories,installed,updated, filterVisibleList,  searchOptions) => ({
     totalSize,
     isFetching,
     labels,
     categories,
+    installed,
+    updated,
     filterVisibleList,
     searchOptions
   })
