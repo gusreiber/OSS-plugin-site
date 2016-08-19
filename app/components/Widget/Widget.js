@@ -238,10 +238,119 @@ export default class Widget extends PureComponent {
 
           </div>
         </div>
+        <section className="jumbotron featured-plugin">
+          <div className="ribbon"></div>
+          <div className="cb"></div>
+          <div className="container">
+            <div className="row">
+              <div className="col-md-1"></div>
+              <div className="col-md-6">
+                <h2>Docker and Jenkins for Continuous Delivery</h2>
+                <p>Utilize the light-weight power of Docker to disaster-proof your Jenkins architecture, run your builds, and deploy your applications.</p>
+                <a href="#" className="btn btn-primary">Get Docker plugins</a>
+              </div>
+              <div className="col-md-1"></div>
+              <div className="col-md-3">
+                <img src="/css/img/docker-logo.png" />
+              </div>
+            </div>
+          </div>
+        </section>
+        <section className="jumbotron certified-plugins item-finder Tiles">
+          <div className="ribbon"></div>
+          <div className="cb"></div>
+          <div className="title"><h2>CloudBees Certified plugins</h2></div>
+          <div className="scroll-box">
+            <div className="Entry-box">
+              <a className="item Entry" href="/build-pipeline-plugin">
+                <div className="Icon"><i className="i" style={{background:'rgb(109, 107, 109)'}}><span className="first">B</span><span className="next">P</span></i></div>
+                <div className="Title"><h4>Build Pipeline</h4></div>
+                <div className="Wiki"></div>
+                <div className="Downloads">Downloads:</div>
+                <div className="Version"><span className="v">1.5.4</span><span className="jc"><span className="j">Jenkins</span><span className="c">1.619+</span></span></div>
+                <div className="Labels"><span>builder </span><span>post-build </span><span> </span></div>
+                <div className="Excerpt">This plugin provides a _Build Pipeline View_ of upstream and downstream connected jobs that typically form a build pipeline. &amp;nbsp;In addition, it offers the ability to define manual triggers for jobs that require intervention prior to execution, e.g. an approval process outside of Jenkins. </div>
+                <div className="Authors"><div>Centrum Systems</div><div>Dan Alvizu</div></div>
+              </a>
+            </div>
+            <div className="Entry-box">
+              <a className="item Entry" href="/build-pipeline-plugin">
+                <div className="Icon"><i className="i" style={{background:'rgb(109, 107, 109)'}}><span className="first">B</span><span className="next">P</span></i></div>
+                <div className="Title"><h4>Build Pipeline</h4></div>
+                <div className="Wiki"></div>
+                <div className="Downloads">Downloads:</div>
+                <div className="Version"><span className="v">1.5.4</span><span className="jc"><span className="j">Jenkins</span><span className="c">1.619+</span></span></div>
+                <div className="Labels"><span>builder </span><span>post-build </span><span> </span></div>
+                <div className="Excerpt">This plugin provides a _Build Pipeline View_ of upstream and downstream connected jobs that typically form a build pipeline. &amp;nbsp;In addition, it offers the ability to define manual triggers for jobs that require intervention prior to execution, e.g. an approval process outside of Jenkins. </div>
+                <div className="Authors"><div>Centrum Systems</div><div>Dan Alvizu</div></div>
+              </a>
+            </div>
+            <div className="Entry-box">
+              <a className="item Entry" href="/build-pipeline-plugin">
+                <div className="Icon"><i className="i" style={{background:'rgb(109, 107, 109)'}}><span className="first">B</span><span className="next">P</span></i></div>
+                <div className="Title"><h4>Build Pipeline</h4></div>
+                <div className="Wiki"></div>
+                <div className="Downloads">Downloads:</div>
+                <div className="Version"><span className="v">1.5.4</span><span className="jc"><span className="j">Jenkins</span><span className="c">1.619+</span></span></div>
+                <div className="Labels"><span>builder </span><span>post-build </span><span> </span></div>
+                <div className="Excerpt">This plugin provides a _Build Pipeline View_ of upstream and downstream connected jobs that typically form a build pipeline. &amp;nbsp;In addition, it offers the ability to define manual triggers for jobs that require intervention prior to execution, e.g. an approval process outside of Jenkins. </div>
+                <div className="Authors"><div>Centrum Systems</div><div>Dan Alvizu</div></div>
+              </a>
+            </div>
+            <div className="Entry-box">
+              <a className="item Entry" href="/build-pipeline-plugin">
+                <div className="Icon"><i className="i" style={{background:'rgb(109, 107, 109)'}}><span className="first">B</span><span className="next">P</span></i></div>
+                <div className="Title"><h4>Build Pipeline</h4></div>
+                <div className="Wiki"></div>
+                <div className="Downloads">Downloads:</div>
+                <div className="Version"><span className="v">1.5.4</span><span className="jc"><span className="j">Jenkins</span><span className="c">1.619+</span></span></div>
+                <div className="Labels"><span>builder </span><span>post-build </span><span> </span></div>
+                <div className="Excerpt">This plugin provides a _Build Pipeline View_ of upstream and downstream connected jobs that typically form a build pipeline. &amp;nbsp;In addition, it offers the ability to define manual triggers for jobs that require intervention prior to execution, e.g. an approval process outside of Jenkins. </div>
+                <div className="Authors"><div>Centrum Systems</div><div>Dan Alvizu</div></div>
+              </a>
+            </div>
+            <div className="Entry-box">
+              <a className="item Entry" href="/build-pipeline-plugin">
+                <div className="Icon"><i className="i" style={{background:'rgb(109, 107, 109)'}}><span className="first">B</span><span className="next">P</span></i></div>
+                <div className="Title"><h4>Build Pipeline</h4></div>
+                <div className="Wiki"></div>
+                <div className="Downloads">Downloads:</div>
+                <div className="Version"><span className="v">1.5.4</span><span className="jc"><span className="j">Jenkins</span><span className="c">1.619+</span></span></div>
+                <div className="Labels"><span>builder </span><span>post-build </span><span> </span></div>
+                <div className="Excerpt">This plugin provides a _Build Pipeline View_ of upstream and downstream connected jobs that typically form a build pipeline. &amp;nbsp;In addition, it offers the ability to define manual triggers for jobs that require intervention prior to execution, e.g. an approval process outside of Jenkins. </div>
+                <div className="Authors"><div>Centrum Systems</div><div>Dan Alvizu</div></div>
+              </a>
+            </div>
+            <div className="Entry-box">
+              <a className="item Entry" href="/build-pipeline-plugin">
+                <div className="Icon"><i className="i" style={{background:'rgb(109, 107, 109)'}}><span className="first">B</span><span className="next">P</span></i></div>
+                <div className="Title"><h4>Build Pipeline</h4></div>
+                <div className="Wiki"></div>
+                <div className="Downloads">Downloads:</div>
+                <div className="Version"><span className="v">1.5.4</span><span className="jc"><span className="j">Jenkins</span><span className="c">1.619+</span></span></div>
+                <div className="Labels"><span>builder </span><span>post-build </span><span> </span></div>
+                <div className="Excerpt">This plugin provides a _Build Pipeline View_ of upstream and downstream connected jobs that typically form a build pipeline. &amp;nbsp;In addition, it offers the ability to define manual triggers for jobs that require intervention prior to execution, e.g. an approval process outside of Jenkins. </div>
+                <div className="Authors"><div>Centrum Systems</div><div>Dan Alvizu</div></div>
+              </a>
+            </div>
+            <div className="Entry-box">
+              <a className="item Entry" href="/build-pipeline-plugin">
+                <div className="Icon"><i className="i" style={{background:'rgb(109, 107, 109)'}}><span className="first">B</span><span className="next">P</span></i></div>
+                <div className="Title"><h4>Build Pipeline</h4></div>
+                <div className="Wiki"></div>
+                <div className="Downloads">Downloads:</div>
+                <div className="Version"><span className="v">1.5.4</span><span className="jc"><span className="j">Jenkins</span><span className="c">1.619+</span></span></div>
+                <div className="Labels"><span>builder </span><span>post-build </span><span> </span></div>
+                <div className="Excerpt">This plugin provides a _Build Pipeline View_ of upstream and downstream connected jobs that typically form a build pipeline. &amp;nbsp;In addition, it offers the ability to define manual triggers for jobs that require intervention prior to execution, e.g. an approval process outside of Jenkins. </div>
+                <div className="Authors"><div>Centrum Systems</div><div>Dan Alvizu</div></div>
+              </a>
+            </div>
+          </div>
+        </section>
         <div className="NoLabels">
         <div className="container">
           <div className="row">
-            <div className={classNames(styles.NoLabels,'col-md-3 NoLabels')}>
+            <div className={classNames(styles.NoLabels,'col-md-3 NoLabels cats')}>
               <fieldset>
                 <legend>Browse categories</legend>
                 {categories.map((cat) => {
@@ -260,7 +369,7 @@ export default class Widget extends PureComponent {
                 })}
               </fieldset>
             </div>
-            <div className="col-md-3">
+            <div className="col-md-3 installed">
               <fieldset>
                 <legend>Most installed</legend>
                 {installed && installed.valueSeq()
@@ -277,7 +386,7 @@ export default class Widget extends PureComponent {
                 })}
               </fieldset>
             </div>
-            <div className="col-md-3">
+            <div className="col-md-3 recent">
               <fieldset>
                 <legend>Recently updated</legend>
                 {updated && updated.valueSeq()
@@ -295,7 +404,7 @@ export default class Widget extends PureComponent {
               </fieldset>
             </div>
 
-            <div className="col-md-3">
+            <div className="col-md-3 rapid">
               <fieldset>
                 <legend>Rapidly adopted</legend>
                 {totalSize > 0 &&

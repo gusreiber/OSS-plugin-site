@@ -5,11 +5,13 @@ img {max-width:100%}
 .cover #plugin-search-form .navbar .btn-group {display:none;}
 .cover #plugin-search-form .info,
 .cover #plugin-search-form .navbar,
-.cover #plugin-search-form .headline {position:relative; z-index:5; margin:0 5% .5rem 45%; text-align:left; padding:0; float:left; display:block;} 
+.cover #plugin-search-form .headline {position:relative; z-index:4; margin:0 5% .5rem 33.3%; text-align:left; padding:0; float:left; display:block;} 
 .cover #plugin-search-form .headline h1 {color:#fff; font-weight:100; font-size:2rem; max-width:25rem}
 .cover #plugin-search-form .info {color:#fff; padding:0 8rem 0 5rem; font-weight:200}
-.cover .overlay1 {background:rgba(0,151,181, .67);  mix-blend-mode:multiply; position:absolute; top:0; left:25%; right:0; bottom:0; z-index:3}
-.cover .overlay2 {background:rgba(225,150,00, .67);  mix-blend-mode:multiply; position:absolute; top:0; left:0; width:15%; bottom:0; z-index:3}
+.cover #plugin-search-form .navbar {z-index:11}
+.cover .filters.container {top:4rem;}
+.cover .overlay1 {background:rgba(0,151,181, .85);  mix-blend-mode:multiply; position:absolute; top:0; left:25%; right:0; bottom:0; z-index:3}
+.cover .overlay2 {background:rgba(225,150,00, .85);  mix-blend-mode:multiply; position:absolute; top:0; left:0; width:15%; bottom:0; z-index:3}
 .cover .overlay3 {position:absolute; right:0; bottom:0; z-index:3; top:0; left:0; mix-blend-mode:screen; overflow:hidden;}
 .cover .overlay3:after {content:'\e916'; font-family:'ji'; font-size:40rem; color:rgba(0,151,181,.75); position:absolute; display:block; bottom:-5rem; left:5rem; line-height:1em;}
 .cover #plugin-search-form::after {display:block; content:''; position:absolute; height:300; width:50%; top:0; left:0;
@@ -20,14 +22,37 @@ background: linear-gradient(to right,  rgba(255,255,255,0) 0%,rgba(255,255,255,1
 filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00ffffff', endColorstr='#ffffff',GradientType=1 ); /* IE6-9 */
 
 }
-.cover #plugin-search-form::before {display:block; content:'';position:absolute; top:0; left:0;background:url(img/puzzle-hand-target.jpg) no-repeat; background-size:100%; width:50%; height:300px}
+.cover #plugin-search-form::before {display:block; content:'';position:absolute; top:0; left:0; background:url(img/puzzle-hand-target.jpg) no-repeat; background-size:100%; width:50%; height:300px}
 body .cover .showResults.item-finder > .HomeHeader {padding:2rem}
 body .showResults.item-finder > .HomeHeader{
   padding:.25rem .5rem;
 }
-body .input-group-addon {color:#fff; text-transform:uppercase; border-radius:1px; background:#F89D20; font-size:.75rem; font-weight:200}
+body .btn.btn-primary,
+body .input-group-addon {color:#fff; text-transform:uppercase; border:none; border-radius:1px; background:#F89D20; font-size:.75rem; font-weight:200}
 
+body .jumbotron {margin:0; border-radius:0; position:relative;}
 
+#website-home {display:block; padding:.5rem 0;}
+header nav {margin-top:2rem;}
+header nav a {color:#999; text-transform:uppercase}
+footer {background:#356; height:20rem; position:relative; clear:both;}
+
+.featured-plugin {position:relative; margin:0; background:#fff;z:#D8D4D3;z:#D8D4D3; z:#356; z:#53BB42; font-weight:200; border-top:1px solid #eee; box-shadow:0 3px 10px rgba(0,0,0,.25); position:relative; z-index:3; zbox-shadow: inset 0 15px 25px -15px #000}
+.featured-plugin > .ribbon,
+.featured-plugin > .cb {background:url(img/cb-cb-solid.png) repeat; background-size:15%; mix-blend-mode:screen; position:absolute; top:0; right:0; bottom:0; width:0%;}
+.featured-plugin > .ribbon {background-image:none; width:0%; background:#6D6B6D; mix-blend-mode:initial}
+.featured-plugin h2 {font-weight:300; font-size:1.75rem; color:#000; text-shadow: 0 1px 2px #fff}
+.featured-plugin img {margin-top:-2rem;}
+
+.certified-plugins {margin:0; background:#D8D4D3; box-shadow:inset 0 5px 10px rgba(0,0,0,.15); padding:0; text-align:center; white-space:nowrap;}
+.certified-plugins .scroll-box{overflow:auto; padding:3rem 1rem 1rem 1rem;}
+.certified-plugins .cb {position:absolute; top:0; bottom:0; left:0; right:0; background:url(img/cb-cb-solid.png) repeat -10px -10px fixed; -webkit-filter:grayscale(1); opacity:.075}
+.certified-plugins > .title {position:absolute; left:0; right:0; height:1px;}
+.certified-plugins h2 {position:relative; box-shadow:0 2px 5px rgba(0,0,0,.25);display:inline-block;  text-align:center; padding:.75rem 2rem; color:#fff; background:#666; border-bottom-left-radius:1rem; border-bottom-right-radius:1rem; font-size:1.25rem; text-transform:uppercase; font-weight:200}
+.certified-plugins .Entry-box {text-align:left; margin:.5rem;}
+.certified-plugins .Entry-box > .item {box-shadow:0 5px 10px rgba(0,0,0,.25)}
+
+body .btn.btn-primary {text-transform:uppercase; font-size:.75rem; font-weight:200}
 
 body .showResults.item-finder > .HomeHeader > .navbar {width:100%; padding:0 10.5rem 0 0;}
 body .showResults.item-finder > .HomeHeader > .navbar > .nav ,
@@ -42,8 +67,15 @@ body .showResults.item-finder .filters .Cols3 {column-count:1}
 
 .NoLabels > .Categories label > input {display:none}
 .NoLabels > .Categories label > span {margin-left:0 !important; color:#0275d8; cursor:pointer}
-
-body #grid-box .item-finder > .NoLabels {padding: 2rem 0; background:#fff}
+.NoLabels .row {display:flex;}
+.NoLabels .row > div {padding-top:2rem; padding-bottom:4rem;}
+.NoLabels .row .cats {background:#6df}
+.NoLabels .row .installed{background:#9ef}
+.NoLabels .row .recent {background:#fd3 }
+.NoLabels .row .rapid {background:#9f6 }
+body #grid-box .item-finder > .NoLabels .row .recent a {color:#970}
+body #grid-box .item-finder > .NoLabels {padding:0; background:#9ef; box-shadow:inset 0 -400px 400px -350px #fff}
+body #grid-box .item-finder > .NoLabels a {color:#1997B5; cursor:pointer;}
 body #grid-box .item-finder > .NoLabels .Cols3 {font-size:.85rem}
 body #grid-box .item-finder > .NoLabels .Cols3 label > span {margin-left:.5rem}
 body #grid-box .item-finder .NoLabels .Entry-box {display:block;    padding: 0.25rem 0;
@@ -95,7 +127,7 @@ h1.title .sub {display:block; font-weight:normal; font-size:1rem; color:#999; ma
     right: 0;
     z-index: 100;
     border-radius: 0;
-  background:#000;
+  background:#356;
   font-size:.85rem
 }
 #ji-toolbar > .navbar-brand {
@@ -107,6 +139,7 @@ h1.title .sub {display:block; font-weight:normal; font-size:1rem; color:#999; ma
 }
 body .item-finder.Tiles .Entry-box{
   display:inline-block;
+  position:relative;
 }
 .categories-box .list-group{margin-top:-2.75rem;position:relative; z-index:2; box-shadow:0 3px 2px -1px rgba(0,0,0,.1)}
 .categories-box .list-group > .label {    background:rgba(0,0,0,.5);
@@ -136,7 +169,7 @@ body .item-finder.Tiles a.item,
 }
 body .item-finder.Tiles .grid-box > div {padding:.5rem 0 2rem .5rem; text-align:left;}
 body .item-finder.List a.item > div,
-body .item-finder.Tiles a.item > div {display:block; position:relative; width:auto; top:auto; left:auto}
+body .item-finder.Tiles a.item > div {display:block; position:relative; width:auto; top:auto; left:auto;}
 body .item-finder.Tiles a.item:hover,
 .Tile:hover {
   border: .1rem solid #999;
@@ -155,7 +188,8 @@ body .item-finder.Tiles a.item .Icon,
   bottom:0;
   right:.75rem;
   display:block;
-  opacity:.75
+  opacity:.75;
+  text-align:center;
 }
 body .item-finder.Tiles a.item:hover .Icon {
   opacity:1
@@ -453,6 +487,7 @@ body .list-group > li > a.active {color:#000 !important; box-shadow:inset 0 99re
     line-height: 1.2rem !important;
     vertical-align: bottom !important;
 }
+#ji-toolbar #home-logo .cb {font-family:lato; font-weight:200; color:#2cd; border-right:1px solid #F89D20; margin-right:.33rem; padding-right:.33rem;}
 nav .form-inline .input-group>.form-control {
     width: 0;
     transition: all 0.5s ease;
