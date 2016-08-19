@@ -90,5 +90,5 @@ export function getDependencies(rawdependencies) {
   All of these are plugins.
   */
 export function cleanTitle(title) {
-  return title.replace('Jenkins ','').replace(' Plugin','').replace(' plugin','').replace(' Plug-in','').replace(' for Jenkins','');
+  return title.replace('Jenkins ','').replace(' Plugin','').replace(' plugin','').replace(' Plug-in','').replace(' for Jenkins','').replace('Hudson ','');
 }
