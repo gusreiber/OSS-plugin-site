@@ -69,8 +69,7 @@ export function getDependencies(rawdependencies) {
     .sort((a, b) => a.optional === b.optional ? 0: a.optional? 1 : -1)
     .map((item, index) => {
     return (<div key={index}>
-      {item.optional ? <Icon icon="bookmark_outline"/> : <Icon icon="bookmark"/> }
-       <Link to={`/${item.name}`} >{item.name} v.{item.version}</Link>
+       <Link className={item.optional ? 'optional' : 'required'} to={`/${item.name}`} >{item.name} v.{item.version}</Link>
     </div>);
   });
   if(!dependencies || dependencies.length === 0) {

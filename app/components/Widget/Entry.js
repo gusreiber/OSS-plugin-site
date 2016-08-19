@@ -71,7 +71,7 @@ export default class Entry extends PureComponent {
             </div>
 
             <div className={classNames(styles.Downloads,'Downloads')}>
-              Downloads: {plugin.download} {plugin.trend}
+              Installs: {plugin.stats.lifetime} {plugin.trend}
             </div>
 
             <div className={classNames(styles.Version,'Version')}>

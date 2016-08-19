@@ -69,7 +69,6 @@ export class PluginDetail extends PureComponent {
     const afterClose = () => {
       router.goBack();
     };
-    location.query = location.query || {};
     return (<ModalView hideOnOverlayClicked isVisible {...{afterClose}}>
       <Header>
         <div className="back" onClick={afterClose}>Plugin detail</div>
@@ -95,30 +94,24 @@ export class PluginDetail extends PureComponent {
                   </div>
                   <div className="col-md-4">
                     <h5>Maintainers</h5>
-                    {getMaintainersLinked(developers,location,router)}
+                    {getMaintainersLinked(developers)}
                   </div>
                   <div className="col-md-4">
                     <h5>Dependencies</h5>
-                    {(dependencies)?
-                      dependencies.map(
-                        (dep,i)=>{
-                          return(<div key={'dep_'+i}><a href="">{dep.name}</a></div>);
-                        })
-                      :"None"
-                    }
+                    {getDependencies(dependencies)}
                   </div>
                 </div>
-                <a href="" className="btn btn-primary btn-lg download"><i className="icon-download"></i> Installation instructions</a>
+                <a href={"http://updates.jenkins-ci.org/latest/" + name + ".hpi" } className="btn btn-primary btn-lg download"><i className="icon-download"></i> Installation instructions</a>
                 <div className="content" dangerouslySetInnerHTML={{__html: wiki.content}}></div>
               </div>
             </div>
             <div className="col-md-3 gutter">
-            <a href="" className="btn btn-primary"><i className="icon-download"></i>
+            <a href={"http://updates.jenkins-ci.org/latest/" + name + ".hpi" } className="btn btn-primary"><i className="icon-download"></i>
               <span>Download</span>
               <span className="v">{cleanTitle(title)} {version}</span>
             </a>
 
-            <a href="" className="btn btn-secondary"><i className="icon-box"></i>
+            <a href={"//updates.jenkins-ci.org/download/plugins/" + name } className="btn btn-secondary"><i className="icon-box"></i>
               <span>Archives</span>
               <span className="v">Get past versions</span>
             </a>
