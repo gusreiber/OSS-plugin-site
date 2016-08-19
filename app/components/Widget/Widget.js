@@ -18,7 +18,7 @@ export default class Widget extends PureComponent {
       this.state[key] = que[key];
     });
 
-    if(que.q || que.categories || que.labels)
+    if(que.q || que.categories || que.labels || que.authors)
       this.state.showResults = 'showResults';
   }
 

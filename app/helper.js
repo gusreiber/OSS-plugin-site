@@ -56,11 +56,10 @@ export function getMaintainers(devs,itemIndex) {
 export function getMaintainersLinked(developers) {
   const maintainers = developers.map((item, index) => {
     const name = item.name || item.developerId;
-    if (item.email) {
-      return <a key={index} href={`mailto:${item.email}`}>{name}</a>;
-    } else {
-      return (<span key={index}>{name}</span>);
-    }
+    console.log('main',item);
+    return (
+        <Link key={index} to={`/?authors=${name}`}>{name}</Link>
+    );
   });
   return maintainers;
 }
@@ -92,5 +91,5 @@ export function getDependencies(rawdependencies) {
   All of these are plugins.
   */
 export function cleanTitle(title) {
-  return title.replace('Jenkins ','').replace(' Plugin','').replace(' plugin','').replace(' Plug-in','');
+  return title.replace('Jenkins ','').replace(' Plugin','').replace(' plugin','').replace(' Plug-in','').replace(' for Jenkins','');
 }
