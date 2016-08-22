@@ -56,7 +56,6 @@ export function getMaintainers(devs,itemIndex) {
 export function getMaintainersLinked(developers) {
   const maintainers = developers.map((item, index) => {
     const name = item.name || item.developerId;
-    console.log('main',item);
     return (
         <Link key={index} to={`/?authors=${name}`}>{name}</Link>
     );
