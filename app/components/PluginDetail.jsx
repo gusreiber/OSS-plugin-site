@@ -6,7 +6,7 @@ import { categories } from './Widget/Categories';
 import moment from 'moment';
 import { actions, plugin as pluginSelector, createSelector, connect } from '../resources';
 
-import { getMaintainersLinked, getLabels, getDependencies } from '../helper';
+import { getMaintainersLinked, getLabels, getDependencies, cleanTitle } from '../helper';
 
 const { func, object, any, string } = PropTypes;
 
@@ -69,7 +69,6 @@ export class PluginDetail extends PureComponent {
     const afterClose = () => {
       router.goBack();
     };
-
     return (<ModalView hideOnOverlayClicked isVisible {...{afterClose}}>
       <Header>
         <div className="back" onClick={afterClose}>Plugin detail</div>
@@ -80,7 +79,7 @@ export class PluginDetail extends PureComponent {
             <div className="col-md-9 main">
               <div className="container-fluid padded">
                 <h1 className="title">
-                  {title}
+                  {cleanTitle(title)}
                   <span className="v">{version}</span>
                   <span className="sub">Required minimum Jenkins: {requiredCore}</span>
                 </h1>
@@ -95,34 +94,24 @@ export class PluginDetail extends PureComponent {
                   </div>
                   <div className="col-md-4">
                     <h5>Maintainers</h5>
-                    {developers.map(
-                        (dev,i)=>{
-                          return(<div key={'dev_'+i}><a href="">{(dev.name && dev.name.length > 0)? dev.name : dev.developerId}</a></div>);
-                        }
-                    )}
+                    {getMaintainersLinked(developers)}
                   </div>
                   <div className="col-md-4">
                     <h5>Dependencies</h5>
-                    {(dependencies)?
-                      dependencies.map(
-                        (dep,i)=>{
-                          return(<div key={'dep_'+i}><a href="">{dep.name}</a></div>);
-                        })
-                      :"None"
-                    }
+                    {getDependencies(dependencies)}
                   </div>
                 </div>
-                <a href="" className="btn btn-primary btn-lg download"><i className="icon-download"></i> Installation instructions</a>
+                <a href={"https://updates.jenkins-ci.org/latest/" + name + ".hpi" } className="btn btn-primary btn-lg download"><i className="icon-download"></i> Installation instructions</a>
                 <div className="content" dangerouslySetInnerHTML={{__html: wiki.content}}></div>
               </div>
             </div>
             <div className="col-md-3 gutter">
-            <a href="" className="btn btn-primary"><i className="icon-download"></i>
+            <a href={"https://updates.jenkins-ci.org/latest/" + name + ".hpi" } className="btn btn-primary"><i className="icon-download"></i>
               <span>Download</span>
-              <span className="v">{title} {version}</span>
+              <span className="v">{cleanTitle(title)} {version}</span>
             </a>
 
-            <a href="" className="btn btn-secondary"><i className="icon-box"></i>
+            <a href={"https://updates.jenkins-ci.org/download/plugins/" + name } className="btn btn-secondary"><i className="icon-box"></i>
               <span>Archives</span>
               <span className="v">Get past versions</span>
             </a>

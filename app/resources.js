@@ -202,7 +202,7 @@ export const actions = {
     return (dispatch) => {
       const page = query.page || 1;
       let PLUGINS_URL = `/plugins?page=${page}`;
-     ['limit', 'q', 'sort', 'asc', 'categories', 'labels']
+     ['limit', 'q', 'sort', 'asc', 'categories', 'labels', 'authors']
         .filter(item => query[item])
         .map(item => PLUGINS_URL += `&${item}=${query[item]}`);
       logger.log(query, PLUGINS_URL);
@@ -239,6 +239,7 @@ export const resources = state => state.resources;
 export const plugins = createSelector([resources], resources => resources.plugins);
 export const labels = createSelector([resources], resources => resources.labels);
 export const categories = createSelector([resources], resources => resources.categories);
+export const authors = createSelector([resources], resources => resources.authors);
 export const installed = createSelector([resources], resources => resources.installed);
 export const updated = createSelector([resources], resources => resources.updated);
 export const plugin = createSelector([resources], resources => resources.plugin);

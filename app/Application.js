@@ -23,7 +23,7 @@ export default class Application extends Component {
   componentWillMount() {
     const { location } = this.props;
     const q = location.query;
-    if(q.labels || q.q || q.categories || q.maintainers || q.cores)
+    if(q.labels || q.q || q.categories || q.authors || q.cores)
       this.props.generatePluginData(q);
     else{
       this.props.generateInstalledData();
