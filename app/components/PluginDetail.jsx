@@ -101,17 +101,17 @@ export class PluginDetail extends PureComponent {
                     {getDependencies(dependencies)}
                   </div>
                 </div>
-                <a href={"http://updates.jenkins-ci.org/latest/" + name + ".hpi" } className="btn btn-primary btn-lg download"><i className="icon-download"></i> Installation instructions</a>
+                <a href={"https://updates.jenkins-ci.org/latest/" + name + ".hpi" } className="btn btn-primary btn-lg download"><i className="icon-download"></i> Installation instructions</a>
                 <div className="content" dangerouslySetInnerHTML={{__html: wiki.content}}></div>
               </div>
             </div>
             <div className="col-md-3 gutter">
-            <a href={"http://updates.jenkins-ci.org/latest/" + name + ".hpi" } className="btn btn-primary"><i className="icon-download"></i>
+            <a href={"https://updates.jenkins-ci.org/latest/" + name + ".hpi" } className="btn btn-primary"><i className="icon-download"></i>
               <span>Download</span>
               <span className="v">{cleanTitle(title)} {version}</span>
             </a>
 
-            <a href={"//updates.jenkins-ci.org/download/plugins/" + name } className="btn btn-secondary"><i className="icon-box"></i>
+            <a href={"https://updates.jenkins-ci.org/download/plugins/" + name } className="btn btn-secondary"><i className="icon-box"></i>
               <span>Archives</span>
               <span className="v">Get past versions</span>
             </a>
