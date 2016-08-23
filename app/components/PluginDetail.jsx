@@ -43,7 +43,6 @@ export class PluginDetail extends PureComponent {
           name,
           excerpt,
           download,
-          trend,
           developers,
           sha1,
           version,
@@ -58,7 +57,8 @@ export class PluginDetail extends PureComponent {
           stats: {
             installations,
             installationsPerVersion,
-            lifetime
+            currentInstalls,
+            trend
             },
           wiki,
           requiredCore,
@@ -86,7 +86,7 @@ export class PluginDetail extends PureComponent {
                 <div className="row flex">
                   <div className="col-md-4">
                     <p>
-                    Installs: {lifetime}<br />
+                    Installs: {currentInstalls}<br />
                     Trend: {trend}<br/>
                     Last released: {moment(releaseTimestamp).fromNow()}<br/>
                     </p>
@@ -116,7 +116,7 @@ export class PluginDetail extends PureComponent {
               <span className="v">Get past versions</span>
             </a>
             <LineChart
-              total={lifetime}
+              total={currentInstalls}
               installations={installations}
             />
             <h5>Labels</h5>
