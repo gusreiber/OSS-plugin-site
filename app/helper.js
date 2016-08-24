@@ -13,7 +13,7 @@ export function getCategories(items,itemIndex){
     const keyIndex = `${itemIndex}_${i}`;
     const itemTitle = items[i];
     categories.push(
-      <span key={keyIndex}>{itemTitle} </span> 
+      <span key={keyIndex}>{itemTitle} </span>
     );
   }
   return categories;
@@ -25,42 +25,42 @@ export function getLabels(items,itemIndex){
     const keyIndex = `${itemIndex}_${i}`;
     const itemTitle = items[i];
     labels.push(
-      <span key={keyIndex}>{itemTitle} </span> 
+      <span key={keyIndex}>{itemTitle} </span>
     );
   }
   return labels;
 }
 
-export function getMaintainers(devs,itemIndex) {
-  const maintainers = [];
-  if(devs){
-    for(let i = 0; i < devs.length; i++){
+export function getMaintainers(maintainers, itemIndex) {
+  const result = [];
+  if(maintainers){
+    for(let i = 0; i < maintainers.length; i++){
       const devIndex = `${itemIndex}_${i}`;
-      const dev = devs[i].name || devs[i].developerId;
-      if( i>1 && i+1 < devs.length ){
-        maintainers.push(
-          <div key={devIndex}>({devs.length - 2} other contributers)</div>
+      const dev = maintainers[i].name || maintainers[i].id;
+      if( i>1 && i+1 < maintainers.length ){
+        result.push(
+          <div key={devIndex}>({maintainers.length - 2} other contributers)</div>
         );
-        i = devs.length;
+        i = maintainers.length;
       }
       else{
-        maintainers.push(
+        result.push(
           <div key={devIndex}>{dev}</div>
         );
       }
     }
   }
-  return maintainers;
+  return result;
 }
 
-export function getMaintainersLinked(developers) {
-  const maintainers = developers.map((item, index) => {
-    const name = item.name || item.developerId;
+export function getMaintainersLinked(maintainers) {
+  const result = maintainers.map((item, index) => {
+    const name = item.name || item.id;
     return (
-        <Link key={index} to={`/?authors=${name}`}>{name}</Link>
+        <Link key={index} to={`/?maintainers=${name}`}>{name}</Link>
     );
   });
-  return maintainers;
+  return result;
 }
 
 export function getDependencies(rawdependencies) {

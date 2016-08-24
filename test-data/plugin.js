@@ -1,9 +1,9 @@
 export const plugin = {
   buildDate: 'Sep 30, 2014',
   dependencies: [],
-  developers: [
+  maintainers: [
   {
-    developerId: 'cjo9900',
+    id: 'cjo9900',
     name: 'Chris Johnson'
   }
 ],

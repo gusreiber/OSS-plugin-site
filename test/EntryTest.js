@@ -17,7 +17,7 @@ const Record = Immutable.Record({
   excerpt: '',
   iconDom: null,
   requiredCore: null,
-  developers: [],
+  maintainers: [],
   labels: [],
   dependencies: []
 });
@@ -25,7 +25,7 @@ const Record = Immutable.Record({
 const plugin = {
     buildDate: 'Mar 03, 2011',
     dependencies: [0],
-    developers: [1],
+    maintainers: [1],
     excerpt: `This (experimental) plug-in exposes the jenkins build extension
     points (SCM, Build, Publish) to a groovy scripting environment that has
       some DSL-style extensions for ease of development.`,

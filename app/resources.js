@@ -44,7 +44,7 @@ export const Plugin = Record({
   trend: null,
   category: null,
   requiredCore: null,
-  developers: [],
+  maintainers: [],
   labels: [],
   categories: [],
   installed: [],
@@ -117,7 +117,7 @@ export const actionHandlers = {
   },
   [ACTION_TYPES.SET_UPDATED](state, { payload }){
     return state.set('updated', payload);
-  },  
+  },
   [ACTION_TYPES.SET_QUERY_INFO](state, { payload }){
     return state.set('searchOptions', payload);
   }
@@ -171,7 +171,7 @@ export const actions = {
       });
     };
   },
-  
+
   generateInstalledData: () => {
     return (dispatch) => {
       return api.getJSON('/plugins/installed',(error, data) => {
@@ -184,7 +184,7 @@ export const actions = {
       });
     };
   },
-  
+
   generateUpdatedData: () => {
     return (dispatch) => {
       return api.getJSON('/plugins/updated',(error, data) => {
@@ -202,7 +202,7 @@ export const actions = {
     return (dispatch) => {
       const page = query.page || 1;
       let PLUGINS_URL = `/plugins?page=${page}`;
-     ['limit', 'q', 'sort', 'asc', 'categories', 'labels', 'authors']
+     ['limit', 'q', 'sort', 'asc', 'categories', 'labels', 'maintainers']
         .filter(item => query[item])
         .map(item => PLUGINS_URL += `&${item}=${query[item]}`);
       logger.log(query, PLUGINS_URL);
@@ -239,7 +239,7 @@ export const resources = state => state.resources;
 export const plugins = createSelector([resources], resources => resources.plugins);
 export const labels = createSelector([resources], resources => resources.labels);
 export const categories = createSelector([resources], resources => resources.categories);
-export const authors = createSelector([resources], resources => resources.authors);
+export const maintainers = createSelector([resources], resources => resources.maintainers);
 export const installed = createSelector([resources], resources => resources.installed);
 export const updated = createSelector([resources], resources => resources.updated);
 export const plugin = createSelector([resources], resources => resources.plugin);

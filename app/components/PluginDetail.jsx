@@ -43,7 +43,7 @@ export class PluginDetail extends PureComponent {
           name,
           excerpt,
           download,
-          developers,
+          maintainers,
           sha1,
           version,
           scm,
@@ -94,7 +94,7 @@ export class PluginDetail extends PureComponent {
                   </div>
                   <div className="col-md-4">
                     <h5>Maintainers</h5>
-                    {getMaintainersLinked(developers)}
+                    {getMaintainersLinked(maintainers)}
                   </div>
                   <div className="col-md-4">
                     <h5>Dependencies</h5>
