@@ -22,6 +22,7 @@ body #grid-box .item-finder > .NoLabels .Cols3 {font-size:.85rem}
 body #grid-box .item-finder > .NoLabels .Cols3 label > span {margin-left:.5rem}
 body #grid-box .item-finder .NoLabels .Entry-box {display:block;    padding: 0.25rem 0;
     line-height: 1rem; font-size:.85rem}
+body #grid-box .item-finder .NoLabels .Entry-box a {cursor:pointer}
 body #grid-box .item-finder .NoLabels legend {font-size:1.1rem; }
 
 .maintainers > .maintainer {display:block;}
