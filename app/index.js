@@ -21,7 +21,7 @@ render((
                  component={Application} />
 
           <Route name="detail"
-                 path=":pluginName"
+                 path="/:pluginName"
                  component={PluginDetail} />
         </Route>
       </Router>

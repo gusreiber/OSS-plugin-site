@@ -24,6 +24,8 @@ body #grid-box .item-finder .NoLabels .Entry-box {display:block;    padding: 0.2
     line-height: 1rem; font-size:.85rem}
 body #grid-box .item-finder .NoLabels legend {font-size:1.1rem; }
 
+.maintainers > .maintainer {display:block;}
+
 .container-fluid.padded {padding:3rem 4rem}
 .modalview > .dialog .gutter {background:#eee; padding:2rem }
 .modalview > .dialog .gutter > .btn { display:block; text-align:left; padding:.5rem 1rem .75rem 3.5rem; position:relative; margin-bottom:1rem}
