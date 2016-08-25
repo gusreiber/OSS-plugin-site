@@ -18,7 +18,7 @@ export default class Widget extends PureComponent {
       this.state[key] = que[key];
     });
 
-    if(que.q || que.categories || que.labels || que.authors)
+    if(que.q || que.categories || que.labels || que.maintainers)
       this.state.showResults = 'showResults';
   }
 
@@ -242,9 +242,9 @@ export default class Widget extends PureComponent {
                       <div className='Entry-box'>
                         <a onClick={e=>{
                           location.query.categories = cat.id;
-                          router.replace(location); 
+                          router.replace(location);
                           this.setState({showResults: 'showResults'});
-                         }} 
+                         }}
                          key={`cat-id-${cat.id}`}>
                            {cat.title}
                        </a>
