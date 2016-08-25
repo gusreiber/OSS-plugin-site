@@ -28,12 +28,11 @@ export default class Filters extends PureComponent {
             <div className={(showResults)?'col-md-12':'col-md-3'}>
               <fieldset>
                 <legend>Sort {location.query.sort}</legend>
-                <label><input type="radio" name="sort" value="name" checked = {this.state.sort === 'name' || !this.state.sort} onChange={this.handleChange} /> Relevance</label>
-                <label><input type="radio" name="sort" value="trend" checked = {this.state.sort === 'trend'} onChange={this.handleChange}  /> Trend</label>
-                <label><input type="radio" name="sort" value="installed" checked = {this.state.sort === 'installed'} onChange={this.handleChange}  /> Installed</label>
+                <label><input type="radio" name="sort" value="relevance" checked = {this.state.sort === 'relevance' || !this.state.sort} onChange={this.handleChange} /> Relevance</label>
+                <label><input type="radio" name="sort" value="installed" checked = {this.state.sort === 'installed'} onChange={this.handleChange}  /> Most installed</label>
+                <label><input type="radio" name="sort" value="trend" checked = {this.state.sort === 'trend'} onChange={this.handleChange}  /> Recently installed</label>
                 <label><input type="radio" name="sort" value="title" checked = {this.state.sort === 'title'} onChange={this.handleChange}  /> Title</label>
-                <label><input type="radio" name="sort" value="updated" checked = {this.state.sort === 'updated'} onChange={this.handleChange}  /> Updated date</label>
-                <label><input type="radio" name="sort" value="created" checked = {this.state.sort === 'created'}  onChange={this.handleChange}  /> Created date</label>
+                <label><input type="radio" name="sort" value="updated" checked = {this.state.sort === 'updated'} onChange={this.handleChange}  /> Release date</label>
               </fieldset>
               <fieldset>
                 <legend>Filters <button onClickCapture={this.handleChange} name="clear" value="core,maintainers" className={classNames('btn btn-secondary btn-sm')}>Clear all</button></legend>
