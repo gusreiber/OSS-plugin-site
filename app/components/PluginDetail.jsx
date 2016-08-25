@@ -74,6 +74,7 @@ export class PluginDetail extends PureComponent {
         <div className="back" onClick={afterClose}>Plugin detail</div>
       </Header>
       <Body>
+        
         <div>
           <div className="row flex">
             <div className="col-md-9 main">
@@ -87,8 +88,8 @@ export class PluginDetail extends PureComponent {
                   <div className="col-md-4">
                     <p>
                     Installs: {currentInstalls}<br />
-                    Trend: {trend}<br/>
-                    Last released: {moment(releaseTimestamp).fromNow()}<br/>
+                    Recent installs: {trend}<br/>
+                    Last released: <span  title={moment(releaseTimestamp).format("dddd, MMMM Do YYYY")}>{moment(releaseTimestamp).fromNow()}</span><br/>
                     </p>
 
                   </div>
