@@ -53,9 +53,9 @@ export function getMaintainers(maintainers, itemIndex) {
   return result;
 }
 
-export function getMaintainersLinked(developers) {
-  const maintainers = developers.map((item, index) => {
-    const name = item.name || item.developerId;
+export function getMaintainersLinked(maintainers) {
+  const result = maintainers.map((item, index) => {
+    const name = item.name || item.id;
     return (
         <Link className="maintainer" key={index} to={`/?maintainers=${name}`}>{name}</Link>
     );
