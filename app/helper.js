@@ -57,7 +57,7 @@ export function getMaintainersLinked(developers) {
   const maintainers = developers.map((item, index) => {
     const name = item.name || item.developerId;
     return (
-        <Link key={index} to={`/?authors=${name}`}>{name}</Link>
+        <Link className="maintainer" key={index} to={`/?authors=${name}`}>{name}</Link>
     );
   });
   return maintainers;
@@ -73,8 +73,7 @@ export function getDependencies(rawdependencies) {
   });
   if(!dependencies || dependencies.length === 0) {
     dependencies.push(<div key={1}>
-      <Icon icon="bookmark_outline"/>
-      none
+      This plugin has no dependencies.
     </div>);
   }
   return dependencies;

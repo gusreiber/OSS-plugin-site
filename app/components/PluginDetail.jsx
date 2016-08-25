@@ -92,11 +92,11 @@ export class PluginDetail extends PureComponent {
                     </p>
 
                   </div>
-                  <div className="col-md-4">
+                  <div className="col-md-4 maintainers">
                     <h5>Maintainers</h5>
                     {getMaintainersLinked(developers)}
                   </div>
-                  <div className="col-md-4">
+                  <div className="col-md-4 dependencies">
                     <h5>Dependencies</h5>
                     {getDependencies(dependencies)}
                   </div>
