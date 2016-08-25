@@ -82,7 +82,8 @@ export class PluginDetail extends PureComponent {
                 <h1 className="title">
                   {cleanTitle(title)}
                   <span className="v">{version}</span>
-                  <span className="sub">Required minimum Jenkins: {requiredCore}</span>
+                  <span className="sub">Minimum Jenkins requirement: {requiredCore}</span>
+                  <span className="sub">ID: {name}</span>
                 </h1>
                 <div className="row flex">
                   <div className="col-md-4">
@@ -102,7 +103,6 @@ export class PluginDetail extends PureComponent {
                     {getDependencies(dependencies)}
                   </div>
                 </div>
-                <a href={"https://updates.jenkins-ci.org/latest/" + name + ".hpi" } className="btn btn-primary btn-lg download"><i className="icon-download"></i> Installation instructions</a>
                 <div className="content" dangerouslySetInnerHTML={{__html: wiki.content}}></div>
               </div>
             </div>
