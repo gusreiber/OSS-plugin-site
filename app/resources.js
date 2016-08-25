@@ -49,6 +49,7 @@ export const Plugin = Record({
   categories: [],
   installed: [],
   updated: [],
+  trend: [],
   dependencies: [],
   stats: Stats,
   detail: null,
@@ -67,6 +68,7 @@ export const State = Record({
   categories: null,
   installed: null,
   updated: null,
+  trend: null,
   labelFilter: Record({//fixme: that should become label: search, sort: field
     field: 'title',
     searchField: null,
@@ -87,6 +89,7 @@ export const ACTION_TYPES = keymirror({
   SET_CATEGORIES: null,
   SET_INSTALLED: null,
   SET_UPDATED: null,
+  SET_TREND: null,
   SET_QUERY_INFO: null
 });
 
@@ -117,6 +120,9 @@ export const actionHandlers = {
   },
   [ACTION_TYPES.SET_UPDATED](state, { payload }){
     return state.set('updated', payload);
+  },
+  [ACTION_TYPES.SET_TREND](state, { payload }){
+    return state.set('trend', payload);
   },
   [ACTION_TYPES.SET_QUERY_INFO](state, { payload }){
     return state.set('searchOptions', payload);
@@ -197,6 +203,19 @@ export const actions = {
       });
     };
   },
+  
+  generateTrendData: () => {
+    return (dispatch) => {
+      return api.getJSON('/plugins/trend',(error, data) => {
+        if (data && data.plugins) {
+          dispatch({
+            type: ACTION_TYPES.SET_TREND,
+            payload: Immutable.OrderedSet(data.plugins)
+          });
+        }
+      });
+    };
+  },
 
   generatePluginData(query={}) {
     return (dispatch) => {
@@ -242,6 +261,7 @@ export const categories = createSelector([resources], resources => resources.cat
 export const maintainers = createSelector([resources], resources => resources.maintainers);
 export const installed = createSelector([resources], resources => resources.installed);
 export const updated = createSelector([resources], resources => resources.updated);
+export const trend = createSelector([resources], resources => resources.trend);
 export const plugin = createSelector([resources], resources => resources.plugin);
 export const searchOptions = createSelector([resources], resources => resources.searchOptions);
 

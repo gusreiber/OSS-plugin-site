@@ -6,6 +6,7 @@ import {
   categories,
   installed,
   updated,
+  trend,
   isFetching,
   searchOptions,
   filterVisibleList,
@@ -28,6 +29,7 @@ export default class Application extends Component {
     else{
       this.props.generateInstalledData();
       this.props.generateUpdatedData();
+      this.props.generateTrendData();
     }
     this.props.generateLabelData();
     this.props.generateCategoryData();
@@ -50,9 +52,10 @@ export default class Application extends Component {
       categories,
       installed,
       updated,
+      trend,
       location,
     } = this.props;
-    if (!categories || !labels || (!installed && !filterVisibleList) || (!updated && !filterVisibleList)) return null;
+    if (!categories || !labels || (!installed && !filterVisibleList) || (!updated && !filterVisibleList) || (!trend && !filterVisibleList)) return null;
     return (<div>
       <DevelopmentFooter />
       <Widget
@@ -60,6 +63,7 @@ export default class Application extends Component {
         categories={categories}
         installed={installed}
         updated={updated}
+        trend={trend}
         searchOptions={searchOptions}
         location={location}
         router={this.context.router}
@@ -81,20 +85,22 @@ Application.propTypes = {
   categories: any,
   installed: any,
   updated: any,
+  trend: any,
   totalSize: any.isRequired,
   searchOptions: any.isRequired,
   isFetching: bool.isRequired,
 };
 
 const selectors = createSelector(
-  [ totalSize, isFetching, labels,categories,installed,updated, filterVisibleList, searchOptions],
-  ( totalSize, isFetching, labels,categories,installed,updated, filterVisibleList,  searchOptions) => ({
+  [ totalSize, isFetching, labels,categories,installed,updated,trend, filterVisibleList, searchOptions],
+  ( totalSize, isFetching, labels,categories,installed,updated,trend, filterVisibleList,  searchOptions) => ({
     totalSize,
     isFetching,
     labels,
     categories,
     installed,
     updated,
+    trend,
     filterVisibleList,
     searchOptions
   })
