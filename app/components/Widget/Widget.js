@@ -157,7 +157,7 @@ export default class Widget extends PureComponent {
                       onBlur={this.formSubmit.bind(this)}
                       placeholder="Find plugins..."
                     />
-                    <input type="submit" className="sr-only sr-only-focusable" />
+                    <input type="submit" className="sr-only" />
                     <div className={classNames(styles.SearchBtn, 'input-group-addon SearchBtn')}>
                       <i className={classNames('icon-search')}/>
                     </div>
