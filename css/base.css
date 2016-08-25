@@ -136,6 +136,7 @@ body .item-finder.Tiles a.item .Icon,
 body .item-finder.Tiles a.item:hover .Icon {
   opacity:1
 }
+body .item-finder.List a.item .Icon>i,
 body .item-finder.Tiles a.item .Icon>i,
 .Tile .Icon>i {
   display: inline-block;

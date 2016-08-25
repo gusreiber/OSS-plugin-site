@@ -335,7 +335,6 @@ body .Tile > .Excerpt {
 .Tile:hover {
   border: .1rem solid #999;
   opacity: 1;
-  transform: scale(1.01);
   z-index:2;
 }
 
