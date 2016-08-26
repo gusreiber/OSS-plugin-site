@@ -5,7 +5,6 @@ const cssnext = require('postcss-cssnext');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const S3Plugin = require('webpack-s3-plugin');
 
 const BUILD_DIR = path.resolve(__dirname, 'dist');
 const APP_DIR = path.resolve(__dirname, 'app');
@@ -51,21 +50,6 @@ if (release) {
     mangle: false,
     compress: {
       warnings: false
-    }
-  }));
-  plugins.push(new S3Plugin({
-    s3Options: {
-      accessKeyId: process.env.AWS_ACCESS_KEY_ID,
-      secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
-      sessionToken: process.env.AWS_SESSION_TOKEN,
-      region: process.env.AWS_REGION
-    },
-    s3UploadOptions: {
-      Bucket: process.env.AWS_S3_BUCKET
-    },
-    cloudfrontInvalidateOptions: {
-      DistributionId: process.env.CLOUDFRONT_DISTRIBUTION_ID,
-      Items: ['/*']
     }
   }));
 } else {
