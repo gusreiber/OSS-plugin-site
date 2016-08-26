@@ -40,11 +40,12 @@ export class Icon extends PureComponent {
 Icon.propTypes = {
   title: PropTypes.any.isRequired,
   type: PropTypes.any,
+  labels: PropTypes.any.isRequired,
 };
 
 export default class Entry extends PureComponent {
   render() {
-    const {plugin, linkOnly, setKey} = this.props;
+    const {plugin, linkOnly, setKey, labels} = this.props;
     return (
       <div
         key={(linkOnly)? setKey : plugin.get('sha1')}
@@ -81,7 +82,7 @@ export default class Entry extends PureComponent {
               </span>
             </div>
             <div className={classNames(styles.Labels,'Labels')}>
-              {getLabels(plugin.get('labels'),plugin.get('sha1'))}
+              {getLabels(plugin.get('labels'),plugin.get('sha1'),labels)}
             </div>
             <div className={classNames(styles.Excerpt,'Excerpt')} dangerouslySetInnerHTML={{__html: plugin.get('excerpt')}} />
 

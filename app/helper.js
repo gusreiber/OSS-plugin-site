@@ -18,15 +18,24 @@ export function getCategories(items,itemIndex){
   }
   return categories;
 }
-export function getLabels(items,itemIndex){
+export function getLabels(items,itemIndex,labelVals,showLink){
   const labels = [];
   if (!items) return;
+  labelVals =  labelVals || [];
   for (let i=0; i < items.length; i++){
     const keyIndex = `${itemIndex}_${i}`;
-    const itemTitle = items[i];
-    labels.push(
-      <span key={keyIndex}>{itemTitle} </span>
-    );
+    let itemTitle = items[i];
+    labelVals.map((lbl)=>{
+      if(lbl.id === items[i]) itemTitle = lbl.title;
+    });
+    if(showLink)
+      labels.push(
+        <Link className="label-link" key={keyIndex} to={`/?labels=${items[i]}`}>{itemTitle}</Link>
+      )
+    else
+      labels.push(
+        <span key={keyIndex}>{itemTitle} </span>
+      );
   }
   return labels;
 }

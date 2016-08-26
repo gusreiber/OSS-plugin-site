@@ -223,6 +223,7 @@ export default class Widget extends PureComponent {
                   return (<Entry
                     className="Entry"
                     key={plugin.name}
+                    labels={labels}
                     plugin={plugin}/>);
                 })}
               </div>

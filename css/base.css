@@ -29,12 +29,15 @@ body #grid-box .item-finder .NoLabels legend {font-size:1.1rem; }
 .maintainers > .maintainer {display:block;}
 
 .container-fluid.padded {padding:3rem 4rem}
+.modalview > .dialog {font-size:.85rem;}
 .modalview > .dialog .gutter {background:#eee; padding:2rem }
 .modalview > .dialog .gutter > .btn { display:block; text-align:left; padding:.5rem 1rem .75rem 3.5rem; position:relative; margin-bottom:1rem}
 .modalview > .dialog .gutter > .btn i {font-size:2.25rem; position:absolute; left:.75rem; top:.5rem}
 .modalview > .dialog .gutter > .btn > span {font-size:1.1rem; line-height:1.3rem; font-weight:500}
-.modalview > .dialog .gutter > .btn > .v {display:block; font-weight:200; font-size:.85rem}
+.modalview > .dialog .gutter > .btn > .v {display:block; font-weight:200; font-size:.75rem; white-space:normal}
 .modalview > .dialog .gutter .lbl {display:inline-block; margin-right:.5rem}
+.modalview > .dialog .gutter .label-link{display:block;}
+.modalview > .dialog .gutter .chart {margin:1rem 0 2rem}
 .modalview > .dialog {width:95% !important; margin:0 1.5%; top:0 !important;}
 .modalview > .dialog .download {margin:2rem 0 2rem -.5rem;}
 .modalview > .dialog > .header {font-size:1rem !important;padding:.5rem 1rem !important; height:auto; min-height:0 !important;cursor:pointer}
@@ -42,11 +45,11 @@ body #grid-box .item-finder .NoLabels legend {font-size:1.1rem; }
 .modalview > .dialog > .header > a {font-size:1rem !important; position:static !important; float:right; }
 .modalview > .dialog > .content {padding:0 !important; max-height:100% !important;}
 .modalview > .dialog > .content .title {margin-bottom:2rem; vertical-align:top}
-
+.modalview > .dialog > .content .content {min-height:25rem}
 .row.flex {display:flex}
 
 h1.title .v {color:#999; font-size:1rem; font-weight:200; margin:0 0 0 .5rem; position:relative; top:.25rem; vertical-align:top}
-h1.title .sub {display:block; font-weight:normal; font-size:1rem; color:#999; margin-top:.25rem}
+h1.title .sub {display:block; font-weight:normal; font-size:.85rem; color:#999; margin-top:.25rem}
 .markdown-body .anchor {display:none}
 .markdown-body h1 {font-size:2rem; margin:4rem 0 1rem;}
 .markdown-body h2 {font-size:1.5rem; margin-top:2rem;}
