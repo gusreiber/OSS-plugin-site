@@ -15,7 +15,6 @@ import {
 } from './resources';
 import React, { PropTypes, Component } from 'react';
 import Widget from './components/Widget/Widget';
-import DevelopmentFooter from './commons/developmentFooter';
 
 const { object, func, any, bool } = PropTypes;
 
@@ -57,7 +56,6 @@ export default class Application extends Component {
     } = this.props;
     if (!categories || !labels || (!installed && !filterVisibleList) || (!updated && !filterVisibleList) || (!trend && !filterVisibleList)) return null;
     return (<div>
-      <DevelopmentFooter />
       <Widget
         labels={labels}
         categories={categories}

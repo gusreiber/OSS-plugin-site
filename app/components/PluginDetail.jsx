@@ -1,6 +1,8 @@
 import PureComponent from 'react-pure-render/component';
 import React, { PropTypes } from 'react';
+import {labels} from '../resources';
 import ModalView, {Body, Header} from 'react-header-modal';
+import { Router, Route, browserHistory, IndexRoute, Navigation, History } from 'react-router';
 import LineChart from './LineChart'
 import { categories } from './Widget/Categories';
 import moment from 'moment';
@@ -15,6 +17,7 @@ export class PluginDetail extends PureComponent {
     if (this.props.params && this.props.params.pluginName) {
       this.getPluginHelper.call(this, this.props.params);
     }
+    this.props.generateLabelData();
   }
 
   componentWillReceiveProps(nextProp) {
@@ -30,7 +33,7 @@ export class PluginDetail extends PureComponent {
   }
 
   render() {
-    if (!this.props.plugin || !this.props.plugin.title) {
+    if (!this.props.plugin || !this.props.plugin.title || !this.props.labels) {
       return null;
     }
     const {
@@ -66,12 +69,14 @@ export class PluginDetail extends PureComponent {
           },
         },
       } = this;
+    const displayLabels = this.props.labels;
     const afterClose = () => {
       router.goBack();
     };
+    
     return (<ModalView hideOnOverlayClicked isVisible {...{afterClose}}>
       <Header>
-        <div className="back" onClick={afterClose}>Plugin detail</div>
+        <div className="back" onClick={afterClose}>Find plugins</div>
       </Header>
       <Body>
         
@@ -116,14 +121,14 @@ export class PluginDetail extends PureComponent {
               <span>Archives</span>
               <span className="v">Get past versions</span>
             </a>
+            <div className="chart">
             <LineChart
               total={currentInstalls}
               installations={installations}
             />
+            </div>
             <h5>Labels</h5>
-            {labels.map(
-                (label,i) => {return(<a className="lbl" key={'label_'+i}>{label}</a>)}
-            )}
+            {getLabels(labels,sha1,displayLabels,true)}
             </div>
           </div>
 
@@ -136,6 +141,8 @@ export class PluginDetail extends PureComponent {
 PluginDetail.propTypes = {
   getPlugin: func,
   plugin: any,
+  generateLabelData: func.isRequired,
+  labels: any,
   params: object.isRequired, // From react-router
 };
 
@@ -143,6 +150,6 @@ PluginDetail.contextTypes = {
   router: object.isRequired,
 };
 
-const selectors = createSelector([pluginSelector], (plugin) => ({plugin}));
+const selectors = createSelector([pluginSelector,labels], (plugin,labels) => ({plugin,labels}));
 
 export default connect(selectors, actions)(PluginDetail);
