@@ -242,12 +242,12 @@ export default class Widget extends PureComponent {
                 <legend>Browse categories</legend>
                 {categories.map((cat) => {
                   return(
-                      <div className='Entry-box'>
-                        <a onClick={e=>{
+                      <div className="Entry-box">
+                        <a onClick={ () => {
                           location.query.categories = cat.id;
                           router.replace(location);
                           this.setState({showResults: 'showResults'});
-                         }}
+                        }}
                          key={`cat-id-${cat.id}`}>
                            {cat.title}
                        </a>
@@ -265,8 +265,8 @@ export default class Widget extends PureComponent {
                       <Entry
                         className="Entry"
                         linkOnly
-                        key={'installed_entry_'+plugin.name}
-                        setKey={'installed_'+plugin.name}
+                        key={`installed_entry_${plugin.name}`}
+                        setKey={`installed_${plugin.name}`}
                         plugin={plugin}
                       />
                     );
@@ -282,8 +282,8 @@ export default class Widget extends PureComponent {
                       <Entry
                         className="Entry"
                         linkOnly
-                        key={'updated_entry_'+plugin.name}
-                        setKey={'updated_'+plugin.name}
+                        key={`updated_entry_${plugin.name}`}
+                        setKey={`updated_${plugin.name}`}
                         plugin={plugin}
                       />
                     );
@@ -300,8 +300,8 @@ export default class Widget extends PureComponent {
                       <Entry
                         className="Entry"
                         linkOnly
-                        key={'updated_entry_'+plugin.name}
-                        setKey={'updated_'+plugin.name}
+                        key={`updated_entry_${plugin.name}`}
+                        setKey={`updated_${plugin.name}`}
                         plugin={plugin}
                       />
                     );
@@ -331,5 +331,8 @@ Widget.propTypes = {
   searchOptions: PropTypes.any.isRequired,
   isFetching: PropTypes.bool.isRequired,
   getVisiblePluginsLabels: PropTypes.any,
-  categories: PropTypes.any.isRequired
+  categories: PropTypes.any.isRequired,
+  installed: PropTypes.any.isRequired,
+  updated: PropTypes.any.isRequired,
+  trend: PropTypes.any.isRequired
 };

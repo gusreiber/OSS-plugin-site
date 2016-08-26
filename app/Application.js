@@ -18,7 +18,7 @@ import Widget from './components/Widget/Widget';
 
 const { object, func, any, bool } = PropTypes;
 
-export default class Application extends Component {
+export class Application extends Component {
 
   componentWillMount() {
     const { location } = this.props;
@@ -78,6 +78,9 @@ Application.propTypes = {
   generatePluginData: func.isRequired,
   generateLabelData: func.isRequired,
   generateCategoryData: func.isRequired,
+  generateInstalledData: func.isRequired,
+  generateUpdatedData: func.isRequired,
+  generateTrendData: func.isRequired,
   filterVisibleList: any,
   labels: any,
   categories: any,

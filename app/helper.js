@@ -1,5 +1,4 @@
 import React from 'react';
-import {Icon} from 'react-material-icons-blue';
 import { Link } from 'react-router';
 
 export function getScoreClassName(score) {
@@ -31,7 +30,7 @@ export function getLabels(items,itemIndex,labelVals,showLink){
     if(showLink)
       labels.push(
         <Link className="label-link" key={keyIndex} to={`/?labels=${items[i]}`}>{itemTitle}</Link>
-      )
+      );
     else
       labels.push(
         <span key={keyIndex}>{itemTitle} </span>
