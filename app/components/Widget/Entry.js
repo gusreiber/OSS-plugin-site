@@ -70,8 +70,8 @@ export default class Entry extends PureComponent {
               {plugin.get('wiki.url')}
             </div>
 
-            <div className={classNames(styles.Downloads,'Downloads')}>
-              Installs: {plugin.stats.currentInstalls} {plugin.stats.trend}
+            <div className={classNames(styles.Downloads,'Downloads Installs')}>
+              Installs: {plugin.stats.currentInstalls}
             </div>
 
             <div className={classNames(styles.Version,'Version')}>
