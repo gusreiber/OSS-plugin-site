@@ -26,7 +26,7 @@ export default class Filters extends PureComponent {
         <div className={classNames(styles.filters, 'filters', ((showResults)? 'col-md-2' :'container'))}>
           <div className={classNames(styles.Header,'row')}>
             <div className={(showResults)?'col-md-12':'col-md-3'}>
-              <fieldset>
+              <fieldset className="sortOptions">
                 <legend>Sort {location.query.sort}</legend>
                 <label><input type="radio" name="sort" value="relevance" checked = {this.state.sort === 'relevance' || !this.state.sort} onChange={this.handleChange} /> Relevance</label>
                 <label><input type="radio" name="sort" value="installed" checked = {this.state.sort === 'installed'} onChange={this.handleChange}  /> Most installed</label>
@@ -34,7 +34,7 @@ export default class Filters extends PureComponent {
                 <label><input type="radio" name="sort" value="title" checked = {this.state.sort === 'title'} onChange={this.handleChange}  /> Title</label>
                 <label><input type="radio" name="sort" value="updated" checked = {this.state.sort === 'updated'} onChange={this.handleChange}  /> Release date</label>
               </fieldset>
-              <fieldset>
+              <fieldset className="filterOptions">
                 <legend>Filters <button onClickCapture={this.handleChange} name="clear" value="core,maintainers" className={classNames('btn btn-secondary btn-sm')}>Clear all</button></legend>
                 <Autocomplete
                   label="Maintainers"

@@ -61,6 +61,8 @@ h1.title .sub {display:block; font-weight:normal; font-size:.85rem; color:#999; 
 .filters .mask li input[type=checkbox]{visibility: hidden;}
 .filters label {cursor:pointer}
 
+.filterOptions {display:none;}
+
 .modalview .content .content h1{font-size:1.67rem; margin:4rem 0 .5rem}
 .modalview .content .content h2{font-size:1.33rem; margin:3rem 0 .5rem}
 .modalview .content .content h3{font-size:1.25rem; margin:2rem 0 .5rem}
