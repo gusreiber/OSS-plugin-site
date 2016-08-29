@@ -32,7 +32,7 @@ export class PluginDetail extends PureComponent {
     getPlugin(name);
   }
   closeDialog(event){
-    event.preventDefault();
+    if(event) event.preventDefault();
     let router = this.context.router;
     if(document.referrer && document.referrer.length > 0 && document.referrer !== window.location.href)
       router.goBack();
@@ -43,7 +43,7 @@ export class PluginDetail extends PureComponent {
   
   @keydown( 'esc' )
   keyClose( event ) {
-    this.closeDialog(event).bind(this);
+    this.closeDialog(event);
   }
   render() {
     if (!this.props.plugin || !this.props.plugin.title || !this.props.labels) {
