@@ -107,13 +107,23 @@ export default class Widget extends PureComponent {
         };
     return valSeq.sort(func);
   }
-  closeFilters(event){
-    if(event.keyCode == 27){
+  
+  closeFilters(event, forceClose){
+    if(event.keyCode == 27 || forceClose){
       event.preventDefault();
       this.setState({ showFilter: false});   
     }
   }
-
+  clickClose(event){
+    let el = event.target;
+    for(let i = 0; i < 3; i++){
+      el = el.parentNode;
+      if(el, el.hasAttribute('data-reactroot')) 
+        this.closeFilters(event,true);    
+    }
+  }
+  
+  
   @keydown( 'esc' )
   keyClose( event ) {
     this.closeFilters(event);
@@ -144,7 +154,7 @@ export default class Widget extends PureComponent {
 
 
     return (
-      <div className={classNames(styles.ItemFinder, view, this.state.showResults, 'item-finder')}>
+      <div className={classNames(styles.ItemFinder, view, this.state.showResults, 'item-finder')} onClick={this.clickClose.bind(this)}>
         <form ref="form" action="#" id="plugin-search-form" className={classNames(styles.HomeHeader, 'HomeHeader jumbotron')} onSubmit={(e)=>{this.formSubmit(e);}}>
           <nav className={classNames(styles.navbar,'navbar')}>
             <div className="nav navbar-nav">
