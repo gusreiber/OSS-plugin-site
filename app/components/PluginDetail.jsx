@@ -33,18 +33,18 @@ export class PluginDetail extends PureComponent {
   }
   closeDialog(event){
     event.preventDefault();
+    let router = this.context.router;
     if(document.referrer && document.referrer.length > 0 && document.referrer !== window.location.href)
       router.goBack();
     else{
       window.location.href = '/';
     }    
   }
-
+  
   @keydown( 'esc' )
   keyClose( event ) {
-    this.closeDialog(event);
+    this.closeDialog(event).bind(this);
   }
-
   render() {
     if (!this.props.plugin || !this.props.plugin.title || !this.props.labels) {
       return null;
@@ -83,7 +83,7 @@ export class PluginDetail extends PureComponent {
         },
       } = this;
     const displayLabels = this.props.labels;
-    const beforeClose = this.closeDialog;
+    const beforeClose = this.closeDialog.bind(this);
     
     return (<ModalView hideOnOverlayClicked enableEscapeButton isVisible {...{beforeClose}}>
       <Header>
