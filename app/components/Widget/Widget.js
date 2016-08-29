@@ -8,6 +8,7 @@ import Spinner from '../../commons/spinner';
 import classNames from 'classnames';
 import PureComponent from 'react-pure-render/component';
 import { findDOMNode } from 'react-dom';
+import keydown from 'react-keydown';
 
 export default class Widget extends PureComponent {
   constructor(properties) {
@@ -106,9 +107,19 @@ export default class Widget extends PureComponent {
         };
     return valSeq.sort(func);
   }
+  closeFilters(event){
+    if(event.keyCode == 27){
+      event.preventDefault();
+      this.setState({ showFilter: false});   
+    }
+  }
+
+  @keydown( 'esc' )
+  keyClose( event ) {
+    this.closeFilters(event);
+  }
 
   render() {
-
     const {
       totalSize,
       isFetching,
@@ -154,7 +165,9 @@ export default class Widget extends PureComponent {
                       name="q"
                       defaultValue={location.query.q}
                       className={classNames('form-control')}
+                      onFocus={()=>{this.setState({ showFilter:true })}}
                       onBlur={this.formSubmit.bind(this)}
+                      onKeyDown={this.closeFilters.bind(this)}
                       placeholder="Find plugins..."
                     />
                     <input type="submit" className="sr-only" />

@@ -178,8 +178,10 @@ body .item-finder a.item .Downloads,
 }
 body .item-finder.Tiles a.item .Labels,
 .Tile .Labels {
-  margin-bottom:.25rem;
-  min-height:2rem;
+  margin:.25rem 0;
+  max-height:2rem;
+  min-height:1rem;
+  overflow:hidden;
 }
 body .item-finder.Tiles a.item .Version span,
 .Tile .Version span {
@@ -205,6 +207,9 @@ body .item-finder.Tiles a.item .Excerpt,
   text-overflow: ellipsis;
   position: relative;
   margin: 0;
+}
+body .item-finder a.item .Excerpt a{
+  color:#666; text-decoration:none;
 }
 
 body .item-finder.Tiles a.item .Excerpt p,
@@ -258,6 +263,9 @@ body .item-finder.List a.item .Authors>div{
 }
 body .item-finder.Tiles a.item .Authors{
   position:absolute; bottom:1rem;
+  max-width: 8rem;
+  overflow: hidden;
+  white-space: nowrap;
 }
 .VirtualScroll>div>div {
   display: inline-block;
