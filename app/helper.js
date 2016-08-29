@@ -32,10 +32,12 @@ export function getLabels(items,itemIndex,labelVals,showLink){
       labels.push(
         <Link className="label-link" key={keyIndex} to={`/?labels=${items[i]}`}>{itemTitle}</Link>
       )
-    else
+    else if (typeof itemTitle === 'string'){
+      itemTitle = itemTitle.replace(' development','');
       labels.push(
-        <span key={keyIndex}>{itemTitle} </span>
+        <span key={keyIndex}>{itemTitle},</span>
       );
+    }
   }
   return labels;
 }

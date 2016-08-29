@@ -7,7 +7,7 @@ import LineChart from './LineChart'
 import { categories } from './Widget/Categories';
 import moment from 'moment';
 import { actions, plugin as pluginSelector, createSelector, connect } from '../resources';
-
+import keydown from 'react-keydown';
 import { getMaintainersLinked, getLabels, getDependencies, cleanTitle } from '../helper';
 
 const { func, object, any, string } = PropTypes;
@@ -30,6 +30,19 @@ export class PluginDetail extends PureComponent {
     const { pluginName: name } = params;
     const { getPlugin } = this.props;
     getPlugin(name);
+  }
+  closeDialog(event){
+    event.preventDefault();
+    if(document.referrer && document.referrer.length > 0 && document.referrer !== window.location.href)
+      router.goBack();
+    else{
+      window.location.href = '/';
+    }    
+  }
+
+  @keydown( 'esc' )
+  keyClose( event ) {
+    this.closeDialog(event);
   }
 
   render() {
@@ -70,14 +83,7 @@ export class PluginDetail extends PureComponent {
         },
       } = this;
     const displayLabels = this.props.labels;
-    const beforeClose = (e) => {
-      e.preventDefault();
-      if(document.referrer && document.referrer.length > 0 && document.referrer !== window.location.href)
-        router.goBack();
-      else{
-        window.location.href = '/';
-      }
-    };
+    const beforeClose = this.closeDialog;
     
     return (<ModalView hideOnOverlayClicked enableEscapeButton isVisible {...{beforeClose}}>
       <Header>

@@ -90,6 +90,7 @@ export const ACTION_TYPES = keymirror({
   SET_INSTALLED: null,
   SET_UPDATED: null,
   SET_TREND: null,
+  SET_VERSION: null,
   SET_QUERY_INFO: null
 });
 
