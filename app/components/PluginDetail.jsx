@@ -70,13 +70,18 @@ export class PluginDetail extends PureComponent {
         },
       } = this;
     const displayLabels = this.props.labels;
-    const afterClose = () => {
-      router.goBack();
+    const beforeClose = (e) => {
+      e.preventDefault();
+      if(document.referrer && document.referrer.length > 0 && document.referrer !== window.location.href)
+        router.goBack();
+      else{
+        window.location.href = '/';
+      }
     };
     
-    return (<ModalView hideOnOverlayClicked isVisible {...{afterClose}}>
+    return (<ModalView hideOnOverlayClicked enableEscapeButton isVisible {...{beforeClose}}>
       <Header>
-        <div className="back" onClick={afterClose}>Find plugins</div>
+        <div className="back" onClick={beforeClose}>Find plugins</div>
       </Header>
       <Body>
         
