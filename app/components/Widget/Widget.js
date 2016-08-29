@@ -107,11 +107,23 @@ export default class Widget extends PureComponent {
         };
     return valSeq.sort(func);
   }
-  
+  toggleFilters(event){
+    if(event) event.preventDefault();
+    this.context.router.replace({});
+    location.query = location.query || {};
+    location.query.showFilter = !this.state.showFilter;
+    this.context.router.replace(location);
+    this.setState({ showFilter: !this.state.showFilter});
+
+  }
   closeFilters(event, forceClose){
     if(event.keyCode == 27 || forceClose){
       event.preventDefault();
-      this.setState({ showFilter: false});   
+      this.context.router.replace({});
+      location.query = location.query || {};
+      location.query.showFilter = !this.state.showFilter;
+      this.context.router.replace(location);
+      this.setState({ showFilter: false}); 
     }
   }
   clickClose(event){
@@ -163,10 +175,7 @@ export default class Widget extends PureComponent {
                 <div className={classNames(styles.searchBox, 'form-group')}>
                   <label className={classNames(styles.searchLabel, 'input-group')}>
                     <a className={classNames(styles.ShowFilter, styles.Fish, 'input-group-addon ShowFilter')}
-                      onClick={(e) => {
-                        e.preventDefault();
-                        this.setState({ showFilter: !this.state.showFilter});
-                     }}
+                      onClick={this.toggleFilters.bind(this)}
                      >
                       Filter
                       <span>{this.state.showFilter ? '▼' : '◄' }</span>
@@ -265,7 +274,7 @@ export default class Widget extends PureComponent {
                 <legend>Browse categories</legend>
                 {categories.map((cat) => {
                   return(
-                      <div className="Entry-box">
+                      <div key={`cat-box-id-${cat.id}`} className="Entry-box">
                         <a onClick={ () => {
                           location.query.categories = cat.id;
                           router.replace(location);
@@ -354,8 +363,8 @@ Widget.propTypes = {
   searchOptions: PropTypes.any.isRequired,
   isFetching: PropTypes.bool.isRequired,
   getVisiblePluginsLabels: PropTypes.any,
-  categories: PropTypes.any.isRequired,
-  installed: PropTypes.any.isRequired,
-  updated: PropTypes.any.isRequired,
-  trend: PropTypes.any.isRequired
+  categories: PropTypes.any,
+  installed: PropTypes.any,
+  updated: PropTypes.any,
+  trend: PropTypes.any
 };
