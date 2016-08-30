@@ -17,6 +17,13 @@ export function getCategories(items,itemIndex){
   }
   return categories;
 }
+export function getLabel(label,labelVals){
+  let itemTitle = label;
+  labelVals.map((lbl)=>{
+    if(lbl.id === label) itemTitle = lbl.title;
+  });
+  return itemTitle;
+}
 export function getLabels(items,itemIndex,labelVals,showLink){
   const labels = [];
   if (!items) return;
