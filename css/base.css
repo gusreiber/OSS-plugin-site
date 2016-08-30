@@ -26,6 +26,21 @@ body #grid-box .item-finder .NoLabels .Entry-box {display:block;    padding: 0.2
 body #grid-box .item-finder .NoLabels .Entry-box a {cursor:pointer}
 body #grid-box .item-finder .NoLabels legend {font-size:1.1rem; }
 
+.navbar-nav .active-filters {white-space:nowrap}
+.navbar-nav .active-filters > div {display:inline-block; white-space:nowrap; margin-right:.5rem; border-right:1px solid #ccc; padding-right:.5rem}
+.navbar-nav .active-filters > div > .nav-link {display:inline-block; margin:0; margin-right:.5rem;}
+.navbar-nav .active-filters > div > .nav-link:before {
+    content: 'x ';
+    display: inline-block;
+    margin: -.15rem .1rem 0 0;
+    padding: 0rem 0 .1rem;
+    border: 1px solid #ccc;
+    line-height: 1em;
+    font-size: .75rem;
+    width: 1.3em;
+    vertical-align: middle;
+    border-radius:2;
+}
 /*-------spinner-----------*/
 
 #plugin-spinner {
@@ -519,8 +534,9 @@ nav.page-controls {text-align:center; padding:.25rem 1rem; font-size:.85rem; ver
     clear: both;
     width: 100%; min-height:2.75rem}
 nav.page-controls .nav-item.filter {float:left}
-nav.page-controls .nav-item.page-picker {float:none; display:inline-block; padding-right:6rem}
-nav .pagination {margin:.25rem;}
+nav.page-controls .nav-item.page-picker {float:right; white-space:nowrap; vertical-align:middle}
+nav.page-controls .nav-item.page-picker > .nav-link {display:inline-block; vertical-align:middle}
+nav .pagination {margin:.25rem 0 .25rem 1rem;vertical-align:middle}
 nav .pagination .page-link {
   padding: .25rem;
   min-width: 2rem;

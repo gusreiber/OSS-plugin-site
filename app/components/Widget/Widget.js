@@ -9,6 +9,7 @@ import classNames from 'classnames';
 import PureComponent from 'react-pure-render/component';
 import { findDOMNode } from 'react-dom';
 import keydown from 'react-keydown';
+import { getLabel } from '../../helper';
 
 export default class Widget extends PureComponent {
   constructor(properties) {
@@ -107,6 +108,41 @@ export default class Widget extends PureComponent {
         };
     return valSeq.sort(func);
   }
+  clearCategories(event){
+    this.context.router.replace({});
+    location.query = location.query || {}
+    const labelId = event.currentTarget.name; 
+    const activeLabels = location.query.categories;
+    const newLabels = (activeLabels)? activeLabels.split(','):[];
+    newLabels.splice(newLabels.indexOf(labelId),1);
+    const labelString = newLabels.join(',');
+    location.query.categories = labelString;
+    this.context.router.replace(location);
+    this.setState({ categories: labelString});     
+  }
+  
+  clearLabels(event){
+    this.context.router.replace({});
+    location.query = location.query || {}
+    const labelId = event.currentTarget.name; 
+    const activeLabels = location.query.labels;
+    const newLabels = (activeLabels)? activeLabels.split(','):[];
+    newLabels.splice(newLabels.indexOf(labelId),1);
+    const labelString = newLabels.join(',');
+    location.query.labels = labelString;
+    this.context.router.replace(location);
+    this.setState({ labels: labelString}); 
+    
+  }
+  clearSearch(event){
+    if(event) event.preventDefault();
+    this.context.router.replace({});
+    location.query = location.query || {};
+    delete location.query.q;
+    this.context.router.replace(location);
+    this.setState({ q: ''}); 
+  }
+  
   toggleFilters(event){
     if(event) event.preventDefault();
     this.context.router.replace({});
@@ -177,12 +213,13 @@ export default class Widget extends PureComponent {
                     <a className={classNames(styles.ShowFilter, styles.Fish, 'input-group-addon ShowFilter')}
                       onClick={this.toggleFilters.bind(this)}
                      >
-                      Filter
+                      Browse
                       <span>{this.state.showFilter ? '▼' : '◄' }</span>
                     </a>
                     <input
                       name="q"
-                      defaultValue={location.query.q}
+                        value={this.state.q}
+                      //defaultValue={this.state.q}
                       className={classNames('form-control')}
                       onFocus={()=>{this.setState({ showFilter:true })}}
                       onBlur={this.formSubmit.bind(this)}
@@ -222,15 +259,31 @@ export default class Widget extends PureComponent {
 
           <nav className="page-controls">
             <ul className="nav navbar-nav">
-              <li className="nav-item count">
-                {totalSize > 0 &&
-                <span className="nav-link">
-                {fromRange} to&nbsp;
-                  {toRange} of {totalSize}
-              </span>
-                }
+              <li className="nav-item active-filters">
+                {location.query.categories ?
+                <div className="active-categories">
+                  {location.query.categories.split(',').map((c,i)=>{
+                    return(<a className="nav-link" key={'active-cats_'+c} name={c} onClick={this.clearCategories.bind(this)}>{getLabel(c,categories)}</a>)
+                  })}
+                </div>:null}
+                {location.query.labels ?
+                <div className="active-labels">
+                  {location.query.labels && location.query.labels.split(',').map((l,i)=>{
+                    return(<a className="nav-link" key={'active-labels_'+l} name={l} onClick={this.clearLabels.bind(this)}>{getLabel(l,labels)}</a>)
+                  })}
+                </div>:null}
+                {location.query.q?
+                <div className="active-string">
+                  <a className="nav-link" title="clear search string" onClick={this.clearSearch.bind(this)} href="#clear-search-string">{location.query.q}</a>
+                </div>:null}
               </li>
               <li className="nav-item page-picker">
+                {totalSize > 0 &&
+                  <span className="nav-link">
+                    {fromRange} to&nbsp;
+                    {toRange} of {totalSize}
+                  </span>
+                }
                 {!isFetching && totalSize > 0 &&
                 Number(searchOptions.pages) > 1 && <Pagination
                   router={router}
@@ -258,7 +311,7 @@ export default class Widget extends PureComponent {
                     labels={labels}
                     plugin={plugin}/>);
                 })}
-                {totalSize === 0 && (
+                {totalSize === 0 && !isFetching && (
                     <div className="no-results">
                       <h1>No results found</h1>
                       <p>You search did not return any results. Please try changing your search criteria or reloading the browser.</p>
