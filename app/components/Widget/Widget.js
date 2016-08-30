@@ -258,6 +258,11 @@ export default class Widget extends PureComponent {
                     labels={labels}
                     plugin={plugin}/>);
                 })}
+                {totalSize === 0 && (
+                    <div className="no-results">
+                      <h1>No results found</h1>
+                      <p>You search did not return any results. Please try changing your search criteria or reloading the browser.</p>
+                    </div>)}
               </div>
             </div>
           </div>
