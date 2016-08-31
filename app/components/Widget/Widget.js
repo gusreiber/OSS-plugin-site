@@ -153,7 +153,7 @@ export default class Widget extends PureComponent {
 
   }
   closeFilters(event, forceClose){
-    if(event.keyCode == 27 || forceClose){
+    if(event.keyCode === 27 || forceClose){
       event.preventDefault();
      // this.context.router.replace({});
      // location.query = location.query || {};
@@ -161,6 +161,10 @@ export default class Widget extends PureComponent {
      // this.context.router.replace(location);
       this.setState({ showFilter: false}); 
     }
+    else if (event.keyCode === 13){
+      event.currentTarget.blur();
+    }
+      
   }
   clickClose(event){
     let el = event.target;
