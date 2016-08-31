@@ -145,20 +145,20 @@ export default class Widget extends PureComponent {
   
   toggleFilters(event){
     if(event) event.preventDefault();
-    this.context.router.replace({});
-    location.query = location.query || {};
-    location.query.showFilter = !this.state.showFilter;
-    this.context.router.replace(location);
+   // this.context.router.replace({});
+   // location.query = location.query || {};
+   // location.query.showFilter = !this.state.showFilter;
+   // this.context.router.replace(location);
     this.setState({ showFilter: !this.state.showFilter});
 
   }
   closeFilters(event, forceClose){
     if(event.keyCode == 27 || forceClose){
       event.preventDefault();
-      this.context.router.replace({});
-      location.query = location.query || {};
-      location.query.showFilter = !this.state.showFilter;
-      this.context.router.replace(location);
+     // this.context.router.replace({});
+     // location.query = location.query || {};
+     // location.query.showFilter = !this.state.showFilter;
+     // this.context.router.replace(location);
       this.setState({ showFilter: false}); 
     }
   }
