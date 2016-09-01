@@ -224,51 +224,60 @@ export default class Widget extends PureComponent {
     return (
       <div className={classNames(styles.ItemFinder, view, this.state.showResults, 'item-finder')} onClick={this.clickClose.bind(this)}>
         <form ref="form" action="#" id="plugin-search-form" className={classNames(styles.HomeHeader, 'HomeHeader jumbotron')} onSubmit={(e)=>{this.formSubmit(e);}}>
-          <nav className={classNames(styles.navbar,'navbar')}>
-            <div className="nav navbar-nav">
-              <fieldset className={classNames(styles.SearchBox, 'form-inline SearchBox')}>
-
-                <div className={classNames(styles.searchBox, 'form-group')}>
-                  <label className={classNames(styles.searchLabel, 'input-group')}>
-                    <a className={classNames(styles.ShowFilter, styles.Fish, 'input-group-addon ShowFilter')}
-                      onClick={this.toggleFilters.bind(this)}
-                     >
-                      Browse
-                      <span>{this.state.showFilter ? '▼' : '◄' }</span>
-                    </a>
-                    <input
-                      name="q"
-                        value={this.state.q}
-                      className={classNames('form-control')}
-                      onFocus={(e)=>{this.toggleFilters(e,false,true)}}
-                      onKeyDown={this.keyPress.bind(this)}
-                      placeholder="Find plugins..."
-                    />
-                    <input type="submit" className="sr-only" />
-                    <div className={classNames(styles.SearchBtn, 'input-group-addon SearchBtn')}>
-                      <i className={classNames('icon-search')}/>
-                    </div>
-                  </label>
-                </div>
-              </fieldset>
-
-              <Views
-                router={router}
+            
+            <h1><span className="logo">Jenkins</span> Plugin Pantry</h1>
+            
+            
+            <nav className={classNames(styles.navbar,'navbar')}>
+              <div className="nav navbar-nav">
+                <fieldset className={classNames(styles.SearchBox, 'form-inline SearchBox')}>
+  
+                  <div className={classNames(styles.searchBox, 'form-group')}>
+                    <label className={classNames(styles.searchLabel, 'input-group')}>
+                      <a className={classNames(styles.ShowFilter, styles.Fish, 'input-group-addon ShowFilter')}
+                        onClick={this.toggleFilters.bind(this)}
+                       >
+                        Browse
+                        <span>{this.state.showFilter ? '▼' : '◄' }</span>
+                      </a>
+                      <input
+                        name="q"
+                          value={this.state.q}
+                        className={classNames('form-control')}
+                        onFocus={(e)=>{this.toggleFilters(e,false,true)}}
+                        onKeyDown={this.keyPress.bind(this)}
+                        placeholder="Find plugins..."
+                      />
+                      <input type="submit" className="sr-only" />
+                      <div className={classNames(styles.SearchBtn, 'input-group-addon SearchBtn')}>
+                        <i className={classNames('icon-search')}/>
+                      </div>
+                    </label>
+                  </div>
+                </fieldset>
+  
+                <Views
+                  router={router}
+                  location={location}
+                />
+  
+              </div>
+            </nav>
+            
+            { this.state.showFilter ?
+              <Filters
+                labels={labels}
+                categories={categories}
                 location={location}
+                router = {router}
+                showResults={this.state.showResults}
+                handleChecks={this.formSubmit}
               />
-
-            </div>
-          </nav>
-          { this.state.showFilter ?
-            <Filters
-              labels={labels}
-              categories={categories}
-              location={location}
-              router = {router}
-              showResults={this.state.showResults}
-              handleChecks={this.formSubmit}
-            />
-          : null }
+            : null }
+            
+            <p>Extend your Jenkins environment with any of the 1000+ community added plugins.
+            Better yet, join the community and contribute your own.</p>
+          
         </form>
         <div className="row results">
           {this.state.showFilter && this.state.showResults ? <div className="col-md-2"/> : null}
