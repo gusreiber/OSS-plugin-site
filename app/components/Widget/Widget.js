@@ -93,6 +93,8 @@ export default class Widget extends PureComponent {
     for(let i = 0; i < formElems.length; i++){
       checkElements(formElems[i],location.query);
     }
+    location.query.showFilter = true;
+    state.showFilter = true;
     router.replace(location);
     return false;
   }
@@ -116,7 +118,10 @@ export default class Widget extends PureComponent {
     const newLabels = (activeLabels)? activeLabels.split(','):[];
     newLabels.splice(newLabels.indexOf(labelId),1);
     const labelString = newLabels.join(',');
-    location.query.categories = labelString;
+    if(newLabels.length ===0)
+      delete location.query.categories;
+    else   
+      location.query.categories = labelString;
     this.context.router.replace(location);
     this.setState({ categories: labelString});     
   }
@@ -129,7 +134,10 @@ export default class Widget extends PureComponent {
     const newLabels = (activeLabels)? activeLabels.split(','):[];
     newLabels.splice(newLabels.indexOf(labelId),1);
     const labelString = newLabels.join(',');
-    location.query.labels = labelString;
+    if(newLabels.length ===0)
+      delete location.query.labels;
+    else
+      location.query.labels = labelString;
     this.context.router.replace(location);
     this.setState({ labels: labelString}); 
     
@@ -143,42 +151,50 @@ export default class Widget extends PureComponent {
     this.setState({ q: ''}); 
   }
   
-  toggleFilters(event){
+  toggleFilters(event,forceClose,forceOpen){
     if(event) event.preventDefault();
-   // this.context.router.replace({});
-   // location.query = location.query || {};
-   // location.query.showFilter = !this.state.showFilter;
-   // this.context.router.replace(location);
-    this.setState({ showFilter: !this.state.showFilter});
+    this.context.router.replace({});
+    location.query = location.query || {};
+    
+    if(forceOpen && typeof forceOpen === 'boolean'){
+      location.query.showFilter = true;
+      this.context.router.replace(location);
+      this.setState({ showFilter: true});
+    }
+    else{
+      if(this.state.showFilter || forceClose)
+        delete location.query.showFilter;
+      else
+        location.query.showFilter = true;
+      this.context.router.replace(location);
+      this.setState({ showFilter: location.query.showFilter});
+    }
+  }
+  keyPress(event){
+    // toggle filters on ESC
+    if(event.keyCode === 27){
+      this.toggleFilters(event);      
+    }
+    // submit form on ENTER
+    if(event.keyCode === 13)
+      this.formSubmit(event);
+  }
 
-  }
-  closeFilters(event, forceClose){
-    if(event.keyCode === 27 || forceClose){
-      event.preventDefault();
-     // this.context.router.replace({});
-     // location.query = location.query || {};
-     // location.query.showFilter = !this.state.showFilter;
-     // this.context.router.replace(location);
-      this.setState({ showFilter: false}); 
-    }
-    else if (event.keyCode === 13){
-      event.currentTarget.blur();
-    }
-      
-  }
   clickClose(event){
     let el = event.target;
     for(let i = 0; i < 3; i++){
       el = el.parentNode;
-      if(el, el.hasAttribute('data-reactroot')) 
-        this.closeFilters(event,true);    
+      if(el, el.hasAttribute('data-reactroot')){
+        console.log('bg');
+        this.toggleFilters(event,true);    
+      }
     }
   }
   
   
   @keydown( 'esc' )
   keyClose( event ) {
-    this.closeFilters(event);
+    this.keyPress(event,false,true);
   }
 
   render() {
@@ -223,11 +239,9 @@ export default class Widget extends PureComponent {
                     <input
                       name="q"
                         value={this.state.q}
-                      //defaultValue={this.state.q}
                       className={classNames('form-control')}
-                      onFocus={()=>{this.setState({ showFilter:true })}}
-                      onBlur={this.formSubmit.bind(this)}
-                      onKeyDown={this.closeFilters.bind(this)}
+                      onFocus={(e)=>{this.toggleFilters(e,false,true)}}
+                      onKeyDown={this.keyPress.bind(this)}
                       placeholder="Find plugins..."
                     />
                     <input type="submit" className="sr-only" />
