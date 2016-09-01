@@ -3,6 +3,20 @@ import { Line } from 'react-chartjs';
 import moment from 'moment';
 
 function chartData(labels,data) {
+  const lastValue = data[data.length-1];
+  let maxValue = null;
+  let minValue = null;
+  if (lastValue < 100) maxValue = 250;
+  else if (lastValue < 250) maxValue = 500;
+  else if (lastValue < 500) maxValue = 1000;
+  else if (lastValue < 1000) maxValue = 2000;
+  else if (lastValue < 2500) maxValue = 5000;
+  else if (lastValue < 7500) maxValue = 10000;
+  
+  if(lastValue > 5000) minValue = 0;
+  
+    
+  debugger;
   return {
     labels: labels,
     datasets: [
@@ -21,11 +35,11 @@ function chartData(labels,data) {
         pointColor: 'rgba(0,0,0,0)',
         pointStrokeColor: 'rgba(0,0,0,0)',
         label: '',
-        data: [0]
+        data: [minValue]
       },
       {
         label: '',
-        data: [10000]
+        data: [maxValue]
       }
     ]
   };
@@ -72,6 +86,7 @@ class LineChart extends React.Component {
     else if (life > 25000) height = 225;
     else if (life > 10000) height = 200;
     else if (life > 5000) height = 175;
+    else if (life > 1000) height = 150;
     if(insts) {
       insts.sort((a,b) => {
         a = a.timestamp;
