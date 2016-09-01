@@ -223,7 +223,7 @@ export default class Widget extends PureComponent {
 
     return (
       <div className={classNames(styles.ItemFinder, view, this.state.showResults, 'item-finder')} onClick={this.clickClose.bind(this)}>
-        <form ref="form" action="#" id="plugin-search-form" className={classNames(styles.HomeHeader, 'HomeHeader jumbotron')} onSubmit={(e)=>{this.formSubmit(e);}}>
+        <form ref="form" action="#" id="plugin-search-form" className={classNames(styles.HomeHeader, (this.state.showFilter)?'showFilter':'', 'HomeHeader jumbotron')} onSubmit={(e)=>{this.formSubmit(e);}}>
             
             <h1><span className="logo">Jenkins</span> Plugin Pantry</h1>
             
@@ -234,7 +234,7 @@ export default class Widget extends PureComponent {
   
                   <div className={classNames(styles.searchBox, 'form-group')}>
                     <label className={classNames(styles.searchLabel, 'input-group')}>
-                      <a className={classNames(styles.ShowFilter, styles.Fish, 'input-group-addon ShowFilter')}
+                      <a className={classNames(styles.ShowFilter, styles.Fish, 'input-group-addon btn btn-primary ShowFilter')}
                         onClick={this.toggleFilters.bind(this)}
                        >
                         Browse
@@ -249,7 +249,7 @@ export default class Widget extends PureComponent {
                         placeholder="Find plugins..."
                       />
                       <input type="submit" className="sr-only" />
-                      <div className={classNames(styles.SearchBtn, 'input-group-addon SearchBtn')}>
+                      <div className={classNames(styles.SearchBtn, 'input-group-addon SearchBtn btn btn-primary')}>
                         <i className={classNames('icon-search')}/>
                       </div>
                     </label>
