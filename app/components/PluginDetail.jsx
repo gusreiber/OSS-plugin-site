@@ -34,11 +34,7 @@ export class PluginDetail extends PureComponent {
   closeDialog(event){
     if(event) event.preventDefault();
     let router = this.context.router;
-    if(document.referrer && document.referrer.length > 0 && document.referrer !== window.location.href)
-      router.goBack();
-    else{
-      window.location.href = '/';
-    }    
+    router.goBack();    
   }
   
   @keydown( 'esc' )

@@ -64,6 +64,7 @@ export const State = Record({
   plugins: null,
   plugin: Plugin,
   isFetching: false,
+  isHome:true,
   labels: null,
   categories: null,
   installed: null,
@@ -81,6 +82,7 @@ export const State = Record({
 export const ACTION_TYPES = keymirror({
   CLEAR_PLUGINS_DATA: null,
   FETCH_PLUGINS_DATA: null,
+  TOGGLE_HOME: null,
   SET_PLUGINS_DATA: null,
   SET_PLUGIN_DATA: null,
   CLEAR_PLUGIN_DATA: null,
@@ -106,6 +108,9 @@ export const actionHandlers = {
   },
   [ACTION_TYPES.FETCH_PLUGINS_DATA](state, {}){
     return state.set('isFetching', !state.isFetching);
+  },
+  [ACTION_TYPES.TOGGLE_HOME](state, {}){
+    return state.set('isHome', !state.isHome);
   },
   [ACTION_TYPES.SET_PLUGINS_DATA](state, { payload }){
     return state.set('plugins', payload);
@@ -136,6 +141,7 @@ export const actions = {
   clearPluginData: () => ({ type: ACTION_TYPES.CLEAR_PLUGINS_DATA }),
 
   fetchPluginData: () => ({ type: ACTION_TYPES.FETCH_PLUGINS_DATA }),
+  toggleIsHome: () => ({ type: ACTION_TYPES.TOGGLE_HOME }),
 
   getPlugin: (name) => {
     return (dispatch) => {
@@ -152,7 +158,7 @@ export const actions = {
       });
     };
   },
-
+  
   generateCategoryData: () =>{
     return (dispatch) => {
       return api.getJSON('/categories', (error, data) => {
@@ -265,7 +271,7 @@ export const updated = createSelector([resources], resources => resources.update
 export const trend = createSelector([resources], resources => resources.trend);
 export const plugin = createSelector([resources], resources => resources.plugin);
 export const searchOptions = createSelector([resources], resources => resources.searchOptions);
-
+export const isHome = createSelector([resources], resources => resources.isHome);
 export const isFetching = createSelector([resources], resources => resources.isFetching);
 
 export const totalSize = createSelector(
