@@ -24,6 +24,12 @@ export default class Widget extends PureComponent {
       this.state.showResults = 'showResults';
   }
 
+  shouldComponentUpdate(nextProp,nextState) {
+    if(!this.props.getVisiblePlugins || !this.props.getVisiblePlugins._map) return false;
+    if(this.props.getVisiblePlugins == nextProp.getVisiblePlugins) return true;
+    return true;
+  }
+  
   formSubmit(e){
     //TODO: FIXME: These are attributes that need to come from label and category click events to check the parent-child rules their selection.
     // would be better for readability if their optional attributes were passed directly into this function.
@@ -93,8 +99,8 @@ export default class Widget extends PureComponent {
     for(let i = 0; i < formElems.length; i++){
       checkElements(formElems[i],location.query);
     }
-    location.query.showFilter = true;
-    state.showFilter = true;
+    location.query.showFilter = 'true';
+    state.showFilter = 'true';
     router.replace(location);
     return false;
   }
@@ -154,18 +160,18 @@ export default class Widget extends PureComponent {
   toggleFilters(event,forceClose,forceOpen){
     if(event) event.preventDefault();
     this.context.router.replace({});
-    location.query = location.query || {};
+    location.query = this.props.location.query || {};
     
     if(forceOpen && typeof forceOpen === 'boolean'){
-      location.query.showFilter = true;
+      location.query.showFilter = 'true';
       this.context.router.replace(location);
-      this.setState({ showFilter: true});
+      this.setState({ showFilter: 'true'});
     }
     else{
       if(this.state.showFilter || forceClose)
         delete location.query.showFilter;
       else
-        location.query.showFilter = true;
+        location.query.showFilter = 'true';
       this.context.router.replace(location);
       this.setState({ showFilter: location.query.showFilter});
     }
@@ -178,6 +184,10 @@ export default class Widget extends PureComponent {
     // submit form on ENTER
     if(event.keyCode === 13)
       this.formSubmit(event);
+    // button clicked
+    if(event.currentTarget.className.indexOf('SearchBtn') > -1)
+      this.formSubmit(event);
+    
   }
 
   clickClose(event){
@@ -185,7 +195,6 @@ export default class Widget extends PureComponent {
     for(let i = 0; i < 3; i++){
       el = el.parentNode;
       if(el, el.hasAttribute('data-reactroot')){
-        console.log('bg');
         this.toggleFilters(event,true);    
       }
     }
@@ -201,6 +210,7 @@ export default class Widget extends PureComponent {
     const {
       totalSize,
       isFetching,
+      isHome,
       searchOptions,
       getVisiblePlugins,
       labels,
@@ -219,7 +229,6 @@ export default class Widget extends PureComponent {
       toRange = searchOptions.limit * Number(searchOptions.page) <= Number(searchOptions.total) ?
       searchOptions.limit * Number(searchOptions.page) : Number(searchOptions.total),
       fromRange = ((searchOptions.limit) * (Number(searchOptions.page)) - (searchOptions.limit - 1));
-
 
     return (
       <div className={classNames(styles.ItemFinder, view, this.state.showResults, 'item-finder')} onClick={this.clickClose.bind(this)}>
@@ -249,7 +258,7 @@ export default class Widget extends PureComponent {
                         placeholder="Find plugins..."
                       />
                       <input type="submit" className="sr-only" />
-                      <div className={classNames(styles.SearchBtn, 'input-group-addon SearchBtn btn btn-primary')}>
+                      <div onClick={this.keyPress.bind(this)} className={classNames(styles.SearchBtn, 'input-group-addon SearchBtn btn btn-primary')}>
                         <i className={classNames('icon-search')}/>
                       </div>
                     </label>
@@ -361,7 +370,7 @@ export default class Widget extends PureComponent {
                   return(
                       <div key={`cat-box-id-${cat.id}`} className="Entry-box">
                         <a onClick={ () => {
-                          location.query.categories = cat.id;
+                          location.query = {categories:cat.id};
                           router.replace(location);
                           this.setState({showResults: 'showResults'});
                         }}
@@ -447,6 +456,7 @@ Widget.propTypes = {
   getVisiblePlugins: PropTypes.any,
   searchOptions: PropTypes.any.isRequired,
   isFetching: PropTypes.bool.isRequired,
+  isHome: PropTypes.bool.isRequired,
   getVisiblePluginsLabels: PropTypes.any,
   categories: PropTypes.any,
   installed: PropTypes.any,
