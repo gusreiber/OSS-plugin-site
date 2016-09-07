@@ -40,7 +40,7 @@ export class Icon extends PureComponent {
 Icon.propTypes = {
   title: PropTypes.any.isRequired,
   type: PropTypes.any,
-  labels: PropTypes.any.isRequired,
+  labels: PropTypes.any,
 };
 
 export default class Entry extends PureComponent {

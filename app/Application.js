@@ -50,7 +50,6 @@ export class Application extends Component {
     const q = this.props.location.query;
     const cats = this.props.categories || {};
     const labels = this.props.labels || {};
-    
     if(this.isHome){
       return !(!( p.installed && p.updated && p.trend));
     }
