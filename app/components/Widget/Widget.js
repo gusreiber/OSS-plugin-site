@@ -14,7 +14,7 @@ import { getLabel } from '../../helper';
 export default class Widget extends PureComponent {
   constructor(properties) {
     super(properties);
-    this.state  = {};
+    this.state  = {q:''};
     const que = properties.location.query;
     Object.keys(properties.location.query).map((key)=>{
       this.state[key] = que[key];
@@ -22,11 +22,10 @@ export default class Widget extends PureComponent {
 
     if(que.q || que.categories || que.labels || que.maintainers)
       this.state.showResults = 'showResults';
+    
   }
-
   shouldComponentUpdate(nextProp,nextState) {
-    if(!this.props.getVisiblePlugins || !this.props.getVisiblePlugins._map) return false;
-    if(this.props.getVisiblePlugins == nextProp.getVisiblePlugins) return true;
+
     return true;
   }
   
@@ -176,7 +175,15 @@ export default class Widget extends PureComponent {
       this.setState({ showFilter: location.query.showFilter});
     }
   }
+  onChange(event){
+    const target = event.currentTarget;
+    if(target.name === 'q'){
+      this.setState({q:target.value});
+    }
+    return true;
+  }
   keyPress(event){
+    const target = event.currentTarget;
     // toggle filters on ESC
     if(event.keyCode === 27){
       this.toggleFilters(event);      
@@ -185,7 +192,7 @@ export default class Widget extends PureComponent {
     if(event.keyCode === 13)
       this.formSubmit(event);
     // button clicked
-    if(event.currentTarget.className.indexOf('SearchBtn') > -1)
+    if(target.className && target.className.indexOf('SearchBtn') > -1)
       this.formSubmit(event);
     
   }
@@ -252,10 +259,11 @@ export default class Widget extends PureComponent {
                       <input
                         name="q"
                           value={this.state.q}
-                        className={classNames('form-control')}
-                        onFocus={(e)=>{this.toggleFilters(e,false,true)}}
-                        onKeyDown={this.keyPress.bind(this)}
-                        placeholder="Find plugins..."
+                          className={classNames('form-control')}
+                          onChange={this.onChange.bind(this)}
+                          onFocus={(e)=>{this.toggleFilters(e,false,true)}}
+                          onKeyDown={this.keyPress.bind(this)}
+                          placeholder="Find plugins..."
                       />
                       <input type="submit" className="sr-only" />
                       <div onClick={this.keyPress.bind(this)} className={classNames(styles.SearchBtn, 'input-group-addon SearchBtn btn btn-primary')}>
@@ -360,13 +368,14 @@ export default class Widget extends PureComponent {
 
           </div>
         </div>
+        {categories && installed && updated && trend ?
         <div className="NoLabels">
         <div className="container">
           <div className="row">
             <div className={classNames(styles.NoLabels,'col-md-3 NoLabels')}>
               <fieldset>
                 <legend>Browse categories</legend>
-                {categories.map((cat) => {
+                {categories && categories.map((cat) => {
                   return(
                       <div key={`cat-box-id-${cat.id}`} className="Entry-box">
                         <a onClick={ () => {
@@ -385,7 +394,7 @@ export default class Widget extends PureComponent {
             <div className="col-md-3">
               <fieldset>
                 <legend>Most installed</legend>
-                {installed && installed.valueSeq()
+                {installed && installed && installed.valueSeq()
                   .map((plugin) => {
                     return (
                       <Entry
@@ -438,7 +447,7 @@ export default class Widget extends PureComponent {
 
           </div>
         </div>
-      </div>
+        </div>:null}
       </div>
     );
   }
@@ -452,7 +461,7 @@ Widget.contextTypes = {
 Widget.propTypes = {
   location: PropTypes.object.isRequired,
   totalSize: PropTypes.any.isRequired,
-  labels: PropTypes.any.isRequired,
+  labels: PropTypes.any,
   getVisiblePlugins: PropTypes.any,
   searchOptions: PropTypes.any.isRequired,
   isFetching: PropTypes.bool.isRequired,
