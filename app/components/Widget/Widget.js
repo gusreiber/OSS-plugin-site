@@ -25,7 +25,7 @@ export default class Widget extends PureComponent {
     
   }
   shouldComponentUpdate(nextProp,nextState) {
-
+    //if(nextProp.isFetching) return false;
     return true;
   }
   
@@ -41,10 +41,12 @@ export default class Widget extends PureComponent {
     const form = document.getElementById('plugin-search-form');
     const formElems = findDOMNode(form).elements;
     const state = this.state;
-
+    
+    // keep track of which location properties are new...
+    let newLocationQuery = {};
+    // keep existing state if not otherwise changed...
+    location.query = state;
     // reset the application state in preparation for evaluating the form settings...
-    const newLocationQuery = {};
-    location.query = {};
     router.replace({});
     e.preventDefault();
 
@@ -98,8 +100,8 @@ export default class Widget extends PureComponent {
     for(let i = 0; i < formElems.length; i++){
       checkElements(formElems[i],location.query);
     }
-    location.query.showFilter = 'true';
-    state.showFilter = 'true';
+    location.query.showFilter = true;
+    state.showFilter = true;
     router.replace(location);
     return false;
   }
@@ -115,6 +117,23 @@ export default class Widget extends PureComponent {
         };
     return valSeq.sort(func);
   }
+  //TODO: these clear function should be 1 + an arg.
+  clearMaintainers(event){
+    this.context.router.replace({});
+    location.query = location.query || {}
+    const labelId = event.currentTarget.name; 
+    const activeLabels = location.query.maintainers;
+    const newLabels = (activeLabels)? activeLabels.split(','):[];
+    newLabels.splice(newLabels.indexOf(labelId),1);
+    const labelString = newLabels.join(',');
+    if(newLabels.length ===0)
+      delete location.query.maintainers;
+    else   
+      location.query.categories = labelString;
+    this.context.router.replace(location);
+    this.setState({ maintainers: labelString});     
+  }
+  
   clearCategories(event){
     this.context.router.replace({});
     location.query = location.query || {}
@@ -158,21 +177,15 @@ export default class Widget extends PureComponent {
   
   toggleFilters(event,forceClose,forceOpen){
     if(event) event.preventDefault();
-    this.context.router.replace({});
-    location.query = this.props.location.query || {};
     
     if(forceOpen && typeof forceOpen === 'boolean'){
-      location.query.showFilter = 'true';
-      this.context.router.replace(location);
-      this.setState({ showFilter: 'true'});
+      this.setState({ showFilter: true});
     }
     else{
       if(this.state.showFilter || forceClose)
-        delete location.query.showFilter;
+        this.setState({ showFilter: false});
       else
-        location.query.showFilter = 'true';
-      this.context.router.replace(location);
-      this.setState({ showFilter: location.query.showFilter});
+        this.setState({ showFilter: true});
     }
   }
   onChange(event){
@@ -304,6 +317,12 @@ export default class Widget extends PureComponent {
           <nav className="page-controls">
             <ul className="nav navbar-nav">
               <li className="nav-item active-filters">
+                {location.query.maintainers ?
+                  <div className="active-maintainers">
+                    {location.query.maintainers.split(',').map((m,i)=>{
+                      return(<a className="nav-link" key={'active-cats_'+m} name={m} onClick={this.clearMaintainers.bind(this)}>{getLabel(m)}</a>)
+                    })}
+                  </div>:null}
                 {location.query.categories ?
                 <div className="active-categories">
                   {location.query.categories.split(',').map((c,i)=>{

@@ -101,7 +101,6 @@ export class PluginDetail extends PureComponent {
                   <div className="col-md-4">
                     <p>
                     Installs: {currentInstalls}<br />
-                    Recent installs: {trend}<br/>
                     Last released: <span  title={moment(releaseTimestamp).format("dddd, MMMM Do YYYY")}>{moment(releaseTimestamp).fromNow()}</span><br/>
                     </p>
 

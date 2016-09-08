@@ -39,6 +39,7 @@ export class Application extends Component {
   }
 
   componentWillReceiveProps(nextProps,nextState) {
+    if(nextProps.isFetching === this.props.isFetching && this.props.isFetching) return false;
     if(nextProps.location.query !== this.props.location.query) {
       this.props.generatePluginData(nextProps.location.query);
     }

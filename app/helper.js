@@ -19,7 +19,8 @@ export function getCategories(items,itemIndex){
 }
 export function getLabel(label,labelVals){
   let itemTitle = label;
-  labelVals.map((lbl)=>{
+  if(labelVals)
+    labelVals.map((lbl)=>{
     if(lbl.id === label) itemTitle = lbl.title;
   });
   return itemTitle;
