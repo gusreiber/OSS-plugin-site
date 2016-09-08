@@ -1,10 +1,15 @@
+import PureRenderMixin from 'react-addons-pure-render-mixin';
 import React, { PropTypes } from 'react';
 import classNames from 'classnames';
 import styles from './Widget.css';
-import { logger } from '../../commons';
-import PureRenderMixin from 'react-addons-pure-render-mixin';
 
-export default class Autocomplete extends React.Component {
+export default class Autocomplete extends React.PureComponent {
+
+  static propTypes = {
+    label: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
+    placeholder: PropTypes.string.isRequired
+  }
 
   constructor(props) {
     super(props);
@@ -12,11 +17,14 @@ export default class Autocomplete extends React.Component {
   }
 
   render() {
-    const {name, placeholder, label} = this.props;
+    const { label, name, placeholder } = this.props;
     return (
       <label>
         <span className={classNames(styles.Top)}>{label}</span>
-        <input type="text" placeholder={placeholder} name={name} />
+        <input name={name}
+          placeholder={placeholder}
+          type="text"
+        />
       </label>
     );
   }
