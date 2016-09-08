@@ -45,7 +45,7 @@ export default class Widget extends PureComponent {
     // keep track of which location properties are new...
     let newLocationQuery = {};
     // keep existing state if not otherwise changed...
-    location.query = state;
+    location.query = {showFilter:true,maintainers:state.maintainers};
     // reset the application state in preparation for evaluating the form settings...
     router.replace({});
     e.preventDefault();
@@ -100,9 +100,8 @@ export default class Widget extends PureComponent {
     for(let i = 0; i < formElems.length; i++){
       checkElements(formElems[i],location.query);
     }
-    location.query.showFilter = true;
-    state.showFilter = true;
     router.replace(location);
+    
     return false;
   }
 
