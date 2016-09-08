@@ -2,10 +2,14 @@ import React, { PropTypes } from 'react';
 import classNames from 'classnames';
 import styles from './Widget.css';
 import { logger } from '../../commons';
-import PureComponent from 'react-pure-render/component';
+import PureRenderMixin from 'react-addons-pure-render-mixin';
 
+export default class Autocomplete extends React.Component {
 
-export default class Autocomplete extends PureComponent {
+  constructor(props) {
+    super(props);
+    this.shouldComponentUpdate = PureRenderMixin.shouldComponentUpdate.bind(this);
+  }
 
   render() {
     const {name, placeholder, label} = this.props;
