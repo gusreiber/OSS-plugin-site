@@ -14,7 +14,7 @@ import { getLabel } from '../../helper';
 export default class Widget extends PureComponent {
   constructor(properties) {
     super(properties);
-    this.state  = {};
+    this.state  = {q:''};
     const que = properties.location.query;
     Object.keys(properties.location.query).map((key)=>{
       this.state[key] = que[key];
@@ -22,8 +22,13 @@ export default class Widget extends PureComponent {
 
     if(que.q || que.categories || que.labels || que.maintainers)
       this.state.showResults = 'showResults';
+    
   }
-
+  shouldComponentUpdate(nextProp,nextState) {
+    //if(nextProp.isFetching) return false;
+    return true;
+  }
+  
   formSubmit(e){
     //TODO: FIXME: These are attributes that need to come from label and category click events to check the parent-child rules their selection.
     // would be better for readability if their optional attributes were passed directly into this function.
@@ -36,10 +41,12 @@ export default class Widget extends PureComponent {
     const form = document.getElementById('plugin-search-form');
     const formElems = findDOMNode(form).elements;
     const state = this.state;
-
+    
+    // keep track of which location properties are new...
+    let newLocationQuery = {};
+    // keep existing state if not otherwise changed...
+    location.query = {showFilter:true,maintainers:state.maintainers};
     // reset the application state in preparation for evaluating the form settings...
-    const newLocationQuery = {};
-    location.query = {};
     router.replace({});
     e.preventDefault();
 
@@ -93,9 +100,8 @@ export default class Widget extends PureComponent {
     for(let i = 0; i < formElems.length; i++){
       checkElements(formElems[i],location.query);
     }
-    location.query.showFilter = true;
-    state.showFilter = true;
     router.replace(location);
+    
     return false;
   }
 
@@ -110,6 +116,23 @@ export default class Widget extends PureComponent {
         };
     return valSeq.sort(func);
   }
+  //TODO: these clear function should be 1 + an arg.
+  clearMaintainers(event){
+    this.context.router.replace({});
+    location.query = location.query || {}
+    const labelId = event.currentTarget.name; 
+    const activeLabels = location.query.maintainers;
+    const newLabels = (activeLabels)? activeLabels.split(','):[];
+    newLabels.splice(newLabels.indexOf(labelId),1);
+    const labelString = newLabels.join(',');
+    if(newLabels.length ===0)
+      delete location.query.maintainers;
+    else   
+      location.query.categories = labelString;
+    this.context.router.replace(location);
+    this.setState({ maintainers: labelString});     
+  }
+  
   clearCategories(event){
     this.context.router.replace({});
     location.query = location.query || {}
@@ -153,24 +176,26 @@ export default class Widget extends PureComponent {
   
   toggleFilters(event,forceClose,forceOpen){
     if(event) event.preventDefault();
-    this.context.router.replace({});
-    location.query = location.query || {};
     
     if(forceOpen && typeof forceOpen === 'boolean'){
-      location.query.showFilter = true;
-      this.context.router.replace(location);
       this.setState({ showFilter: true});
     }
     else{
       if(this.state.showFilter || forceClose)
-        delete location.query.showFilter;
+        this.setState({ showFilter: false});
       else
-        location.query.showFilter = true;
-      this.context.router.replace(location);
-      this.setState({ showFilter: location.query.showFilter});
+        this.setState({ showFilter: true});
     }
   }
+  onChange(event){
+    const target = event.currentTarget;
+    if(target.name === 'q'){
+      this.setState({q:target.value});
+    }
+    return true;
+  }
   keyPress(event){
+    const target = event.currentTarget;
     // toggle filters on ESC
     if(event.keyCode === 27){
       this.toggleFilters(event);      
@@ -178,6 +203,10 @@ export default class Widget extends PureComponent {
     // submit form on ENTER
     if(event.keyCode === 13)
       this.formSubmit(event);
+    // button clicked
+    if(target.className && target.className.indexOf('SearchBtn') > -1)
+      this.formSubmit(event);
+    
   }
 
   clickClose(event){
@@ -185,7 +214,6 @@ export default class Widget extends PureComponent {
     for(let i = 0; i < 3; i++){
       el = el.parentNode;
       if(el, el.hasAttribute('data-reactroot')){
-        console.log('bg');
         this.toggleFilters(event,true);    
       }
     }
@@ -201,6 +229,7 @@ export default class Widget extends PureComponent {
     const {
       totalSize,
       isFetching,
+      isHome,
       searchOptions,
       getVisiblePlugins,
       labels,
@@ -219,7 +248,6 @@ export default class Widget extends PureComponent {
       toRange = searchOptions.limit * Number(searchOptions.page) <= Number(searchOptions.total) ?
       searchOptions.limit * Number(searchOptions.page) : Number(searchOptions.total),
       fromRange = ((searchOptions.limit) * (Number(searchOptions.page)) - (searchOptions.limit - 1));
-
 
     return (
       <div className={classNames(styles.ItemFinder, view, this.state.showResults, 'item-finder')} onClick={this.clickClose.bind(this)}>
@@ -243,13 +271,14 @@ export default class Widget extends PureComponent {
                       <input
                         name="q"
                           value={this.state.q}
-                        className={classNames('form-control')}
-                        onFocus={(e)=>{this.toggleFilters(e,false,true)}}
-                        onKeyDown={this.keyPress.bind(this)}
-                        placeholder="Find plugins..."
+                          className={classNames('form-control')}
+                          onChange={this.onChange.bind(this)}
+                          onFocus={(e)=>{this.toggleFilters(e,false,true)}}
+                          onKeyDown={this.keyPress.bind(this)}
+                          placeholder="Find plugins..."
                       />
                       <input type="submit" className="sr-only" />
-                      <div className={classNames(styles.SearchBtn, 'input-group-addon SearchBtn btn btn-primary')}>
+                      <div onClick={this.keyPress.bind(this)} className={classNames(styles.SearchBtn, 'input-group-addon SearchBtn btn btn-primary')}>
                         <i className={classNames('icon-search')}/>
                       </div>
                     </label>
@@ -287,6 +316,12 @@ export default class Widget extends PureComponent {
           <nav className="page-controls">
             <ul className="nav navbar-nav">
               <li className="nav-item active-filters">
+                {location.query.maintainers ?
+                  <div className="active-maintainers">
+                    {location.query.maintainers.split(',').map((m,i)=>{
+                      return(<a className="nav-link" key={'active-cats_'+m} name={m} onClick={this.clearMaintainers.bind(this)}>{getLabel(m)}</a>)
+                    })}
+                  </div>:null}
                 {location.query.categories ?
                 <div className="active-categories">
                   {location.query.categories.split(',').map((c,i)=>{
@@ -351,17 +386,18 @@ export default class Widget extends PureComponent {
 
           </div>
         </div>
+        {categories && installed && updated && trend ?
         <div className="NoLabels">
         <div className="container">
           <div className="row">
             <div className={classNames(styles.NoLabels,'col-md-3 NoLabels')}>
               <fieldset>
                 <legend>Browse categories</legend>
-                {categories.map((cat) => {
+                {categories && categories.map((cat) => {
                   return(
                       <div key={`cat-box-id-${cat.id}`} className="Entry-box">
                         <a onClick={ () => {
-                          location.query.categories = cat.id;
+                          location.query = {categories:cat.id};
                           router.replace(location);
                           this.setState({showResults: 'showResults'});
                         }}
@@ -376,7 +412,7 @@ export default class Widget extends PureComponent {
             <div className="col-md-3">
               <fieldset>
                 <legend>Most installed</legend>
-                {installed && installed.valueSeq()
+                {installed && installed && installed.valueSeq()
                   .map((plugin) => {
                     return (
                       <Entry
@@ -429,7 +465,7 @@ export default class Widget extends PureComponent {
 
           </div>
         </div>
-      </div>
+        </div>:null}
       </div>
     );
   }
@@ -443,10 +479,11 @@ Widget.contextTypes = {
 Widget.propTypes = {
   location: PropTypes.object.isRequired,
   totalSize: PropTypes.any.isRequired,
-  labels: PropTypes.any.isRequired,
+  labels: PropTypes.any,
   getVisiblePlugins: PropTypes.any,
   searchOptions: PropTypes.any.isRequired,
   isFetching: PropTypes.bool.isRequired,
+  isHome: PropTypes.bool.isRequired,
   getVisiblePluginsLabels: PropTypes.any,
   categories: PropTypes.any,
   installed: PropTypes.any,

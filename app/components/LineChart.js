@@ -14,9 +14,7 @@ function chartData(labels,data) {
   else if (lastValue < 7500) maxValue = 10000;
   
   if(lastValue > 5000) minValue = 0;
-  
-    
-  debugger;
+
   return {
     labels: labels,
     datasets: [

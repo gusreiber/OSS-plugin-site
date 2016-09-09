@@ -8,6 +8,7 @@ import {
   updated,
   trend,
   isFetching,
+  isHome,
   searchOptions,
   filterVisibleList,
   createSelector,
@@ -23,30 +24,48 @@ export class Application extends Component {
   componentWillMount() {
     const { location } = this.props;
     const q = location.query;
-    if(q.labels || q.q || q.categories || q.maintainers || q.cores)
+    if(q.labels || q.q || q.categories || q.maintainers || q.cores){
       this.props.generatePluginData(q);
+      this.isHome = false;;
+    }
     else{
       this.props.generateInstalledData();
       this.props.generateUpdatedData();
       this.props.generateTrendData();
+      this.isHome = true;
     }
     this.props.generateLabelData();
     this.props.generateCategoryData();
-
   }
 
-  componentWillReceiveProps(nextProps) {
+  componentWillReceiveProps(nextProps,nextState) {
+    if(nextProps.isFetching === this.props.isFetching && this.props.isFetching) return false;
     if(nextProps.location.query !== this.props.location.query) {
       this.props.generatePluginData(nextProps.location.query);
     }
   }
-
+  
+  shouldComponentUpdate(nextProp,nextState) {
+    
+    const p = nextProp;
+    const q = this.props.location.query;
+    const cats = this.props.categories || {};
+    const labels = this.props.labels || {};
+    if(this.isHome){
+      return !(!( p.installed && p.updated && p.trend));
+    }
+    else{
+      return !(isNaN(cats.size) && isNaN(labels.size));
+    }
+  }
   render() {
+
     const {
       filterVisibleList,
       totalSize,
       searchOptions,
       isFetching,
+      isHome,
       labels,
       categories,
       installed,
@@ -54,7 +73,14 @@ export class Application extends Component {
       trend,
       location,
     } = this.props;
-    if (!categories || !labels || (!installed && !filterVisibleList) || (!updated && !filterVisibleList) || (!trend && !filterVisibleList)) return null;
+    
+    if(this.isHome){
+      if(!installed || !updated || !trend) return null;
+    }
+    else{
+      if(!categories || !labels) return null;
+    }
+    
     return (<div>
       <Widget
         labels={labels}
@@ -68,6 +94,7 @@ export class Application extends Component {
         getVisiblePlugins={filterVisibleList}
         totalSize={totalSize}
         isFetching = {isFetching}
+        isHome = {this.isHome}
       />
     </div>);
   }
@@ -90,13 +117,15 @@ Application.propTypes = {
   totalSize: any.isRequired,
   searchOptions: any.isRequired,
   isFetching: bool.isRequired,
+  isHome: bool.isRequired,
 };
 
 const selectors = createSelector(
-  [ totalSize, isFetching, labels,categories,installed,updated,trend, filterVisibleList, searchOptions],
-  ( totalSize, isFetching, labels,categories,installed,updated,trend, filterVisibleList,  searchOptions) => ({
+  [ totalSize, isFetching,isHome, labels,categories,installed,updated,trend, filterVisibleList, searchOptions],
+  ( totalSize, isFetching,isHome, labels,categories,installed,updated,trend, filterVisibleList,  searchOptions) => ({
     totalSize,
     isFetching,
+    isHome,
     labels,
     categories,
     installed,
