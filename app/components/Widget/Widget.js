@@ -22,13 +22,13 @@ export default class Widget extends PureComponent {
 
     if(que.q || que.categories || que.labels || que.maintainers)
       this.state.showResults = 'showResults';
-    
+
   }
   shouldComponentUpdate(nextProp,nextState) {
     //if(nextProp.isFetching) return false;
     return true;
   }
-  
+
   formSubmit(e){
     //TODO: FIXME: These are attributes that need to come from label and category click events to check the parent-child rules their selection.
     // would be better for readability if their optional attributes were passed directly into this function.
@@ -41,7 +41,7 @@ export default class Widget extends PureComponent {
     const form = document.getElementById('plugin-search-form');
     const formElems = findDOMNode(form).elements;
     const state = this.state;
-    
+
     // keep track of which location properties are new...
     let newLocationQuery = {};
     // keep existing state if not otherwise changed...
@@ -101,7 +101,7 @@ export default class Widget extends PureComponent {
       checkElements(formElems[i],location.query);
     }
     router.replace(location);
-    
+
     return false;
   }
 
@@ -120,39 +120,39 @@ export default class Widget extends PureComponent {
   clearMaintainers(event){
     this.context.router.replace({});
     location.query = location.query || {}
-    const labelId = event.currentTarget.name; 
+    const labelId = event.currentTarget.name;
     const activeLabels = location.query.maintainers;
     const newLabels = (activeLabels)? activeLabels.split(','):[];
     newLabels.splice(newLabels.indexOf(labelId),1);
     const labelString = newLabels.join(',');
     if(newLabels.length ===0)
       delete location.query.maintainers;
-    else   
+    else
       location.query.categories = labelString;
     this.context.router.replace(location);
-    this.setState({ maintainers: labelString});     
+    this.setState({ maintainers: labelString});
   }
-  
+
   clearCategories(event){
     this.context.router.replace({});
     location.query = location.query || {}
-    const labelId = event.currentTarget.name; 
+    const labelId = event.currentTarget.name;
     const activeLabels = location.query.categories;
     const newLabels = (activeLabels)? activeLabels.split(','):[];
     newLabels.splice(newLabels.indexOf(labelId),1);
     const labelString = newLabels.join(',');
     if(newLabels.length ===0)
       delete location.query.categories;
-    else   
+    else
       location.query.categories = labelString;
     this.context.router.replace(location);
-    this.setState({ categories: labelString});     
+    this.setState({ categories: labelString});
   }
-  
+
   clearLabels(event){
     this.context.router.replace({});
     location.query = location.query || {}
-    const labelId = event.currentTarget.name; 
+    const labelId = event.currentTarget.name;
     const activeLabels = location.query.labels;
     const newLabels = (activeLabels)? activeLabels.split(','):[];
     newLabels.splice(newLabels.indexOf(labelId),1);
@@ -162,8 +162,8 @@ export default class Widget extends PureComponent {
     else
       location.query.labels = labelString;
     this.context.router.replace(location);
-    this.setState({ labels: labelString}); 
-    
+    this.setState({ labels: labelString});
+
   }
   clearSearch(event){
     if(event) event.preventDefault();
@@ -171,12 +171,12 @@ export default class Widget extends PureComponent {
     location.query = location.query || {};
     delete location.query.q;
     this.context.router.replace(location);
-    this.setState({ q: ''}); 
+    this.setState({ q: ''});
   }
-  
+
   toggleFilters(event,forceClose,forceOpen){
     if(event) event.preventDefault();
-    
+
     if(forceOpen && typeof forceOpen === 'boolean'){
       this.setState({ showFilter: true});
     }
@@ -198,7 +198,7 @@ export default class Widget extends PureComponent {
     const target = event.currentTarget;
     // toggle filters on ESC
     if(event.keyCode === 27){
-      this.toggleFilters(event);      
+      this.toggleFilters(event);
     }
     // submit form on ENTER
     if(event.keyCode === 13)
@@ -206,7 +206,7 @@ export default class Widget extends PureComponent {
     // button clicked
     if(target.className && target.className.indexOf('SearchBtn') > -1)
       this.formSubmit(event);
-    
+
   }
 
   clickClose(event){
@@ -214,12 +214,12 @@ export default class Widget extends PureComponent {
     for(let i = 0; i < 3; i++){
       el = el.parentNode;
       if(el, el.hasAttribute('data-reactroot')){
-        this.toggleFilters(event,true);    
+        this.toggleFilters(event,true);
       }
     }
   }
-  
-  
+
+
   @keydown( 'esc' )
   keyClose( event ) {
     this.keyPress(event,false,true);
@@ -252,14 +252,14 @@ export default class Widget extends PureComponent {
     return (
       <div className={classNames(styles.ItemFinder, view, this.state.showResults, 'item-finder')} onClick={this.clickClose.bind(this)}>
         <form ref="form" action="#" id="plugin-search-form" className={classNames(styles.HomeHeader, (this.state.showFilter)?'showFilter':'', 'HomeHeader jumbotron')} onSubmit={(e)=>{this.formSubmit(e);}}>
-            
+
             <h1><span className="logo">Jenkins</span> Plugin Pantry</h1>
-            
-            
+
+
             <nav className={classNames(styles.navbar,'navbar')}>
               <div className="nav navbar-nav">
                 <fieldset className={classNames(styles.SearchBox, 'form-inline SearchBox')}>
-  
+
                   <div className={classNames(styles.searchBox, 'form-group')}>
                     <label className={classNames(styles.searchLabel, 'input-group')}>
                       <a className={classNames(styles.ShowFilter, styles.Fish, 'input-group-addon btn btn-primary ShowFilter')}
@@ -284,15 +284,12 @@ export default class Widget extends PureComponent {
                     </label>
                   </div>
                 </fieldset>
-  
-                <Views
-                  router={router}
-                  location={location}
-                />
-  
+
+                <Views />
+
               </div>
             </nav>
-            
+
             { this.state.showFilter ?
               <Filters
                 labels={labels}
@@ -303,10 +300,10 @@ export default class Widget extends PureComponent {
                 handleChecks={this.formSubmit}
               />
             : null }
-            
+
             <p>Extend your Jenkins environment with any of the 1000+ community added plugins.
             Better yet, join the community and contribute your own.</p>
-          
+
         </form>
         <div className="row results">
           {this.state.showFilter && this.state.showResults ? <div className="col-md-2"/> : null}

@@ -1,49 +1,43 @@
 import React, { PropTypes } from 'react';
-import PureComponent from 'react-pure-render/component';
+import View from './View';
 
 const items = ['Tiles', 'List', 'Table'];
 
-export class View extends PureComponent {
+export default class Views extends React.PureComponent {
 
-  static propTypes = {
-    title: PropTypes.any.isRequired,
-    onClick: PropTypes.func.isRequired,
-  };
-
-  render() {
-    const { title, onClick, isActive,icon } = this.props;
-    return (<button className={"btn btn-secondary " + isActive}
-               onClick={onClick}><i className={icon}></i></button>
-    );
-  }
-}
-export default class Views extends PureComponent {
-
-  static propTypes = {
+  static contextTypes = {
     router: PropTypes.object.isRequired,
     location: PropTypes.object.isRequired,
   };
 
-  render() {
-    const {location, router} = this.props;
-    const {view = 'Tiles'} = location.query;
-    return (<fieldset className='btn-group'>
+  buildIcon(item) {
+    switch (item) {
+      case 'Tiles': return 'icon-grid-alt';
+      case 'List': return 'icon-list2';
+      case 'Table': return 'icon-menu3';
+      default: return '';
+    }
+  }
 
-          { items.map((item, index) => {
-            const isActive = (item === view )?'active':'';
-            const icon = (item === 'Tiles')? 'icon-grid-alt':
-              (item === 'List')? 'icon-list2' :
-                (item === 'Table')? 'icon-menu3':'';        
-            return (<View key={index}
-                      icon={icon}
-                      isActive={isActive}
-                      title={item}
-                      onClick={(e)=> {
-                        e.preventDefault()
-                        location.query.view = item;
-                        router.replace(location);
-            }}/>);
-          })}
+  render() {
+    const {location, router} = this.context;
+    const {view = 'Tiles'} = location.query;
+    return (
+      <fieldset className="btn-group">
+        { items.map((item, index) => {
+          const icon = this.buildIcon(item);
+          return (
+            <View key={index}
+              icon={icon}
+              isActive={item === view}
+              onClick={(event) => {
+                event.preventDefault();
+                location.query.view = item;
+                router.replace(location);
+              }}
+            />
+          );
+        })}
       </fieldset>
     );
   }
