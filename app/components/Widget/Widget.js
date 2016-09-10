@@ -260,7 +260,7 @@ export default class Widget extends PureComponent {
         <form ref="form" action="#" id="plugin-search-form" className={classNames(styles.HomeHeader, (this.state.showFilter)?'showFilter':'', 'HomeHeader jumbotron')} onSubmit={(e)=>{this.formSubmit(e);}}>
             
             <h1><span className="logo">project</span>Voltron</h1>
-            <p className="tagline">The strength of many, joined to one.</p>
+            <p className="tagline">The strength of many, shared by all.</p>
             
             <nav className={classNames(styles.navbar,'navbar')}>
               <div className="nav navbar-nav">
