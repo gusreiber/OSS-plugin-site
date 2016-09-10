@@ -80,7 +80,7 @@ export default class Categories extends PureComponent {
       <fieldset className={classNames(styles.Categories)}>
         <legend>
           Categories
-          <button className={classNames('btn btn-secondary btn-sm')}
+          <button className={classNames('btn btn-secondary btn-sm show-all')}
             name="clear"
             value="category,labelFilter"
               onClickCapture={handleChecks.bind(this)}>Show all</button>
