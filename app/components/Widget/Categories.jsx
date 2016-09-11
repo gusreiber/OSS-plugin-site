@@ -3,7 +3,7 @@ import classNames from 'classnames';
 import styles from './Widget.css';
 import Category from './Category';
 
-export default class Categories extends React.PureComponent {
+export default class Categories extends React.Component {
 
   static propTypes = {
     categories: PropTypes.object.isRequired,
