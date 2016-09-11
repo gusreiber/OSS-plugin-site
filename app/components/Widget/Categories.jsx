@@ -4,9 +4,6 @@ import styles from './Widget.css';
 import Category from './Category';
 
 export default class Categories extends React.PureComponent {
-  constructor(properties) {
-    super(properties);
-  }
 
   static propTypes = {
     categories: PropTypes.object.isRequired,
@@ -15,7 +12,7 @@ export default class Categories extends React.PureComponent {
   };
 
   render() {
-    const {categories,labels, handleChecks} = this.props;
+    const {categories, labels, handleChecks} = this.props;
     const sortedCategories = categories.valueSeq();
     return (
       <fieldset className={classNames(styles.Categories)}>
@@ -24,7 +21,7 @@ export default class Categories extends React.PureComponent {
           <button className={classNames('btn btn-secondary btn-sm')}
             name="clear"
             value="category,labelFilter"
-              onClickCapture={handleChecks.bind(this)}>Show all</button>
+              onClickCapture={handleChecks}>Show all</button>
         </legend>
         <ul className={classNames(styles.Cols3, 'Cols3')}>
           {sortedCategories.map((item) => {

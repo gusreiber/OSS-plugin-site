@@ -6,7 +6,7 @@ export default class Category extends React.PureComponent {
 
   constructor(props, context) {
     super(props, context);
-    this.state = context.location.query;
+    this.handleChange = this.handleChange.bind(this);
   }
 
   static propTypes = {
@@ -20,7 +20,7 @@ export default class Category extends React.PureComponent {
     location: PropTypes.object.isRequired
   };
 
-  handleChange(e){
+  handleChange(e) {
     //TODO:FIXME: seems hacky to toss the original target and the related child labels into the event like this...
     //but I am doing it, so hold your nose...
     const myEvent = new Event('submit');
@@ -29,11 +29,10 @@ export default class Category extends React.PureComponent {
     document.getElementById('plugin-search-form').dispatchEvent(myEvent);
   }
 
-  checkState(name,value) {
-    const q = this.context.location.query;
-    const qName = q[name];
-    if(!q || !qName) return false;
-    return qName.split(',').indexOf(value) > -1;
+  checkState(name, value) {
+    const query = this.context.location.query || '';
+    const queryName = query[name];
+    return queryName ? queryName.split(',').indexOf(value) > -1 : false;
   }
 
   render() {
@@ -44,8 +43,8 @@ export default class Category extends React.PureComponent {
       >
         <label>
           <input type="checkbox" name="categories" value={id}
-            checked={this.checkState('categories',id)}
-            onChange={this.handleChange.bind(this)}
+            checked={this.checkState('categories', id)}
+            onChange={this.handleChange}
           />
           <span>{title}</span>
         </label>
@@ -56,7 +55,7 @@ export default class Category extends React.PureComponent {
                 <label>
                   <input type="checkbox" name="labels" value={label.id} data-parent={id}
                   checked={this.checkState('labels', label.id)}
-                  onChange={this.handleChange.bind(this)}
+                  onChange={this.handleChange}
                 />
                   <span>{label.title}</span>
                 </label>
