@@ -18,7 +18,7 @@ export default class Categories extends React.Component {
       <fieldset className={classNames(styles.Categories)}>
         <legend>
           Categories
-          <button className={classNames('btn btn-secondary btn-sm')}
+          <button className={classNames('btn btn-secondary btn-sm show-all')}
             name="clear"
             value="category,labelFilter"
               onClickCapture={handleChecks}>Show all</button>

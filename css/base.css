@@ -14,24 +14,52 @@ body .showResults.item-finder .filters .row {border:none; padding:0}
 body .showResults.item-finder .filters .row > div {font-size:.75rem; padding:0 .5rem;  overflow:hidden;}
 body .showResults.item-finder .filters .row > div label {white-space:nowrap;}
 body .showResults.item-finder .filters .Cols3 {column-count:1; -moz-column-count:1;}
-
+.filters .show-all{display: none;
+    border: none;
+    background: #168BB9;
+    font-family: lato;
+    padding: .15rem .5rem;
+    margin-left: .5rem;
+    font-size: .67rem;
+    color: #fff;
+    font-weight: 200;
+    border-radius: 2px;
+}
+.isFiltered .filters .show-all {display: inline-block}
 .showResults #plugin-search-form .nav > .btn-group {display:inline-block;}
 .showResults #plugin-search-form p,
 .showResults #plugin-search-form h1,
 .showResults #plugin-search-form:before {display:none}
 #plugin-search-form {vertical-align:middle; padding:4rem 2rem}
-#plugin-search-form p{font-family:'Raleway'; color:#bde; font-weight:200; box-sizing:content-box;  max-width:30rem; margin:1rem auto; font-size:1.1rem; text-align:left; padding-left:75px}
-#plugin-search-form h1{font-family: 'georgia',serif; box-sizing:content-box; position:relative; padding-left:50px; font-weight:bold; color:#bde; width:30rem; margin:1.5rem auto 1rem; text-align:left}
-#plugin-search-form h1 .logo {font-family:'georgia'; font-weight:bold; color:#fff;}
-#plugin-search-form h1:before {display:inline-block; position:absolute; left:-150px; vertical-align:top; margin:-3rem 0 0; width:180px; height:246px; background:url(https://jenkins.io/images/226px-Jenkins_logo.svg.png) no-repeat;background-size:100%; content:''}
-#plugin-search-form .nav {vertical-align:middle; padding-left:50px}
+#plugin-search-form p{font-family:'Ubuntu'; color:#bde; font-weight:200; box-sizing:content-box;  max-width:30rem; margin:1rem auto; font-size:1.1rem; text-align:left; padding-left:170px}
+#plugin-search-form p.tagline {margin-top:-1rem; padding-left:360px; color:#ff9; font-style:italic}
+#plugin-search-form h1{    font-family: 'Ubuntu','Titillium Web','Orbitron',sans-serif;
+    color: #fff;
+    font-size: 3rem;
+    box-sizing: content-box;
+    position: relative;
+    padding-left: 145px;
+    font-weight: 800;
+    width: 30rem;
+    margin: 1.5rem auto 1rem;
+    text-align: left;
+    font-style: italic;
+    border-bottom: 1px solid rgba(255,255,255,.25);}
+#plugin-search-form h1 .logo {font-family:'Titillium Web','Orbitron'; font-weight:100;color:#bde; margin-right:.25rem}
+#plugin-search-form h1:before {display:inline-block; position:absolute; left:-150px; vertical-align:top; margin:-3rem 0 0; width:271px; height:294px; background:url(img/jenkins-voltron-271x294x8.png) no-repeat;background-size:100%; content:''}
+#plugin-search-form .nav {vertical-align:middle; padding-left:145px}
 #plugin-search-form .nav > .btn-group {display:none;}
 #plugin-search-form .nav-box {display:inline-block; text-align:left;}
+
+body a {color:#069}
+body a:visited {color:#7ac}
+body a:hover {color:#09c}
+body a:active {color:#c00}
 
 .NoLabels > .Categories label > input {display:none}
 .NoLabels > .Categories label > span {margin-left:0 !important; color:#0275d8; cursor:pointer}
 
-body #grid-box .item-finder > .NoLabels {padding: 2rem 0; background:#fff}
+body #grid-box .item-finder > .NoLabels {padding: 2rem 0; background:#e5f8ff}
 body #grid-box .item-finder > .NoLabels .Cols3 {font-size:.85rem}
 body #grid-box .item-finder > .NoLabels .Cols3 label > span {margin-left:.5rem}
 body #grid-box .item-finder .NoLabels .Entry-box {display:block;    padding: 0.25rem 0;
@@ -206,8 +234,9 @@ h1.title .sub {display:block; font-weight:normal; font-size:.85rem; color:#999; 
 .markdown-body h3 {font-size:1.25rem;}
 .markdown-body h4 {font-size:1.1rem;}
 
-.filters .mask li {opacity:.5; position:relative;}
-.filters .mask li label:before {content:''; font-size:0; display:block; height:.5rem; width:.5rem; margin:.25rem .4rem; background:#168BB9; position:absolute;}
+.filters .mask li > label {opacity:.5; position:relative;}
+.filters .mask li > label:hover {opacity:1; color:#168BB9}
+.filters .mask li > label:before {content:''; font-size:0; display:block; height:.5rem; width:.5rem; margin:.25rem .4rem; background:#168BB9; position:absolute;}
 .filters .mask li input[type=checkbox]{visibility: hidden;}
 .filters label {cursor:pointer}
 
@@ -458,7 +487,7 @@ spinner .double-bounce1, .spinner .double-bounce2 {
 }
 .results.row {overflow:hidden; height:0}
 .showResults .results.row {height:auto;}
-.showResults.Tiles .results.row {min-height:79rem;}
+.showResults .results.row {min-height:75rem; padding-bottom:5rem}
 
 .double-bounce2 {
   -webkit-animation-delay: -1.0s;

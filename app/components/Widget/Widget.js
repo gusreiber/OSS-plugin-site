@@ -50,6 +50,8 @@ class Widget extends React.PureComponent {
   }
 
   formSubmit(e){
+    console.log(e);
+
     //TODO: FIXME: These are attributes that need to come from label and category click events to check the parent-child rules their selection.
     // would be better for readability if their optional attributes were passed directly into this function.
     const clicked = e.nativeEvent.orgTarget || e.currentTarget;
@@ -60,13 +62,14 @@ class Widget extends React.PureComponent {
     const { router } = this.props;
     const form = document.getElementById('plugin-search-form');
     const formElems = findDOMNode(form).elements;
-    const state = this.state;
+    const state = this.state || {};
 
     // keep track of which location properties are new...
-    let newLocationQuery = {};
-    // keep existing state if not otherwise changed...
+    const newLocationQuery = {};
+    // keep existing state for stuff not in the form...
     const { location } = this.context;
-    location.query = {showFilter:true,maintainers:state.maintainers};
+    location.query = {showFilter:true};
+    if (state.maintainers) location.query.maintainers = state.maintainers;
     // reset the application state in preparation for evaluating the form settings...
     router.replace({});
     e.preventDefault();
@@ -116,11 +119,12 @@ class Widget extends React.PureComponent {
         }
       }
     }
-
-    // now lets check-em...
-    for(let i = 0; i < formElems.length; i++){
-      checkElements(formElems[i],location.query);
-    }
+    // if this is a clear button, lets do that, but if not...
+    if(clicked.name !== 'clear')
+      // now lets check-em...
+      for(let i = 0; i < formElems.length; i++){
+        checkElements(formElems[i],location.query);
+      }
     router.replace(location);
 
     return false;
@@ -274,18 +278,18 @@ class Widget extends React.PureComponent {
     const { location } = this.context;
     const {view = 'Tiles'} = location.query;
 
+    const isFiltered = (location.query.categories || location.query.labels)?'isFiltered':null;
+
     const
       toRange = searchOptions.limit * Number(searchOptions.page) <= Number(searchOptions.total) ?
       searchOptions.limit * Number(searchOptions.page) : Number(searchOptions.total),
       fromRange = ((searchOptions.limit) * (Number(searchOptions.page)) - (searchOptions.limit - 1));
 
     return (
-      <div className={classNames(styles.ItemFinder, view, this.state.showResults, 'item-finder')} onClick={this.clickClose.bind(this)}>
+      <div className={classNames(styles.ItemFinder, view, this.state.showResults, isFiltered, 'item-finder')} onClick={this.clickClose.bind(this)}>
         <form ref="form" action="#" id="plugin-search-form" className={classNames(styles.HomeHeader, (this.state.showFilter)?'showFilter':'', 'HomeHeader jumbotron')} onSubmit={(e)=>{this.formSubmit(e);}}>
-
-            <h1><span className="logo">Jenkins</span> Plugin Pantry</h1>
-
-
+            <h1><span className="logo">project</span>Voltron</h1>
+            <p className="tagline">The strength of many, shared by all.</p>    
             <nav className={classNames(styles.navbar,'navbar')}>
               <div className="nav navbar-nav">
                 <fieldset className={classNames(styles.SearchBox, 'form-inline SearchBox')}>
