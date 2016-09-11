@@ -4,26 +4,46 @@ import Pagination from './Pagination';
 import Filters from './Filters';
 import Views from './Views';
 import React, { PropTypes } from 'react';
+import { withRouter } from 'react-router';
 import Spinner from '../../commons/spinner';
 import classNames from 'classnames';
-import PureComponent from 'react-pure-render/component';
 import { findDOMNode } from 'react-dom';
 import keydown from 'react-keydown';
 import { getLabel } from '../../helper';
 
-export default class Widget extends PureComponent {
-  constructor(properties) {
-    super(properties);
+class Widget extends React.PureComponent {
+
+  constructor(props, context) {
+    super(props, context);
     this.state  = {q:''};
-    const que = properties.location.query;
-    Object.keys(properties.location.query).map((key)=>{
+    const { location } = context;
+    const que = location.query;
+    Object.keys(location.query).map((key)=>{
       this.state[key] = que[key];
     });
 
     if(que.q || que.categories || que.labels || que.maintainers)
       this.state.showResults = 'showResults';
-
   }
+
+  static contextTypes = {
+    location: PropTypes.object.isRequired
+  };
+
+  static propTypes = {
+    totalSize: PropTypes.any.isRequired,
+    labels: PropTypes.any,
+    getVisiblePlugins: PropTypes.any,
+    searchOptions: PropTypes.any.isRequired,
+    isFetching: PropTypes.bool.isRequired,
+    isHome: PropTypes.bool.isRequired,
+    getVisiblePluginsLabels: PropTypes.any,
+    categories: PropTypes.any,
+    installed: PropTypes.any,
+    updated: PropTypes.any,
+    trend: PropTypes.any
+  };
+
   shouldComponentUpdate(nextProp,nextState) {
     //if(nextProp.isFetching) return false;
     return true;
@@ -37,7 +57,7 @@ export default class Widget extends PureComponent {
     const childred =e.nativeEvent.children || [];
 
     // These constant elements are pieces that will be used to reconcile the state of the form with the state and results of the app
-    const router = this.router || this.context.router || this.props.router;
+    const router = this.props.router;
     const form = document.getElementById('plugin-search-form');
     const formElems = findDOMNode(form).elements;
     const state = this.state;
@@ -116,10 +136,13 @@ export default class Widget extends PureComponent {
         };
     return valSeq.sort(func);
   }
+
   //TODO: these clear function should be 1 + an arg.
-  clearMaintainers(event){
-    this.context.router.replace({});
-    location.query = location.query || {}
+  clearMaintainers(event) {
+    const { router } = this.props;
+    const { location } = this.context;
+    router.replace({});
+    location.query = location.query || {};
     const labelId = event.currentTarget.name;
     const activeLabels = location.query.maintainers;
     const newLabels = (activeLabels)? activeLabels.split(','):[];
@@ -129,13 +152,15 @@ export default class Widget extends PureComponent {
       delete location.query.maintainers;
     else
       location.query.categories = labelString;
-    this.context.router.replace(location);
+    router.replace(location);
     this.setState({ maintainers: labelString});
   }
 
-  clearCategories(event){
-    this.context.router.replace({});
-    location.query = location.query || {}
+  clearCategories(event) {
+    const { router } = this.props;
+    const { location } = this.context;
+    router.replace({});
+    location.query = location.query || {};
     const labelId = event.currentTarget.name;
     const activeLabels = location.query.categories;
     const newLabels = (activeLabels)? activeLabels.split(','):[];
@@ -145,13 +170,15 @@ export default class Widget extends PureComponent {
       delete location.query.categories;
     else
       location.query.categories = labelString;
-    this.context.router.replace(location);
+    router.replace(location);
     this.setState({ categories: labelString});
   }
 
-  clearLabels(event){
-    this.context.router.replace({});
-    location.query = location.query || {}
+  clearLabels(event) {
+    const { router } = this.props;
+    const { location } = this.context;
+    router.replace({});
+    location.query = location.query || {};
     const labelId = event.currentTarget.name;
     const activeLabels = location.query.labels;
     const newLabels = (activeLabels)? activeLabels.split(','):[];
@@ -161,16 +188,19 @@ export default class Widget extends PureComponent {
       delete location.query.labels;
     else
       location.query.labels = labelString;
-    this.context.router.replace(location);
+    router.replace(location);
     this.setState({ labels: labelString});
 
   }
-  clearSearch(event){
+
+  clearSearch(event) {
+    const { router } = this.props;
+    const { location } = this.context;
     if(event) event.preventDefault();
-    this.context.router.replace({});
+    router.replace({});
     location.query = location.query || {};
     delete location.query.q;
-    this.context.router.replace(location);
+    router.replace(location);
     this.setState({ q: ''});
   }
 
@@ -236,12 +266,11 @@ export default class Widget extends PureComponent {
       categories,
       installed,
       updated,
-      trend,
-      location
-      } = this.props;
+      trend
+    } = this.props;
 
     const { router } = this.context;
-
+    const { location } = this.context;
     const {view = 'Tiles'} = location.query;
 
     const
@@ -469,21 +498,4 @@ export default class Widget extends PureComponent {
 
 }
 
-Widget.contextTypes = {
-  router: PropTypes.object.isRequired,
-};
-
-Widget.propTypes = {
-  location: PropTypes.object.isRequired,
-  totalSize: PropTypes.any.isRequired,
-  labels: PropTypes.any,
-  getVisiblePlugins: PropTypes.any,
-  searchOptions: PropTypes.any.isRequired,
-  isFetching: PropTypes.bool.isRequired,
-  isHome: PropTypes.bool.isRequired,
-  getVisiblePluginsLabels: PropTypes.any,
-  categories: PropTypes.any,
-  installed: PropTypes.any,
-  updated: PropTypes.any,
-  trend: PropTypes.any
-};
+export default withRouter(Widget);

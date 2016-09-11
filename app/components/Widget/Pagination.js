@@ -1,9 +1,16 @@
 import React, { PropTypes } from 'react';
-import { logger } from '../../commons';
-import PureComponent from 'react-pure-render/component';
+import { withRouter } from 'react-router';
 
-export default class Pagination extends PureComponent {
+class Pagination extends React.PureComponent {
 
+  static contextTypes = {
+    location: PropTypes.object.isRequired
+  };
+
+  static propTypes = {
+    pages: PropTypes.number.isRequired,
+    page: PropTypes.number.isRequired
+  };
 
   render() {
     const {
@@ -27,9 +34,10 @@ export default class Pagination extends PureComponent {
       start = 1;
 
     const handleClick = (data) => {
-      this.props.location.query.page = data;
-      logger.log(this.props.location);
-      this.props.router.replace(this.props.location);
+      const { location } = this.context;
+      const { router } = this.props;
+      location.query.page = data;
+      router.replace(location);
     };
 
     return (
@@ -54,49 +62,49 @@ export default class Pagination extends PureComponent {
             {cn4}
           </a>
         </li>}
-          
+
           {cn3 > 0 && current + 2 > pages && <li className="page-item">
           <a className="page-link" onClick={handleClick.bind(null, cn3)} aria-label="next">
             {cn3}
           </a>
         </li>}
-          
+
           {cn2 > 0 && <li className="page-item">
           <a className="page-link" onClick={handleClick.bind(null, cn2)} aria-label="next">
             {cn2}
           </a>
         </li>}
-          
+
           {cn1 > 0 && <li className="page-item">
           <a className="page-link" onClick={handleClick.bind(null, cn1)} aria-label="next">
             {cn1}
           </a>
-        </li>}        
-          
+        </li>}
+
           <li className="page-item active">
             <a  className="page-link" >
               {current}<span className="sr-only">(current)</span>
             </a>
           </li>
-          
+
           {c1 <=pages && <li className="page-item">
           <a className="page-link" onClick={handleClick.bind(null, c1)} aria-label="next">
             {c1}
           </a>
         </li>}
-          
+
           {c2 <=pages && <li className="page-item">
           <a className="page-link" onClick={handleClick.bind(null, c2)} aria-label="next">
             {c2}
           </a>
         </li>}
-          
+
           {c3 <=pages && current < 3 && <li className="page-item">
           <a className="page-link" onClick={handleClick.bind(null, c3)} aria-label="next">
             {c3}
           </a>
         </li>}
-          
+
           {c4 <=pages && current < 2 && <li className="page-item">
           <a className="page-link" onClick={handleClick.bind(null, c4)} aria-label="next">
             {c4}
@@ -120,9 +128,4 @@ export default class Pagination extends PureComponent {
   }
 }
 
-Pagination.propTypes = {
-  router: PropTypes.object.isRequired,
-  location: PropTypes.object.isRequired,
-  pages: PropTypes.number.isRequired,
-  page: PropTypes.number.isRequired
-};
+export default withRouter(Pagination);

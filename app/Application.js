@@ -14,15 +14,36 @@ import {
   createSelector,
   connect,
 } from './resources';
-import React, { PropTypes, Component } from 'react';
+import React, { PropTypes } from 'react';
 import Widget from './components/Widget/Widget';
 
-const { object, func, any, bool } = PropTypes;
+class Application extends React.Component {
 
-export class Application extends Component {
+  static contextTypes = {
+    location: PropTypes.object.isRequired
+  };
+
+  static propTypes = {
+    generatePluginData: PropTypes.func.isRequired,
+    generateLabelData: PropTypes.func.isRequired,
+    generateCategoryData: PropTypes.func.isRequired,
+    generateInstalledData: PropTypes.func.isRequired,
+    generateUpdatedData: PropTypes.func.isRequired,
+    generateTrendData: PropTypes.func.isRequired,
+    filterVisibleList: PropTypes.any,
+    labels: PropTypes.any,
+    categories: PropTypes.any,
+    installed: PropTypes.any,
+    updated: PropTypes.any,
+    trend: PropTypes.any,
+    totalSize: PropTypes.any.isRequired,
+    searchOptions: PropTypes.any.isRequired,
+    isFetching: PropTypes.bool.isRequired,
+    isHome: PropTypes.bool.isRequired,
+  };
 
   componentWillMount() {
-    const { location } = this.props;
+    const { location } = this.context;
     const q = location.query;
     if(q.labels || q.q || q.categories || q.maintainers || q.cores){
       this.props.generatePluginData(q);
@@ -40,15 +61,15 @@ export class Application extends Component {
 
   componentWillReceiveProps(nextProps,nextState) {
     if(nextProps.isFetching === this.props.isFetching && this.props.isFetching) return false;
-    if(nextProps.location.query !== this.props.location.query) {
+    if(nextProps.location.query !== this.context.location.query) {
       this.props.generatePluginData(nextProps.location.query);
     }
   }
-  
+
   shouldComponentUpdate(nextProp,nextState) {
-    
+
     const p = nextProp;
-    const q = this.props.location.query;
+    const q = this.context.location.query;
     const cats = this.props.categories || {};
     const labels = this.props.labels || {};
     if(this.isHome){
@@ -70,17 +91,16 @@ export class Application extends Component {
       categories,
       installed,
       updated,
-      trend,
-      location,
+      trend
     } = this.props;
-    
+
     if(this.isHome){
       if(!installed || !updated || !trend) return null;
     }
     else{
       if(!categories || !labels) return null;
     }
-    
+
     return (<div>
       <Widget
         labels={labels}
@@ -89,8 +109,6 @@ export class Application extends Component {
         updated={updated}
         trend={trend}
         searchOptions={searchOptions}
-        location={location}
-        router={this.context.router}
         getVisiblePlugins={filterVisibleList}
         totalSize={totalSize}
         isFetching = {isFetching}
@@ -99,26 +117,6 @@ export class Application extends Component {
     </div>);
   }
 }
-
-Application.propTypes = {
-  location: object.isRequired,
-  generatePluginData: func.isRequired,
-  generateLabelData: func.isRequired,
-  generateCategoryData: func.isRequired,
-  generateInstalledData: func.isRequired,
-  generateUpdatedData: func.isRequired,
-  generateTrendData: func.isRequired,
-  filterVisibleList: any,
-  labels: any,
-  categories: any,
-  installed: any,
-  updated: any,
-  trend: any,
-  totalSize: any.isRequired,
-  searchOptions: any.isRequired,
-  isFetching: bool.isRequired,
-  isHome: bool.isRequired,
-};
 
 const selectors = createSelector(
   [ totalSize, isFetching,isHome, labels,categories,installed,updated,trend, filterVisibleList, searchOptions],
