@@ -57,7 +57,7 @@ class Widget extends React.PureComponent {
     const childred =e.nativeEvent.children || [];
 
     // These constant elements are pieces that will be used to reconcile the state of the form with the state and results of the app
-    const router = this.props.router;
+    const { router } = this.props;
     const form = document.getElementById('plugin-search-form');
     const formElems = findDOMNode(form).elements;
     const state = this.state;
@@ -65,6 +65,7 @@ class Widget extends React.PureComponent {
     // keep track of which location properties are new...
     let newLocationQuery = {};
     // keep existing state if not otherwise changed...
+    const { location } = this.context;
     location.query = {showFilter:true,maintainers:state.maintainers};
     // reset the application state in preparation for evaluating the form settings...
     router.replace({});
