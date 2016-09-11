@@ -375,8 +375,6 @@ class Widget extends React.PureComponent {
                 }
                 {!isFetching && totalSize > 0 &&
                 Number(searchOptions.pages) > 1 && <Pagination
-                  router={router}
-                  location={location}
                   pages={Number(searchOptions.pages)}
                   page={Number(searchOptions.page)}
                 />}
