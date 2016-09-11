@@ -1,8 +1,21 @@
-import React, { Component, PropTypes } from 'react';
+import React, { PropTypes } from 'react';
 
-const { any } = PropTypes;
+export default class App extends React.Component {
 
-class App extends Component {
+  static childContextTypes = {
+    location: PropTypes.object.isRequired
+  };
+
+  static propTypes = {
+    children: PropTypes.any,
+  };
+
+  getChildContext() {
+    return {
+      location: this.props.location
+    };
+  }
+
   render() {
     return (
       <div>
@@ -11,9 +24,3 @@ class App extends Component {
     );
   }
 }
-
-App.propTypes = {
-  children: any,
-};
-
-export default App;
