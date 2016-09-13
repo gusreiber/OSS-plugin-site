@@ -289,7 +289,7 @@ class Widget extends React.PureComponent {
       <div className={classNames(styles.ItemFinder, view, this.state.showResults, isFiltered, 'item-finder')} onClick={this.clickClose.bind(this)}>
         <form ref="form" action="#" id="plugin-search-form" className={classNames(styles.HomeHeader, (this.state.showFilter)?'showFilter':'', 'HomeHeader jumbotron')} onSubmit={(e)=>{this.formSubmit(e);}}>
             <h1><span className="logo">project</span>Voltron</h1>
-            <p className="tagline">The strength of many, shared by all.</p>    
+            <p className="tagline">The strength of many, shared by all.</p>
             <nav className={classNames(styles.navbar,'navbar')}>
               <div className="nav navbar-nav">
                 <fieldset className={classNames(styles.SearchBox, 'form-inline SearchBox')}>
@@ -328,8 +328,6 @@ class Widget extends React.PureComponent {
               <Filters
                 labels={labels}
                 categories={categories}
-                location={location}
-                router = {router}
                 showResults={this.state.showResults}
                 handleChecks={this.formSubmit}
               />

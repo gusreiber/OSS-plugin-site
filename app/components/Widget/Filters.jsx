@@ -4,7 +4,7 @@ import styles from './Widget.css';
 import Autocomplete from './Autocomplete';
 import Categories from './Categories';
 
-export default class Filters extends React.PureComponent {
+export default class Filters extends React.Component {
 
   constructor(props, context) {
     super(props, context);
