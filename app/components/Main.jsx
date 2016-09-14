@@ -55,6 +55,7 @@ export default class Main extends React.Component {
           page: data.page,
           pages: data.pages,
           plugins: data.plugins,
+          showFilter: true,
           showResults: true,
           total: data.total
         });
