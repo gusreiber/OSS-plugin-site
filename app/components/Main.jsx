@@ -41,7 +41,8 @@ export default class Main extends React.Component {
     });
   }
 
-  search() {
+  search(event) {
+    event.preventDefault();
     const { query, activeCategories, activeLabels, sort, page, limit } = this.state;
     this.setState({
       isFetching: true,
