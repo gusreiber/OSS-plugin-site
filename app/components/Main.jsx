@@ -68,8 +68,11 @@ export default class Main extends React.Component {
   selectSort(sort) {
     this.setState({
       sort: sort
-    },
-    this.search);
+    }, () => {
+      if (this.state.showResults) {
+        this.search();
+      }
+    });
   }
 
   updateQuery(query) {
