@@ -41,6 +41,16 @@ export default class Api {
       });
   }
 
+  static getPlugin(name) {
+    const url = `${env.REST_API_URL}/plugin/${name}`;
+    return fetch(url, fetchOptions)
+      .then(this.checkStatus)
+      .then(this.parseJSON)
+      .then(data => {
+        return data;
+      });
+  }
+
   static getPlugins(query, categories, labels, sort) {
     const data = {
       q: query,

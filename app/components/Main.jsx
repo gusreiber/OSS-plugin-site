@@ -81,42 +81,52 @@ export default class Main extends React.Component {
     });
   }
 
-  componentDidMount() {
+  componentWillMount() {
     Api.getCategories()
       .then(categories => {
-        console.info("Got categories");
         this.setState({
           categories: categories
         });
       });
     Api.getLabels()
       .then(labels => {
-        console.info("Got labels");
         this.setState({
           labels: labels
         });
       });
     Api.getInstalled()
       .then(installed => {
-        console.info("Got installed");
         this.setState({
           installed: installed
         });
       });
     Api.getTrend()
       .then(trend => {
-        console.info("Got trend");
         this.setState({
           trend: trend
         });
       });
     Api.getUpdated()
       .then(updated => {
-        console.info("Got updated");
         this.setState({
           updated: updated
         });
       });
+    const activeCategories = this.props.location.query.categories || this.state.activeCategories;
+    const activeLabels = this.props.location.query.labels || this.state.activeLabels;
+    const sort = this.props.location.query.sort || this.state.sort;
+    const query = this.props.location.query.q || this.state.query;
+    const forceSearch = activeCategories.length != 0 || activeLabels.length != 0 || query !== '';
+    this.setState({
+      activeCategories: activeCategories,
+      activeLabels: activeLabels,
+      query: query,
+      sort: sort
+    }, () => {
+      if (forceSearch) {
+        this.search();
+      }
+    });
   }
 
   render() {

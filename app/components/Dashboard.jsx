@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react';
-import styles from './Widget/Widget.css';
+import styles from './Main.css';
 import classNames from 'classnames';
 import Filters from './Filters';
 import Footer from './Footer';

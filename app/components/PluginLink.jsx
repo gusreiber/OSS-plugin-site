@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react';
 import { Link } from 'react-router';
-import styles from './Widget/Widget.css';
+import styles from './Main.css';
 import classNames from 'classnames';
 import { cleanTitle } from '../helper';
 

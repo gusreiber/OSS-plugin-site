@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react';
 import classNames from 'classnames';
-import styles from './Widget/Widget.css';
+import styles from './Main.css';
 import Categories from './Categories';
 import Sort from './Sort';
 
