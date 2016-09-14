@@ -1,15 +1,7 @@
 
-import React, { PropTypes, Component } from 'react';
+import React from 'react';
 
-export default class Spinner extends Component {
-
-  static propTypes ={
-    style: PropTypes.object
-  };
-
-  static defaultProps = {
-    style: {}
-  };
+export default class Spinner extends React.PureComponent {
 
   render () {
     return (
