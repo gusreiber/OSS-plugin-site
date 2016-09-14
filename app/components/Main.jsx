@@ -41,8 +41,7 @@ export default class Main extends React.Component {
     });
   }
 
-  search(event) {
-    event.preventDefault();
+  search() {
     const { query, activeCategories, activeLabels, sort, page, limit } = this.state;
     this.setState({
       isFetching: true,
@@ -69,7 +68,8 @@ export default class Main extends React.Component {
   selectSort(sort) {
     this.setState({
       sort: sort
-    });
+    },
+    this.search);
   }
 
   updateQuery(query) {

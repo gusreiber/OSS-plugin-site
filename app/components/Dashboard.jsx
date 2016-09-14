@@ -11,6 +11,7 @@ export default class Dashboard extends React.PureComponent {
 
   constructor(props) {
     super(props);
+    this.handleOnSubmit = this.handleOnSubmit.bind(this);
   }
 
   static propTypes = {
@@ -56,12 +57,17 @@ export default class Dashboard extends React.PureComponent {
     updateQuery: PropTypes.func.isRequired
   };
 
+  handleOnSubmit(event) {
+    event.preventDefault();
+    this.props.search();
+  }
+
   render() {
     return (
       <div className={classNames(styles.ItemFinder, this.props.view, { showResults: this.props.showResults }, { isFiltered: this.props.isFiltered }, 'item-finder')}>
         <form ref="form" action="#" id="plugin-search-form"
             className={classNames(styles.HomeHeader, { showFilter: this.props.showFilter }, 'HomeHeader jumbotron')}
-            onSubmit={this.props.search}>
+            onSubmit={this.handleOnSubmit}>
           <h1><span className="logo">project</span>Voltron</h1>
           <p className="tagline">The strength of many, shared by all.</p>
           <nav className={classNames(styles.navbar, 'navbar')}>
