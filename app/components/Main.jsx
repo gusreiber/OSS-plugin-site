@@ -11,6 +11,7 @@ export default class Main extends React.Component {
       activeLabels: [],
       activeQuery: '',
       categories: [],
+      installed: [],
       isFetching: false,
       isFiltered: false,
       labels: [],
@@ -23,6 +24,8 @@ export default class Main extends React.Component {
       showResults: false,
       sort: 'relevance',
       total: 0,
+      trend: [],
+      updated: [],
       view: 'Tiles'
     };
     this.toogleFilter = this.toggleFilter.bind(this);
@@ -77,14 +80,37 @@ export default class Main extends React.Component {
   componentDidMount() {
     Api.getCategories()
       .then(categories => {
+        console.info("Got categories");
         this.setState({
           categories: categories
         });
       });
     Api.getLabels()
       .then(labels => {
+        console.info("Got labels");
         this.setState({
           labels: labels
+        });
+      });
+    Api.getInstalled()
+      .then(installed => {
+        console.info("Got installed");
+        this.setState({
+          installed: installed
+        });
+      });
+    Api.getTrend()
+      .then(trend => {
+        console.info("Got trend");
+        this.setState({
+          trend: trend
+        });
+      });
+    Api.getUpdated()
+      .then(updated => {
+        console.info("Got updated");
+        this.setState({
+          updated: updated
         });
       });
   }
@@ -97,6 +123,7 @@ export default class Main extends React.Component {
           activeLabels={this.state.activeLabels}
           activeQuery={this.state.activeQuery}
           categories={this.state.categories}
+          installed={this.state.installed}
           isFetching={this.state.isFetching}
           isFiltered={this.state.isFiltered}
           labels={this.state.labels}
@@ -109,6 +136,8 @@ export default class Main extends React.Component {
           showResults={this.state.showResults}
           sort={this.state.sort}
           total={this.state.total}
+          trend={this.state.trend}
+          updated={this.state.updated}
           view={this.state.view}
           search={this.search}
           selectSort={this.selectSort}

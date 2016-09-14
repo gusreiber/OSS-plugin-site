@@ -2,6 +2,7 @@ import React, { PropTypes } from 'react';
 import styles from './Widget/Widget.css';
 import classNames from 'classnames';
 import Filters from './Filters';
+import Footer from './Footer';
 import SearchBox from './SearchBox';
 import SearchResults from './SearchResults';
 import Views from './Views';
@@ -21,6 +22,10 @@ export default class Dashboard extends React.PureComponent {
       labels: PropTypes.arrayOf(PropTypes.string).isRequired,
       title: PropTypes.string.isRequired
     })).isRequired,
+    installed: PropTypes.arrayOf(PropTypes.shape({
+      name: PropTypes.string.isRequired,
+      title: PropTypes.string.isRequired
+    })).isRequired,
     isFetching: PropTypes.bool.isRequired,
     isFiltered: PropTypes.bool.isRequired,
     labels: PropTypes.arrayOf(PropTypes.shape({
@@ -38,6 +43,14 @@ export default class Dashboard extends React.PureComponent {
     total: PropTypes.number.isRequired,
     view: PropTypes.string.isRequired,
     toggleFilter: PropTypes.func.isRequired,
+    trend: PropTypes.arrayOf(PropTypes.shape({
+      name: PropTypes.string.isRequired,
+      title: PropTypes.string.isRequired
+    })).isRequired,
+    updated: PropTypes.arrayOf(PropTypes.shape({
+      name: PropTypes.string.isRequired,
+      title: PropTypes.string.isRequired
+    })).isRequired,
     search: PropTypes.func.isRequired,
     selectSort: PropTypes.func.isRequired,
     updateQuery: PropTypes.func.isRequired
@@ -82,6 +95,7 @@ export default class Dashboard extends React.PureComponent {
           activeLabels={this.props.activeLabels}
           activeQuery={this.props.activeQuery}
           categories={this.props.categories}
+          installed={this.props.installed}
           isFetching={this.props.isFetching}
           labels={this.props.labels}
           limit={this.props.limit}
@@ -91,6 +105,14 @@ export default class Dashboard extends React.PureComponent {
           showFilter={this.props.showFilter}
           showResults={this.props.showResults}
           total={this.props.total}
+          trend={this.props.trend}
+          updated={this.props.updated}
+        />
+        <Footer
+          categories={this.props.categories}
+          installed={this.props.installed}
+          trend={this.props.trend}
+          updated={this.props.updated}
         />
       </div>
     );

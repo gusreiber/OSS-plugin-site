@@ -57,4 +57,34 @@ export default class Api {
       });
   }
 
+  static getInstalled() {
+    const url = `${env.REST_API_URL}/plugins/installed`;
+    return fetch(url, fetchOptions)
+      .then(this.checkStatus)
+      .then(this.parseJSON)
+      .then(data => {
+        return data.plugins;
+      });
+  }
+
+  static getUpdated() {
+    const url = `${env.REST_API_URL}/plugins/updated`;
+    return fetch(url, fetchOptions)
+      .then(this.checkStatus)
+      .then(this.parseJSON)
+      .then(data => {
+        return data.plugins;
+      });
+  }
+
+  static getTrend() {
+    const url = `${env.REST_API_URL}/plugins/trend`;
+    return fetch(url, fetchOptions)
+      .then(this.checkStatus)
+      .then(this.parseJSON)
+      .then(data => {
+        return data.plugins;
+      });
+  }
+
 }
