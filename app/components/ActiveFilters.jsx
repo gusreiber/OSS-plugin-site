@@ -5,6 +5,7 @@ export default class ActiveFilters extends React.PureComponent {
   static propTypes = {
     activeCategories: PropTypes.arrayOf(PropTypes.string).isRequired,
     activeLabels: PropTypes.arrayOf(PropTypes.string).isRequired,
+    activeQuery: PropTypes.string.isRequired,
     categories: PropTypes.arrayOf(PropTypes.shape({
       id: PropTypes.string.isRequired,
       labels: PropTypes.arrayOf(PropTypes.string).isRequired,
@@ -13,12 +14,11 @@ export default class ActiveFilters extends React.PureComponent {
     labels: PropTypes.arrayOf(PropTypes.shape({
       id: PropTypes.string.isRequired,
       title: PropTypes.string
-    })).isRequired,
-    query: PropTypes.string.isRequired
+    })).isRequired
   };
 
   render() {
-    const { activeCategories, activeLabels, categories, labels, query } = this.props;
+    const { activeCategories, activeLabels, activeQuery, categories, labels } = this.props;
     const activeCategoryTitles = activeCategories.map((activeCategory) => {
       const category = categories.find((category) => category.id === activeCategory);
       const text = category !== undefined ? category.title : activeCategory;
@@ -38,7 +38,7 @@ export default class ActiveFilters extends React.PureComponent {
           {activeLabelTitles}
         </div>
         <div className="active-string">
-          {query !== '' && <a className="nav-link" title="clear search string">{query}</a>}
+          {activeQuery !== '' && <a className="nav-link" title="clear search string">{activeQuery}</a>}
         </div>
       </li>
     );

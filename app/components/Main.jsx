@@ -9,6 +9,7 @@ export default class Main extends React.Component {
     this.state = {
       activeCategories: [],
       activeLabels: [],
+      activeQuery: '',
       categories: [],
       isFetching: false,
       isFiltered: false,
@@ -48,6 +49,7 @@ export default class Main extends React.Component {
         this.setState({
           activeCategories: activeCategories,
           activeLabels: activeLabels,
+          activeQuery: query,
           isFetching: false,
           limit: limit,
           page: data.page,
@@ -74,14 +76,12 @@ export default class Main extends React.Component {
   componentDidMount() {
     Api.getCategories()
       .then(categories => {
-        console.info("Got categories");
         this.setState({
           categories: categories
         });
       });
     Api.getLabels()
       .then(labels => {
-        console.info("Got labels");
         this.setState({
           labels: labels
         });
@@ -94,6 +94,7 @@ export default class Main extends React.Component {
         <Dashboard
           activeCategories={this.state.activeCategories}
           activeLabels={this.state.activeLabels}
+          activeQuery={this.state.activeQuery}
           categories={this.state.categories}
           isFetching={this.state.isFetching}
           isFiltered={this.state.isFiltered}

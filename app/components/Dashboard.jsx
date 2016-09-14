@@ -15,6 +15,7 @@ export default class Dashboard extends React.PureComponent {
   static propTypes = {
     activeCategories: PropTypes.arrayOf(PropTypes.string).isRequired,
     activeLabels: PropTypes.arrayOf(PropTypes.string).isRequired,
+    activeQuery: PropTypes.string.isRequired,
     categories: PropTypes.arrayOf(PropTypes.shape({
       id: PropTypes.string.isRequired,
       labels: PropTypes.arrayOf(PropTypes.string).isRequired,
@@ -79,6 +80,7 @@ export default class Dashboard extends React.PureComponent {
         <SearchResults
           activeCategories={this.props.activeCategories}
           activeLabels={this.props.activeLabels}
+          activeQuery={this.props.activeQuery}
           categories={this.props.categories}
           isFetching={this.props.isFetching}
           labels={this.props.labels}
@@ -86,7 +88,6 @@ export default class Dashboard extends React.PureComponent {
           page={this.props.page}
           pages={this.props.pages}
           plugins={this.props.plugins}
-          query={this.props.query}
           showFilter={this.props.showFilter}
           showResults={this.props.showResults}
           total={this.props.total}

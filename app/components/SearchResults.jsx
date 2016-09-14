@@ -11,6 +11,7 @@ export default class SearchResults extends React.PureComponent {
   static propTypes = {
     activeCategories: PropTypes.arrayOf(PropTypes.string).isRequired,
     activeLabels: PropTypes.arrayOf(PropTypes.string).isRequired,
+    activeQuery: PropTypes.string.isRequired,
     categories: PropTypes.arrayOf(PropTypes.shape({
       id: PropTypes.string.isRequired,
       labels: PropTypes.arrayOf(PropTypes.string).isRequired,
@@ -25,7 +26,6 @@ export default class SearchResults extends React.PureComponent {
     page: PropTypes.number.isRequired,
     pages: PropTypes.number.isRequired,
     plugins: PropTypes.arrayOf(PropTypes.object).isRequired,
-    query: PropTypes.string.isRequired,
     showFilter: PropTypes.bool.isRequired,
     showResults: PropTypes.bool.isRequired,
     total: PropTypes.number.isRequired
@@ -41,9 +41,9 @@ export default class SearchResults extends React.PureComponent {
               <ActiveFilters
                 activeCategories={this.props.activeCategories}
                 activeLabels={this.props.activeLabels}
+                activeQuery={this.props.activeQuery}
                 categories={this.props.categories}
                 labels={this.props.labels}
-                query={this.props.query}
               />
               <Pagination
                 limit={this.props.limit}
