@@ -51,11 +51,13 @@ export default class Api {
       });
   }
 
-  static getPlugins(query, categories, labels, sort) {
+  static getPlugins(query, categories, labels, sort, page, limit) {
     const data = {
       q: query,
       categories: categories.join(','),
       labels: labels.join(','),
+      limit: limit,
+      page: page,
       sort: sort
     };
     const url = `${env.REST_API_URL}/plugins?${querystring.stringify(data)}`;
