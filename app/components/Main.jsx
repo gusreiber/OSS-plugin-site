@@ -34,8 +34,8 @@ export default class Main extends React.Component {
     this.updateQuery = this.updateQuery.bind(this);
   }
 
-  toggleFilter() {
-    const showFilter = !this.state.showFilter;
+  toggleFilter({ forceOpen = false, forceClose = false }) {
+    const showFilter = forceOpen ? true : (forceClose ? false : !this.state.showFilter);
     this.setState({
       showFilter: showFilter
     });

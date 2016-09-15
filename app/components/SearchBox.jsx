@@ -7,6 +7,7 @@ export default class SearchBox extends React.PureComponent {
   constructor(props) {
     super(props);
     this.handleOnChange = this.handleOnChange.bind(this);
+    this.forceShowFilter = this.forceShowFilter.bind(this);
   }
 
   static propTypes = {
@@ -19,6 +20,10 @@ export default class SearchBox extends React.PureComponent {
   handleOnChange(event) {
     event.preventDefault();
     this.props.updateQuery(this.query.value);
+  }
+
+  forceShowFilter(event) {
+    this.props.toggleFilter({ forceOpen: true });
   }
 
   render() {
@@ -35,6 +40,7 @@ export default class SearchBox extends React.PureComponent {
             <input ref={(ref) => this.query = ref}
                 value={query}
                 onChange={this.handleOnChange}
+                onFocus={this.forceShowFilter}
                 className={classNames('form-control')}
                 placeholder="Find plugins..."
             />
