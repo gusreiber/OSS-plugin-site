@@ -44,8 +44,7 @@ export default class Main extends React.Component {
   search() {
     const { query, activeCategories, activeLabels, sort, page, limit } = this.state;
     this.setState({
-      isFetching: true,
-      showResults: false
+      isFetching: true
     });
     Api.getPlugins(query, activeCategories, activeLabels, sort, page, limit)
       .then(data => {
