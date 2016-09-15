@@ -23,6 +23,7 @@ export default class Dashboard extends React.PureComponent {
       labels: PropTypes.arrayOf(PropTypes.string).isRequired,
       title: PropTypes.string.isRequired
     })).isRequired,
+    clearQuery: PropTypes.func.isRequired,
     installed: PropTypes.arrayOf(PropTypes.shape({
       name: PropTypes.string.isRequired,
       title: PropTypes.string.isRequired
@@ -105,6 +106,7 @@ export default class Dashboard extends React.PureComponent {
           activeLabels={this.props.activeLabels}
           activeQuery={this.props.activeQuery}
           categories={this.props.categories}
+          clearQuery={this.props.clearQuery}
           installed={this.props.installed}
           isFetching={this.props.isFetching}
           labels={this.props.labels}

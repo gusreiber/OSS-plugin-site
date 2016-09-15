@@ -28,12 +28,21 @@ export default class Main extends React.Component {
       updated: [],
       view: 'Tiles'
     };
+    this.clearQuery = this.clearQuery.bind(this);
     this.search = this.search.bind(this);
     this.selectSort = this.selectSort.bind(this);
     this.toggleCategory = this.toggleCategory.bind(this);
     this.toogleFilter = this.toggleFilter.bind(this);
     this.toggleLabel = this.toggleLabel.bind(this);
     this.updateQuery = this.updateQuery.bind(this);
+  }
+
+  clearQuery() {
+    this.setState({
+      query: ''
+    }, () => {
+      this.search();
+    });
   }
 
   search() {
@@ -186,6 +195,7 @@ export default class Main extends React.Component {
           activeLabels={this.state.activeLabels}
           activeQuery={this.state.activeQuery}
           categories={this.state.categories}
+          clearQuery={this.clearQuery}
           installed={this.state.installed}
           isFetching={this.state.isFetching}
           isFiltered={this.state.isFiltered}
@@ -195,19 +205,19 @@ export default class Main extends React.Component {
           pages={this.state.pages}
           plugins={this.state.plugins}
           query={this.state.query}
+          search={this.search}
+          selectSort={this.selectSort}
           showFilter={this.state.showFilter}
           showResults={this.state.showResults}
           sort={this.state.sort}
-          total={this.state.total}
-          trend={this.state.trend}
-          updated={this.state.updated}
-          view={this.state.view}
-          search={this.search}
-          selectSort={this.selectSort}
           toggleCategory={this.toggleCategory}
           toggleFilter={this.toogleFilter}
           toggleLabel={this.toggleLabel}
+          total={this.state.total}
+          trend={this.state.trend}
+          updated={this.state.updated}
           updateQuery={this.updateQuery}
+          view={this.state.view}
         />
       </div>
     );

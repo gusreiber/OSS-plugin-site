@@ -17,6 +17,7 @@ export default class SearchResults extends React.PureComponent {
       labels: PropTypes.arrayOf(PropTypes.string).isRequired,
       title: PropTypes.string.isRequired
     })).isRequired,
+    clearQuery: PropTypes.func.isRequired,
     isFetching: PropTypes.bool.isRequired,
     labels: PropTypes.arrayOf(PropTypes.shape({
       id: PropTypes.string.isRequired,
@@ -45,6 +46,7 @@ export default class SearchResults extends React.PureComponent {
                 activeLabels={this.props.activeLabels}
                 activeQuery={this.props.activeQuery}
                 categories={this.props.categories}
+                clearQuery={this.props.clearQuery}
                 labels={this.props.labels}
                 toggleCategory={this.props.toggleCategory}
                 toggleLabel={this.props.toggleLabel}
