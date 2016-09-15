@@ -22,12 +22,14 @@ export default class ActiveFilters extends React.PureComponent {
     const activeCategoryTitles = activeCategories.map((activeCategory) => {
       const category = categories.find((category) => category.id === activeCategory);
       const text = category !== undefined ? category.title : activeCategory;
-      return <a className="nav-link">{text}</a>;
+      const key = `category_${activeCategory}`;
+      return <a key={key} className="nav-link">{text}</a>;
     });
     const activeLabelTitles = activeLabels.map((activeLabel) => {
       const label = labels.find((label) => label.id === activeLabel);
       const text = label !== undefined && label.title !== null ? label.title : activeLabel;
-      return <a className="nav-link">{text}</a>;
+      const key = `label_${activeLabel}`;
+      return <a key={key} className="nav-link">{text}</a>;
     });
     return (
       <li className="nav-item active-filters">

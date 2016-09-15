@@ -5,6 +5,11 @@ import Label from './Label';
 
 export default class Category extends React.PureComponent {
 
+  constructor(props) {
+    super(props);
+    this.handleOnClick = this.handleOnClick.bind(this);
+  }
+
   static propTypes = {
     activeCategories: PropTypes.arrayOf(PropTypes.string).isRequired,
     activeLabels: PropTypes.arrayOf(PropTypes.string).isRequired,
@@ -16,8 +21,13 @@ export default class Category extends React.PureComponent {
     labels: PropTypes.arrayOf(PropTypes.shape({
       id: PropTypes.string.isRequired,
       title: PropTypes.string
-    })).isRequired
+    })).isRequired,
+    toggleCategory: PropTypes.func.isRequired
   };
+
+  handleOnClick(event) {
+    this.props.toggleCategory(this.props.category);
+  }
 
   render() {
     const { activeCategories, activeLabels, category, labels } = this.props;
@@ -26,7 +36,7 @@ export default class Category extends React.PureComponent {
     return (
       <li className={classNames(styles[category.id], category.id, { mask: checked })}>
         <label>
-          <input type="checkbox" name="categories" value={category.id} checked={checked} />
+          <input type="checkbox" name="categories" value={category.id} checked={checked} onClick={this.handleOnClick}/>
           <span>{category.title}</span>
         </label>
         <ul>

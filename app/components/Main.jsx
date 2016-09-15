@@ -28,17 +28,11 @@ export default class Main extends React.Component {
       updated: [],
       view: 'Tiles'
     };
-    this.toogleFilter = this.toggleFilter.bind(this);
-    this.selectSort = this.selectSort.bind(this);
     this.search = this.search.bind(this);
+    this.selectSort = this.selectSort.bind(this);
+    this.toggleCategory = this.toggleCategory.bind(this);
+    this.toogleFilter = this.toggleFilter.bind(this);
     this.updateQuery = this.updateQuery.bind(this);
-  }
-
-  toggleFilter({ forceOpen = false, forceClose = false }) {
-    const showFilter = forceOpen ? true : (forceClose ? false : !this.state.showFilter);
-    this.setState({
-      showFilter: showFilter
-    });
   }
 
   search() {
@@ -71,6 +65,39 @@ export default class Main extends React.Component {
       if (this.state.showResults) {
         this.search();
       }
+    });
+  }
+
+  toggleCategory(category) {
+    const { activeCategories, activeLabels } = this.state;
+    const checked = activeCategories.find((active) => active === category.id) !== undefined;
+    if (checked) {
+      // Remove category and its labels
+      const newActiveCategories = activeCategories.filter((active) => active !== category.id);
+      const newActiveLabels = activeLabels.filter((active) => !category.labels.includes(active));
+      this.setState({
+        activeCategories: newActiveCategories,
+        activeLabels: newActiveLabels
+      }, () => {
+        this.search();
+      });
+    } else {
+      // Add category but remove its labels.
+      const newActiveCategories = activeCategories.concat(category.id);
+      const newActiveLabels = activeLabels.filter((active) => !category.labels.includes(active));
+      this.setState({
+        activeCategories: newActiveCategories,
+        activeLabels: newActiveLabels
+      }, () => {
+        this.search();
+      });
+    }
+  }
+
+  toggleFilter({ forceOpen = false, forceClose = false }) {
+    const showFilter = forceOpen ? true : (forceClose ? false : !this.state.showFilter);
+    this.setState({
+      showFilter: showFilter
     });
   }
 
@@ -154,6 +181,7 @@ export default class Main extends React.Component {
           view={this.state.view}
           search={this.search}
           selectSort={this.selectSort}
+          toggleCategory={this.toggleCategory}
           toggleFilter={this.toogleFilter}
           updateQuery={this.updateQuery}
         />

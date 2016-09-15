@@ -43,6 +43,7 @@ export default class Dashboard extends React.PureComponent {
     sort: PropTypes.string.isRequired,
     total: PropTypes.number.isRequired,
     view: PropTypes.string.isRequired,
+    toggleCategory: PropTypes.func.isRequired,
     toggleFilter: PropTypes.func.isRequired,
     trend: PropTypes.arrayOf(PropTypes.shape({
       name: PropTypes.string.isRequired,
@@ -90,6 +91,7 @@ export default class Dashboard extends React.PureComponent {
             showFilter={this.props.showFilter}
             showResults={this.props.showResults}
             sort={this.props.sort}
+            toggleCategory={this.props.toggleCategory}
           />
           <p>
             Extend your Jenkins environment with any of the 1000+ community added plugins.
