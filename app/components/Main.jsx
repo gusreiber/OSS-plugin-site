@@ -35,6 +35,7 @@ export default class Main extends React.Component {
     this.toogleFilter = this.toggleFilter.bind(this);
     this.toggleLabel = this.toggleLabel.bind(this);
     this.updateQuery = this.updateQuery.bind(this);
+    this.updateView = this.updateView.bind(this);
   }
 
   clearQuery() {
@@ -139,6 +140,12 @@ export default class Main extends React.Component {
     });
   }
 
+  updateView(view) {
+    this.setState({
+      view: view
+    });
+  }
+
   componentWillMount() {
     Api.getCategories()
       .then(categories => {
@@ -217,6 +224,7 @@ export default class Main extends React.Component {
           trend={this.state.trend}
           updated={this.state.updated}
           updateQuery={this.updateQuery}
+          updateView={this.updateView}
           view={this.state.view}
         />
       </div>

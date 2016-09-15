@@ -57,7 +57,8 @@ export default class Dashboard extends React.PureComponent {
     })).isRequired,
     search: PropTypes.func.isRequired,
     selectSort: PropTypes.func.isRequired,
-    updateQuery: PropTypes.func.isRequired
+    updateQuery: PropTypes.func.isRequired,
+    updateView: PropTypes.func.isRequired
   };
 
   handleOnSubmit(event) {
@@ -81,7 +82,10 @@ export default class Dashboard extends React.PureComponent {
                 toggleFilter={this.props.toggleFilter}
                 updateQuery={this.props.updateQuery}
               />
-              <Views view={this.props.view} />
+              <Views
+                updateView={this.props.updateView}
+                view={this.props.view}
+              />
             </div>
           </nav>
           <Filters

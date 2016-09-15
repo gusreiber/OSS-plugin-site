@@ -1,17 +1,40 @@
 import React, { PropTypes } from 'react';
 import classNames from 'classnames';
 
-const View = ({ icon, isActive, onClick }) => (
-  <button className={classNames('btn btn-secondary', { active: isActive })}
-    onClick={onClick}
-  > <i className={icon} />
-  </button>
-);
+export default class View extends React.PureComponent {
 
-View.propTypes = {
-  icon: PropTypes.string.isRequired,
-  isActive: PropTypes.bool.isRequired,
-  onClick: PropTypes.func.isRequired
-};
+  constructor(props) {
+    super(props);
+    this.handleOnClick = this.handleOnClick.bind(this);
+  }
 
-export default View;
+  static propTypes = {
+    isActive: PropTypes.bool.isRequired,
+    updateView: PropTypes.func.isRequired,
+    view: PropTypes.string.isRequired
+  };
+
+  buildIcon(view) {
+    switch (view) {
+      case 'Tiles': return 'icon-grid-alt';
+      case 'List': return 'icon-list2';
+      case 'Table': return 'icon-menu3';
+      default: return '';
+    }
+  }
+
+  handleOnClick(event) {
+    this.props.updateView(this.props.view);
+  }
+
+  render() {
+    const { isActive, updateView, view } = this.props;
+    const icon = this.buildIcon(view);
+    return (
+      <button className={classNames('btn btn-secondary', { active: isActive })} onClick={this.handleOnClick}>
+        <i className={icon} />
+      </button>
+    );
+  }
+
+}
