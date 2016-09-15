@@ -21,6 +21,24 @@ export default class Api {
     return response.json();
   }
 
+  static getInitialData() {
+    return Promise.all([
+      this.getCategories(),
+      this.getLabels(),
+      this.getInstalled(),
+      this.getTrend(),
+      this.getUpdated()
+    ]).then((data) => {
+      return {
+        categories: data[0],
+        labels: data[1],
+        installed: data[2],
+        trend: data[3],
+        updated: data[4]
+      };
+    });
+  }
+
   static getCategories() {
     const url = `${env.REST_API_URL}/categories`;
     return fetch(url, fetchOptions)

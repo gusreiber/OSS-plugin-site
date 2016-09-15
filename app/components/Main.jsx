@@ -147,50 +147,31 @@ export default class Main extends React.Component {
   }
 
   componentWillMount() {
-    Api.getCategories()
-      .then(categories => {
+    Api.getInitialData().then((data) => {
+      const { categories, labels, installed, trend, updated } = data;
+      this.setState({
+        categories: categories,
+        labels: labels,
+        installed: installed,
+        trend: trend,
+        updated: updated
+      }, () => {
+        const activeCategories = this.props.location.query.categories || this.state.activeCategories;
+        const activeLabels = this.props.location.query.labels || this.state.activeLabels;
+        const sort = this.props.location.query.sort || this.state.sort;
+        const query = this.props.location.query.q || this.state.query;
+        const forceSearch = activeCategories.length != 0 || activeLabels.length != 0 || query !== '';
         this.setState({
-          categories: categories
+          activeCategories: activeCategories,
+          activeLabels: activeLabels,
+          query: query,
+          sort: sort
+        }, () => {
+          if (forceSearch) {
+            this.search();
+          }
         });
-      });
-    Api.getLabels()
-      .then(labels => {
-        this.setState({
-          labels: labels
-        });
-      });
-    Api.getInstalled()
-      .then(installed => {
-        this.setState({
-          installed: installed
-        });
-      });
-    Api.getTrend()
-      .then(trend => {
-        this.setState({
-          trend: trend
-        });
-      });
-    Api.getUpdated()
-      .then(updated => {
-        this.setState({
-          updated: updated
-        });
-      });
-    const activeCategories = this.props.location.query.categories || this.state.activeCategories;
-    const activeLabels = this.props.location.query.labels || this.state.activeLabels;
-    const sort = this.props.location.query.sort || this.state.sort;
-    const query = this.props.location.query.q || this.state.query;
-    const forceSearch = activeCategories.length != 0 || activeLabels.length != 0 || query !== '';
-    this.setState({
-      activeCategories: activeCategories,
-      activeLabels: activeLabels,
-      query: query,
-      sort: sort
-    }, () => {
-      if (forceSearch) {
-        this.search();
-      }
+      })
     });
   }
 
