@@ -24,6 +24,7 @@ export default class View extends React.PureComponent {
   }
 
   handleOnClick(event) {
+    event.preventDefault();
     this.props.updateView(this.props.view);
   }
 
