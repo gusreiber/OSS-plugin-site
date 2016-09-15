@@ -22,7 +22,8 @@ export default class Category extends React.PureComponent {
       id: PropTypes.string.isRequired,
       title: PropTypes.string
     })).isRequired,
-    toggleCategory: PropTypes.func.isRequired
+    toggleCategory: PropTypes.func.isRequired,
+    toggleLabel: PropTypes.func.isRequired
   };
 
   handleOnClick(event) {
@@ -30,7 +31,7 @@ export default class Category extends React.PureComponent {
   }
 
   render() {
-    const { activeCategories, activeLabels, category, labels } = this.props;
+    const { activeCategories, activeLabels, category, labels, toggleLabel } = this.props;
     const matchedLabels = category.labels.map((id) => labels.find((label) => label.id === id));
     const checked = activeCategories.find((active) => active === category.id) !== undefined;
     return (
@@ -45,7 +46,9 @@ export default class Category extends React.PureComponent {
               <Label
                 key={label.id}
                 activeLabels={activeLabels}
+                category={category.id}
                 label={label}
+                toggleLabel={toggleLabel}
               />
             );
           })}

@@ -32,6 +32,7 @@ export default class Main extends React.Component {
     this.selectSort = this.selectSort.bind(this);
     this.toggleCategory = this.toggleCategory.bind(this);
     this.toogleFilter = this.toggleFilter.bind(this);
+    this.toggleLabel = this.toggleLabel.bind(this);
     this.updateQuery = this.updateQuery.bind(this);
   }
 
@@ -99,6 +100,28 @@ export default class Main extends React.Component {
     this.setState({
       showFilter: showFilter
     });
+  }
+
+  toggleLabel(label, categoryId) {
+    const { activeCategories, activeLabels } = this.state;
+    const checked = activeLabels.find((active) => active === label.id) !== undefined;
+    if (checked) {
+      const newActiveLabels = activeLabels.filter((active) => active !== label.id);
+      this.setState({
+        activeLabels: newActiveLabels
+      }, () => {
+        this.search();
+      });
+    } else {
+      const newActiveCategories = activeCategories.filter((active) => active !== categoryId);
+      const newActiveLabels = activeLabels.concat(label.id);
+      this.setState({
+        activeCategories: newActiveCategories,
+        activeLabels: newActiveLabels
+      }, () => {
+        this.search();
+      });
+    }
   }
 
   updateQuery(query) {
@@ -183,6 +206,7 @@ export default class Main extends React.Component {
           selectSort={this.selectSort}
           toggleCategory={this.toggleCategory}
           toggleFilter={this.toogleFilter}
+          toggleLabel={this.toggleLabel}
           updateQuery={this.updateQuery}
         />
       </div>

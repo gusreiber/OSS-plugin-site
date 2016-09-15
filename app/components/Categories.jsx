@@ -17,11 +17,12 @@ export default class Categories extends React.PureComponent {
       id: PropTypes.string.isRequired,
       title: PropTypes.string
     })).isRequired,
-    toggleCategory: PropTypes.func.isRequired
+    toggleCategory: PropTypes.func.isRequired,
+    toggleLabel: PropTypes.func.isRequired
   };
 
   render() {
-    const { activeCategories, activeLabels, categories, labels, toggleCategory } = this.props;
+    const { activeCategories, activeLabels, categories, labels, toggleCategory, toggleLabel } = this.props;
     return (
       <fieldset className={classNames(styles.Categories)}>
         <legend>
@@ -38,6 +39,7 @@ export default class Categories extends React.PureComponent {
                 category={category}
                 labels={labels}
                 toggleCategory={toggleCategory}
+                toggleLabel={toggleLabel}
               />
             );
           })}

@@ -22,11 +22,12 @@ export default class Filters extends React.PureComponent {
     showFilter: PropTypes.bool.isRequired,
     showResults: PropTypes.bool.isRequired,
     sort: PropTypes.string.isRequired,
-    toggleCategory: PropTypes.func.isRequired
+    toggleCategory: PropTypes.func.isRequired,
+    toggleLabel: PropTypes.func.isRequired
   };
 
   render() {
-    const { activeCategories, activeLabels, categories, labels, selectSort, showFilter, showResults, sort, toggleCategory } = this.props;
+    const { activeCategories, activeLabels, categories, labels, selectSort, showFilter, showResults, sort, toggleCategory, toggleLabel } = this.props;
     return (
       showFilter &&
         <div className={classNames(styles.FiltersBox)}>
@@ -45,6 +46,7 @@ export default class Filters extends React.PureComponent {
                   activeCategories={activeCategories}
                   activeLabels={activeLabels}
                   toggleCategory={toggleCategory}
+                  toggleLabel={toggleLabel}
                 />
               </div>
             </div>
