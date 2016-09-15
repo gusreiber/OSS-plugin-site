@@ -4,7 +4,7 @@ import classNames from 'classnames';
 import ActiveFilters from './ActiveFilters';
 import Pagination from './Pagination';
 import Plugins from './Plugins';
-import Spinner from '../commons/spinner';
+import Spinner from './Spinner';
 
 export default class SearchResults extends React.PureComponent {
 

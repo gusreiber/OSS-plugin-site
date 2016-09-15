@@ -23,17 +23,6 @@ const plugins = [
   ])
 ];
 
-function getJenkinsBuildInformation() {
-  return {
-    timeStamp: new Date().toISOString(),
-    revision: process.env.GIT_COMMIT || 'HEAD',
-    branch: process.env.GIT_BRANCH || 'develop',
-    jenkinsTag: process.env.BUILD_TAG || 'local',
-    jenkinsUrl: process.env.BUILD_URL || undefined,
-    version: require('./package.json').version
-  };
-}
-
 const release = process.env.NODE_ENV === 'production';
 
 if (release) {
@@ -57,8 +46,7 @@ if (release) {
     'process.env': JSON.stringify({
       debug: true,
       NODE_ENV: 'development',
-      REST_API_URL: process.env.REST_API_URL,
-      buildRevisionInfo: getJenkinsBuildInformation()
+      REST_API_URL: process.env.REST_API_URL
     })
   }));
 }
