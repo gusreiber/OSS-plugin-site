@@ -12,6 +12,7 @@ export default class PluginDetail extends React.PureComponent {
   constructor() {
     super();
     this.state = {
+      labels: [],
       plugin: null
     };
     this.closeDialog = this.closeDialog.bind(this);
@@ -19,12 +20,15 @@ export default class PluginDetail extends React.PureComponent {
 
   componentWillMount() {
     const name = this.props.params.pluginName;
-    Api.getPlugin(name)
-      .then(plugin => {
-        this.setState({
-          plugin: plugin
-        });
+    Promise.all([
+      Api.getLabels(),
+      Api.getPlugin(name)
+    ]).then((data) => {
+      this.setState({
+        labels: data[0],
+        plugin: data[1]
       });
+    });
   }
 
   @keydown('esc')
@@ -41,8 +45,10 @@ export default class PluginDetail extends React.PureComponent {
   }
 
   getLabels(labels) {
-    return labels.map((label) => {
-      return <div className="label-link" key={label}>{label}</div>;
+    return labels.map((id) => {
+      const label = this.state.labels.find((label) => label.id === id);
+      const text = label !== undefined ? label.title : id;
+      return <div className="label-link" key={id}>{text}</div>;
     });
   }
 
