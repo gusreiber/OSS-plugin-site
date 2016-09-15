@@ -1,4 +1,6 @@
 import React, { PropTypes } from 'react';
+import ActiveCategory from './ActiveCategory';
+import ActiveLabel from './ActiveLabel';
 
 export default class ActiveFilters extends React.PureComponent {
 
@@ -14,30 +16,38 @@ export default class ActiveFilters extends React.PureComponent {
     labels: PropTypes.arrayOf(PropTypes.shape({
       id: PropTypes.string.isRequired,
       title: PropTypes.string
-    })).isRequired
+    })).isRequired,
+    toggleCategory: PropTypes.func.isRequired,
+    toggleLabel: PropTypes.func.isRequired
   };
 
   render() {
-    const { activeCategories, activeLabels, activeQuery, categories, labels } = this.props;
-    const activeCategoryTitles = activeCategories.map((activeCategory) => {
-      const category = categories.find((category) => category.id === activeCategory);
-      const text = category !== undefined ? category.title : activeCategory;
-      const key = `category_${activeCategory}`;
-      return <a key={key} className="nav-link">{text}</a>;
+    const { activeCategories, activeLabels, activeQuery, categories, labels, toggleCategory, toggleLabel } = this.props;
+    const renderedActiveCategories = activeCategories.map((activeCategory) => {
+      return (
+        <ActiveCategory
+          key={`category_${activeCategory}`}
+          category={categories.find((category) => category.id === activeCategory)}
+          toggleCategory={toggleCategory}
+        />
+      );
     });
-    const activeLabelTitles = activeLabels.map((activeLabel) => {
-      const label = labels.find((label) => label.id === activeLabel);
-      const text = label !== undefined && label.title !== null ? label.title : activeLabel;
-      const key = `label_${activeLabel}`;
-      return <a key={key} className="nav-link">{text}</a>;
+    const renderedActiveLabels = activeLabels.map((activeLabel) => {
+      return (
+        <ActiveLabel
+          key={`label_${activeLabel}`}
+          label={labels.find((label) => label.id === activeLabel)}
+          toggleLabel={toggleLabel}
+        />
+      );
     });
     return (
       <li className="nav-item active-filters">
         <div className="active-categories">
-          {activeCategoryTitles}
+          {renderedActiveCategories}
         </div>
         <div className="active-labels">
-          {activeLabelTitles}
+          {renderedActiveLabels}
         </div>
         <div className="active-string">
           {activeQuery !== '' && <a className="nav-link" title="clear search string">{activeQuery}</a>}

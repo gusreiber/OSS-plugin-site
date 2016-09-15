@@ -28,6 +28,8 @@ export default class SearchResults extends React.PureComponent {
     plugins: PropTypes.arrayOf(PropTypes.object).isRequired,
     showFilter: PropTypes.bool.isRequired,
     showResults: PropTypes.bool.isRequired,
+    toggleCategory: PropTypes.func.isRequired,
+    toggleLabel: PropTypes.func.isRequired,
     total: PropTypes.number.isRequired
   }
 
@@ -44,6 +46,8 @@ export default class SearchResults extends React.PureComponent {
                 activeQuery={this.props.activeQuery}
                 categories={this.props.categories}
                 labels={this.props.labels}
+                toggleCategory={this.props.toggleCategory}
+                toggleLabel={this.props.toggleLabel}
               />
               <Pagination
                 limit={this.props.limit}

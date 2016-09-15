@@ -114,6 +114,8 @@ export default class Dashboard extends React.PureComponent {
           plugins={this.props.plugins}
           showFilter={this.props.showFilter}
           showResults={this.props.showResults}
+          toggleCategory={this.props.toggleCategory}
+          toggleLabel={this.props.toggleLabel}
           total={this.props.total}
           trend={this.props.trend}
           updated={this.props.updated}
