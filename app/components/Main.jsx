@@ -156,10 +156,11 @@ export default class Main extends React.Component {
         trend: trend,
         updated: updated
       }, () => {
-        const activeCategories = this.props.location.query.categories || this.state.activeCategories;
-        const activeLabels = this.props.location.query.labels || this.state.activeLabels;
-        const sort = this.props.location.query.sort || this.state.sort;
-        const query = this.props.location.query.q || this.state.query;
+        const { location } = this.props;
+        const activeCategories = (location.query.categories && location.query.categories.split(',')) || this.state.activeCategories;
+        const activeLabels = (location.query.labels && location.query.labels.split(',')) || this.state.activeLabels;
+        const sort = location.query.sort || this.state.sort;
+        const query = location.query.q || this.state.query;
         const forceSearch = activeCategories.length != 0 || activeLabels.length != 0 || query !== '';
         this.setState({
           activeCategories: activeCategories,
