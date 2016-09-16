@@ -184,10 +184,12 @@ class Main extends React.Component {
         const activeLabels = (location.query.labels && location.query.labels.split(',')) || this.state.activeLabels;
         const sort = location.query.sort || this.state.sort;
         const query = location.query.q || this.state.query;
+        const page = Number(location.query.page) !== NaN ? Number(location.query.page) : this.state.page;
         const forceSearch = activeCategories.length != 0 || activeLabels.length != 0 || query !== '';
         this.setState({
           activeCategories: activeCategories,
           activeLabels: activeLabels,
+          page: page,
           query: query,
           sort: sort
         }, () => {
