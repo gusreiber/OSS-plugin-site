@@ -35,6 +35,7 @@ class Main extends React.Component {
     this.toggleCategory = this.toggleCategory.bind(this);
     this.toogleFilter = this.toggleFilter.bind(this);
     this.toggleLabel = this.toggleLabel.bind(this);
+    this.updatePage = this.updatePage.bind(this);
     this.updateQuery = this.updateQuery.bind(this);
     this.updateView = this.updateView.bind(this);
   }
@@ -151,6 +152,17 @@ class Main extends React.Component {
     });
   }
 
+  updatePage(page) {
+    if (this.state.page === page) {
+      return;
+    }
+    this.setState({
+      page: page
+    }, () => {
+      this.search();
+    });
+  }
+
   updateView(view) {
     this.setState({
       view: view
@@ -216,6 +228,7 @@ class Main extends React.Component {
           total={this.state.total}
           trend={this.state.trend}
           updated={this.state.updated}
+          updatePage={this.updatePage}
           updateQuery={this.updateQuery}
           updateView={this.updateView}
           view={this.state.view}

@@ -57,6 +57,7 @@ export default class Dashboard extends React.PureComponent {
     })).isRequired,
     search: PropTypes.func.isRequired,
     selectSort: PropTypes.func.isRequired,
+    updatePage: PropTypes.func.isRequired,
     updateQuery: PropTypes.func.isRequired,
     updateView: PropTypes.func.isRequired
   };
@@ -125,6 +126,7 @@ export default class Dashboard extends React.PureComponent {
           total={this.props.total}
           trend={this.props.trend}
           updated={this.props.updated}
+          updatePage={this.props.updatePage}
         />
         <Footer
           categories={this.props.categories}

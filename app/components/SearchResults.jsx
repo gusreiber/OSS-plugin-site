@@ -31,7 +31,8 @@ export default class SearchResults extends React.PureComponent {
     showResults: PropTypes.bool.isRequired,
     toggleCategory: PropTypes.func.isRequired,
     toggleLabel: PropTypes.func.isRequired,
-    total: PropTypes.number.isRequired
+    total: PropTypes.number.isRequired,
+    updatePage: PropTypes.func.isRequired
   }
 
   render() {
@@ -56,6 +57,7 @@ export default class SearchResults extends React.PureComponent {
                 page={this.props.page}
                 pages={this.props.pages}
                 total={this.props.total}
+                updatePage={this.props.updatePage}
               />
             </ul>
           </nav>

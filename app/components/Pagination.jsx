@@ -7,11 +7,12 @@ export default class Pagination extends React.PureComponent {
     limit: PropTypes.number.isRequired,
     page: PropTypes.number.isRequired,
     pages: PropTypes.number.isRequired,
-    total: PropTypes.number.isRequired
+    total: PropTypes.number.isRequired,
+    updatePage: PropTypes.func.isRequired
   }
 
   render() {
-    const { limit, page, pages, total } = this.props;
+    const { limit, page, pages, total, updatePage } = this.props;
     const start = (limit * page) - (limit - 1);
     const end = limit * page <= total ? limit * page : total;
     return (
@@ -27,6 +28,7 @@ export default class Pagination extends React.PureComponent {
             current={page}
             pages={pages}
             pagesToDisplay={5}
+            updatePage={updatePage}
           />
         }
       </li>
