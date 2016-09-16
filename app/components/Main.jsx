@@ -49,13 +49,14 @@ class Main extends React.Component {
   }
 
   search() {
-    const { query, activeCategories, activeLabels, sort, page, limit } = this.state;
+    const { activeCategories, activeLabels, limit, page, query, sort, view } = this.state;
     const locationQuery = {
-      q: query,
       categories: activeCategories,
       labels: activeLabels,
       page: page,
-      sort: sort
+      q: query,
+      sort: sort,
+      view: view
     };
     const location = this.props.location;
     location.query = locationQuery;
@@ -185,13 +186,15 @@ class Main extends React.Component {
         const sort = location.query.sort || this.state.sort;
         const query = location.query.q || this.state.query;
         const page = Number(location.query.page) !== NaN ? Number(location.query.page) : this.state.page;
+        const view = location.query.view || this.state.view;
         const forceSearch = activeCategories.length != 0 || activeLabels.length != 0 || query !== '';
         this.setState({
           activeCategories: activeCategories,
           activeLabels: activeLabels,
           page: page,
           query: query,
-          sort: sort
+          sort: sort,
+          view: view
         }, () => {
           if (forceSearch) {
             this.search();
