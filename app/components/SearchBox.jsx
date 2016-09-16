@@ -7,7 +7,7 @@ export default class SearchBox extends React.PureComponent {
   constructor(props) {
     super(props);
     this.handleOnChange = this.handleOnChange.bind(this);
-    this.forceShowFilter = this.forceShowFilter.bind(this);
+    this.handleToggleFilter = this.handleToggleFilter.bind(this);
   }
 
   static propTypes = {
@@ -20,11 +20,15 @@ export default class SearchBox extends React.PureComponent {
 
   handleOnChange(event) {
     event.preventDefault();
-    this.props.updateQuery(this.query.value);
+    this.props.updateQuery(event.currentTarget.value);
   }
 
-  forceShowFilter(event) {
-    this.props.toggleFilter({ forceOpen: true });
+  // For some reason the input.onFocus was overriding a.onClick so use the
+  // same function and detect the caller
+  handleToggleFilter(event) {
+    event.preventDefault();
+    const forceOpen = event.currentTarget.name === 'query';
+    this.props.toggleFilter({ forceOpen: forceOpen });
   }
 
   render() {
@@ -34,14 +38,14 @@ export default class SearchBox extends React.PureComponent {
         <div className={classNames(styles.searchBox, 'form-group')}>
           <label className={classNames(styles.searchLabel, 'input-group')}>
             <a className={classNames(styles.ShowFilter, styles.Fish, 'input-group-addon btn btn-primary ShowFilter')}
-              onClick={toggleFilter}
+              onClick={this.handleToggleFilter}
             >
               Browse <span>{showFilter ? '▼' : '◄' }</span>
             </a>
-            <input ref={(ref) => this.query = ref}
+            <input name="query"
                 value={query}
                 onChange={this.handleOnChange}
-                onFocus={this.forceShowFilter}
+                onFocus={this.handleToggleFilter}
                 className={classNames('form-control')}
                 placeholder="Find plugins..."
             />
