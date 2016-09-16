@@ -64,7 +64,7 @@ export default class Dashboard extends React.PureComponent {
 
   handleOnSubmit(event) {
     event.preventDefault();
-    this.props.search();
+    this.props.search({ resetPage: true });
   }
 
   render() {

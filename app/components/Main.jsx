@@ -48,12 +48,13 @@ class Main extends React.Component {
     });
   }
 
-  search() {
+  search(opts = { resetPage: false }) {
     this.syncLocationQuery();
     this.setState({
       isFetching: true
     });
-    const { activeCategories, activeLabels, limit, page, query, sort, view } = this.state;
+    const { activeCategories, activeLabels, limit, query, sort, view } = this.state;
+    const page = opts.resetPage ? 1 : this.state.page;
     Api.getPlugins(query, activeCategories, activeLabels, sort, page, limit)
       .then(data => {
         this.setState({
