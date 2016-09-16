@@ -1,8 +1,9 @@
 import React from 'react';
+import { withRouter } from 'react-router';
 import Api from '../api';
 import Dashboard from './Dashboard';
 
-export default class Main extends React.Component {
+class Main extends React.Component {
 
   constructor(props) {
     super(props);
@@ -48,6 +49,16 @@ export default class Main extends React.Component {
 
   search() {
     const { query, activeCategories, activeLabels, sort, page, limit } = this.state;
+    const locationQuery = {
+      q: query,
+      categories: activeCategories,
+      labels: activeLabels,
+      page: page,
+      sort: sort
+    };
+    const location = this.props.location;
+    location.query = locationQuery;
+    this.props.router.replace(location);
     this.setState({
       isFetching: true
     });
@@ -214,3 +225,5 @@ export default class Main extends React.Component {
   }
 
 }
+
+export default withRouter(Main);
