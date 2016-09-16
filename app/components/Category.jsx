@@ -7,7 +7,7 @@ export default class Category extends React.PureComponent {
 
   constructor(props) {
     super(props);
-    this.handleOnClick = this.handleOnClick.bind(this);
+    this.handleOnChange = this.handleOnChange.bind(this);
   }
 
   static propTypes = {
@@ -26,7 +26,7 @@ export default class Category extends React.PureComponent {
     toggleLabel: PropTypes.func.isRequired
   };
 
-  handleOnClick(event) {
+  handleOnChange(event) {
     this.props.toggleCategory(this.props.category);
   }
 
@@ -37,7 +37,7 @@ export default class Category extends React.PureComponent {
     return (
       <li className={classNames(styles[category.id], category.id, { mask: checked })}>
         <label>
-          <input type="checkbox" name="categories" value={category.id} checked={checked} onClick={this.handleOnClick}/>
+          <input type="checkbox" name="categories" value={category.id} checked={checked} onChange={this.handleOnChange}/>
           <span>{category.title}</span>
         </label>
         <ul>
