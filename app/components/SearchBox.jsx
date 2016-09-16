@@ -11,6 +11,7 @@ export default class SearchBox extends React.PureComponent {
   }
 
   static propTypes = {
+    handleOnSubmit: PropTypes.func.isRequired,
     query: PropTypes.string.isRequired,
     showFilter: PropTypes.bool.isRequired,
     toggleFilter: PropTypes.func.isRequired,
@@ -45,7 +46,7 @@ export default class SearchBox extends React.PureComponent {
                 placeholder="Find plugins..."
             />
             <input type="submit" className="sr-only" />
-            <div className={classNames(styles.SearchBtn, 'input-group-addon SearchBtn btn btn-primary')}>
+            <div className={classNames(styles.SearchBtn, 'input-group-addon SearchBtn btn btn-primary')} onClick={this.props.handleOnSubmit}>
               <i className={classNames('icon-search')} />
             </div>
           </label>

@@ -78,6 +78,7 @@ export default class Dashboard extends React.PureComponent {
           <nav className={classNames(styles.navbar, 'navbar')}>
             <div className="nav navbar-nav">
               <SearchBox
+                handleOnSubmit={this.handleOnSubmit}
                 query={this.props.query}
                 showFilter={this.props.showFilter}
                 toggleFilter={this.props.toggleFilter}
