@@ -49,21 +49,11 @@ class Main extends React.Component {
   }
 
   search() {
-    const { activeCategories, activeLabels, limit, page, query, sort, view } = this.state;
-    const locationQuery = {
-      categories: activeCategories,
-      labels: activeLabels,
-      page: page,
-      q: query,
-      sort: sort,
-      view: view
-    };
-    const location = this.props.location;
-    location.query = locationQuery;
-    this.props.router.replace(location);
+    this.syncLocationQuery();
     this.setState({
       isFetching: true
     });
+    const { activeCategories, activeLabels, limit, page, query, sort, view } = this.state;
     Api.getPlugins(query, activeCategories, activeLabels, sort, page, limit)
       .then(data => {
         this.setState({
@@ -90,6 +80,21 @@ class Main extends React.Component {
         this.search();
       }
     });
+  }
+
+  syncLocationQuery() {
+    const { activeCategories, activeLabels, limit, page, query, sort, view } = this.state;
+    const locationQuery = {
+      categories: activeCategories,
+      labels: activeLabels,
+      page: page,
+      q: query,
+      sort: sort,
+      view: view
+    };
+    const location = this.props.location;
+    location.query = locationQuery;
+    this.props.router.replace(location);
   }
 
   toggleCategory(category) {
@@ -167,6 +172,8 @@ class Main extends React.Component {
   updateView(view) {
     this.setState({
       view: view
+    }, () => {
+      this.syncLocationQuery();
     });
   }
 
