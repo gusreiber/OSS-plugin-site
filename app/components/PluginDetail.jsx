@@ -36,9 +36,13 @@ export default class PluginDetail extends React.PureComponent {
   }
 
   getDependencies(dependencies) {
-    return dependencies.map((dependency) => {
+    return dependencies.sort((a, b) => a.optional === b.optional ? 0 : (a.optional ? 1 : -1)).map((dependency) => {
       const required = !dependency.optional ? '(required)' : '';
-      return <div key={dependency.name}>{dependency.name} v.{dependency.version} {required}</div>;
+      return (
+        <div key={dependency.name}>
+          <a href={`/${dependency.name}`}>{dependency.name} v.{dependency.version} {required}</a>
+        </div>
+      );
     });
   }
 
