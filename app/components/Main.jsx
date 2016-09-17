@@ -43,9 +43,9 @@ class Main extends React.PureComponent {
       const activeCategories = queryParams.categories ? queryParams.categories.split(',') : undefined;
       const activeLabels = queryParams.labels ? queryParams.labels.split(',') : undefined;
       const page = queryParams.page ? Number(queryParams.page) : undefined;
-      const query = queryParams.q;
-      const sort = queryParams.sort;
-      const view = queryParams.view;
+      const query = queryParams.q || undefined;
+      const sort = queryParams.sort || undefined;
+      const view = queryParams.view || undefined;
       const data = {
         activeCategories: activeCategories,
         activeLabels: activeLabels,

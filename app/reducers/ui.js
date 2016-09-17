@@ -30,7 +30,8 @@ export const ui = (state = initialState, action) => {
       if (Object.keys(queryParams).length == 0) {
         return state;
       }
-      return Object.assign({}, state, queryParams);
+      // Since at least one was given it's being treated as initial state.
+      return Object.assign({}, initialState, queryParams);
     }
     case ACTION_TYPES.CLEAR_QUERY:
       return Object.assign({}, state, {
