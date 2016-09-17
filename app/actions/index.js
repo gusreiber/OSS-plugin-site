@@ -41,11 +41,15 @@ export function parseQueryParams(queryParams) {
   };
 }
 
-export const clearQuery = () => {
-  return {
-    type: ACTION_TYPES.CLEAR_QUERY
+export function clearQuery() {
+  return (dispatch) => {
+    const action = {
+      type: ACTION_TYPES.CLEAR_QUERY
+    };
+    dispatch(action);
+    dispatch(search());
   };
-};
+}
 
 export const setQuery = (query) => {
   return {
