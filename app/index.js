@@ -5,7 +5,7 @@ import { applyMiddleware, createStore } from 'redux';
 import createLogger from 'redux-logger'
 import thunkMiddleware from 'redux-thunk';
 import { Provider } from 'react-redux';
-import App from './containers/App';
+import App from './components/App';
 import Main from './components/Main';
 import PluginDetail from './components/PluginDetail';
 import reducer from './reducers';
