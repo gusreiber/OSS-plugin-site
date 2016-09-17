@@ -4,7 +4,7 @@ import classNames from 'classnames';
 import styles from '../styles/Main.css';
 import Category from './Category';
 
-export default class Categories extends React.PureComponent {
+class Categories extends React.PureComponent {
 
   static propTypes = {
     categories: PropTypes.arrayOf(PropTypes.shape({
