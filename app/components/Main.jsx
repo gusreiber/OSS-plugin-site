@@ -3,32 +3,34 @@ import { withRouter } from 'react-router';
 import Api from '../api';
 import Dashboard from './Dashboard';
 
+let state = {
+  activeCategories: [],
+  activeLabels: [],
+  activeQuery: '',
+  categories: [],
+  installed: [],
+  isFetching: false,
+  isFiltered: false,
+  labels: [],
+  limit: 50,
+  page: 1,
+  pages: 1,
+  plugins: [],
+  query: '',
+  showFilter: false,
+  showResults: false,
+  sort: 'relevance',
+  total: 0,
+  trend: [],
+  updated: [],
+  view: 'Tiles'
+};
+
 class Main extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = {
-      activeCategories: [],
-      activeLabels: [],
-      activeQuery: '',
-      categories: [],
-      installed: [],
-      isFetching: false,
-      isFiltered: false,
-      labels: [],
-      limit: 50,
-      page: 1,
-      pages: 1,
-      plugins: [],
-      query: '',
-      showFilter: false,
-      showResults: false,
-      sort: 'relevance',
-      total: 0,
-      trend: [],
-      updated: [],
-      view: 'Tiles'
-    };
+    this.state = state;
     this.clearQuery = this.clearQuery.bind(this);
     this.search = this.search.bind(this);
     this.selectSort = this.selectSort.bind(this);
@@ -49,7 +51,6 @@ class Main extends React.Component {
   }
 
   search(opts = { resetPage: false }) {
-    this.syncLocationQuery();
     this.setState({
       isFetching: true
     });
@@ -83,21 +84,6 @@ class Main extends React.Component {
     });
   }
 
-  syncLocationQuery() {
-    const { activeCategories, activeLabels, limit, page, query, sort, view } = this.state;
-    const locationQuery = {
-      categories: activeCategories,
-      labels: activeLabels,
-      page: page,
-      q: query,
-      sort: sort,
-      view: view
-    };
-    const location = this.props.location;
-    location.query = locationQuery;
-    this.props.router.replace(location);
-  }
-
   toggleCategory(category) {
     const { activeCategories, activeLabels } = this.state;
     const checked = activeCategories.find((active) => active === category.id) !== undefined;
@@ -124,8 +110,8 @@ class Main extends React.Component {
     }
   }
 
-  toggleFilter({ forceOpen = false, forceClose = false }) {
-    const showFilter = forceOpen ? true : (forceClose ? false : !this.state.showFilter);
+  toggleFilter(opts = { forceOpen: false, forceClose: false }) {
+    const showFilter = opts.forceOpen ? true : (opts.forceClose ? false : !this.state.showFilter);
     this.setState({
       showFilter: showFilter
     });
@@ -173,8 +159,6 @@ class Main extends React.Component {
   updateView(view) {
     this.setState({
       view: view
-    }, () => {
-      this.syncLocationQuery();
     });
   }
 
@@ -188,13 +172,7 @@ class Main extends React.Component {
         trend: trend,
         updated: updated
       }, () => {
-        const { location } = this.props;
-        const activeCategories = (location.query.categories && location.query.categories.split(',')) || this.state.activeCategories;
-        const activeLabels = (location.query.labels && location.query.labels.split(',')) || this.state.activeLabels;
-        const sort = location.query.sort || this.state.sort;
-        const query = location.query.q || this.state.query;
-        const page = Number(location.query.page) !== NaN ? Number(location.query.page) : this.state.page;
-        const view = location.query.view || this.state.view;
+        const { activeCategories, activeLabels, page, query, sort, view } = this.extractState();
         const forceSearch = activeCategories.length != 0 || activeLabels.length != 0 || query !== '';
         this.setState({
           activeCategories: activeCategories,
@@ -208,8 +186,42 @@ class Main extends React.Component {
             this.search();
           }
         });
-      })
+      });
     });
+  }
+
+  componentWillUnmount() {
+    state = this.state;
+  }
+
+  extractState() {
+    const queryParams = this.parseQueryParams();
+    const merged = Object.assign({}, this.state, queryParams);
+    return merged;
+  }
+
+  parseQueryParams() {
+    const queryParams = this.props.location.query;
+    const activeCategories = queryParams.categories ? queryParams.categories.split(',') : undefined;
+    const activeLabels = queryParams.labels ? queryParams.labels.split(',') : undefined;
+    const page = queryParams.page ? Number(queryParams.page) : undefined;
+    const query = queryParams.q;
+    const sort = queryParams.sort;
+    const view = queryParams.view;
+    const data = {
+      activeCategories: activeCategories,
+      activeLabels: activeLabels,
+      page: page,
+      query: query,
+      sort: sort,
+      view: view
+    };
+    Object.keys(data).forEach((key) => {
+      if (typeof data[key] === 'undefined') {
+        delete data[key];
+      }
+    });
+    return data;
   }
 
   render() {
