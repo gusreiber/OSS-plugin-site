@@ -47,7 +47,7 @@ class SearchBox extends React.PureComponent {
             <input name="query"
                 value={query}
                 onChange={this.handleOnChange}
-                onFocus={this.handleToggleShowFilter}
+                onClick={this.handleToggleShowFilter}
                 className={classNames('form-control')}
                 placeholder="Find plugins..."
             />

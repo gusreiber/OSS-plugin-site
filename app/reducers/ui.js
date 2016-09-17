@@ -86,10 +86,13 @@ export const ui = (state = initialState, action) => {
         });
       }
     }
-    case ACTION_TYPES.TOGGLE_SHOW_FILTER:
+    case ACTION_TYPES.TOGGLE_SHOW_FILTER: {
+      const opts = action.opts;
+      const showFilter = opts.forceOpen || !state.showFilter;
       return Object.assign({}, state, {
-        showFilter: !state.showFilter
+        showFilter: showFilter
       });
+    }
     case ACTION_TYPES.SET_PAGE:
       return Object.assign({}, state, {
         page: action.page

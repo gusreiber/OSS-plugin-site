@@ -92,7 +92,7 @@ export function toggleLabel(label, categoryId) {
   };
 }
 
-export const toggleShowFilter = (opts) => {
+export const toggleShowFilter = (opts = { forceOpen: false }) => {
   return {
     type: ACTION_TYPES.TOGGLE_SHOW_FILTER,
     opts: opts
