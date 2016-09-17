@@ -25,7 +25,7 @@ class PluginDetail extends React.PureComponent {
   }
 
   componentWillMount() {
-    const name = this.props.params.pluginName;
+    const name = this.props.params.pluginName; // eslint-disable-line react/prop-types
     Api.getPlugin(name)
       .then((data) => {
       this.setState({
@@ -96,7 +96,8 @@ class PluginDetail extends React.PureComponent {
                     <div className="col-md-4">
                       <p>
                         Installs: {plugin.stats.currentInstalls}<br />
-                        Last released: <span  title={moment(plugin.releaseTimestamp).format('dddd, MMMM Do YYYY')}>{moment(plugin.releaseTimestamp).fromNow()}</span><br/>
+                        Last released: <span  title={moment(plugin.releaseTimestamp).format('dddd, MMMM Do YYYY')}>
+                          {moment(plugin.releaseTimestamp).fromNow()}</span><br/>
                       </p>
                     </div>
                     <div className="col-md-4 maintainers">
@@ -117,7 +118,8 @@ class PluginDetail extends React.PureComponent {
                   <span>Download</span>
                   <span className="v">{cleanTitle(plugin.title)} {plugin.version}</span>
                 </a>
-                <a href={`https://updates.jenkins-ci.org/download/plugins/${plugin.name}` } className="btn btn-secondary">
+                <a href={`https://updates.jenkins-ci.org/download/plugins/${plugin.name}` }
+                    className="btn btn-secondary">
                   <i className="icon-box" />
                   <span>Archives</span>
                   <span className="v">Get past versions</span>

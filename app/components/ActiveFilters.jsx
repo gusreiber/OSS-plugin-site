@@ -25,7 +25,8 @@ class ActiveFilters extends React.PureComponent {
   };
 
   render() {
-    const { activeCategories, activeLabels, activeQuery, categories, clearQuery, labels, toggleCategory, toggleLabel } = this.props;
+    const { activeCategories, activeLabels, activeQuery, categories, clearQuery,
+      labels, toggleCategory, toggleLabel } = this.props;
     const renderedActiveCategories = activeCategories.map((activeCategory) => {
       return (
         <ActiveCategory
@@ -53,7 +54,8 @@ class ActiveFilters extends React.PureComponent {
           {renderedActiveLabels}
         </div>
         <div className="active-string">
-          {activeQuery !== '' && <a className="nav-link" title="clear search string" onClick={clearQuery}>{activeQuery}</a>}
+          {activeQuery !== '' &&
+            <a className="nav-link" title="clear search string" onClick={clearQuery}>{activeQuery}</a>}
         </div>
       </li>
     );

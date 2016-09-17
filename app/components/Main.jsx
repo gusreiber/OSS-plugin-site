@@ -39,7 +39,7 @@ class Main extends React.PureComponent {
     // sort - sort by
     // view - tiles, table, etc.
     const parseQueryParams = () => {
-      const queryParams = this.props.location.query;
+      const queryParams = this.props.location.query; // eslint-disable-line react/prop-types
       const activeCategories = queryParams.categories ? queryParams.categories.split(',') : undefined;
       const activeLabels = queryParams.labels ? queryParams.labels.split(',') : undefined;
       const page = queryParams.page ? Number(queryParams.page) : undefined;
@@ -67,7 +67,8 @@ class Main extends React.PureComponent {
 
   render() {
     return (
-      <div className={classNames(styles.ItemFinder, this.props.view, { showResults: this.props.showResults }, { isFiltered: this.props.isFiltered }, 'item-finder')}>
+      <div className={classNames(styles.ItemFinder, this.props.view, { showResults: this.props.showResults },
+          { isFiltered: this.props.isFiltered }, 'item-finder')}>
         <form ref="form" action="#" id="plugin-search-form"
             className={classNames(styles.HomeHeader, { showFilter: this.props.showFilter }, 'HomeHeader jumbotron')}
             onSubmit={this.handleOnSubmit}>

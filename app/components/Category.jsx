@@ -37,7 +37,8 @@ class Category extends React.PureComponent {
     return (
       <li className={classNames(styles[category.id], category.id, { mask: checked })}>
         <label>
-          <input type="checkbox" name="categories" value={category.id} checked={checked} onChange={this.handleOnChange}/>
+          <input type="checkbox" name="categories" value={category.id}
+            checked={checked} onChange={this.handleOnChange}/>
           <span>{category.title}</span>
         </label>
         <ul>

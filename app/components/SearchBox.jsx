@@ -52,7 +52,8 @@ class SearchBox extends React.PureComponent {
                 placeholder="Find plugins..."
             />
             <input type="submit" className="sr-only" />
-            <div className={classNames(styles.SearchBtn, 'input-group-addon SearchBtn btn btn-primary')} onClick={this.props.handleOnSubmit}>
+            <div className={classNames(styles.SearchBtn, 'input-group-addon SearchBtn btn btn-primary')}
+                onClick={this.props.handleOnSubmit}>
               <i className={classNames('icon-search')} />
             </div>
           </label>

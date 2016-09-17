@@ -20,7 +20,8 @@ class SearchResults extends React.PureComponent {
     return (
       <div className="row results">
         {this.props.showFilter && this.props.showResults && <div className="col-md-2" /> }
-        <div className={classNames(styles.ItemsList, `items-box col-md-${this.props.showFilter && this.props.showResults ? '10' : '12'}`)}>
+        <div className={classNames(styles.ItemsList,
+            `items-box col-md-${this.props.showFilter && this.props.showResults ? '10' : '12'}`)}>
           <nav className="page-controls">
             <ul className="nav navbar-nav">
               <ActiveFilters />
@@ -37,7 +38,10 @@ class SearchResults extends React.PureComponent {
                 {this.props.total === 0 && !this.props.isFetching &&
                   <div className="no-results">
                     <h1>No results found</h1>
-                    <p>You search did not return any results. Please try changing your search criteria or reloading the browser.</p>
+                    <p>
+                      You search did not return any results. 
+                      Please try changing your search criteria or reloading the browser.
+                    </p>
                   </div>
                 }
               </div>
