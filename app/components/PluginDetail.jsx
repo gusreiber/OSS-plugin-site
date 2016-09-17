@@ -50,7 +50,11 @@ export default class PluginDetail extends React.PureComponent {
     return labels.map((id) => {
       const label = this.state.labels.find((label) => label.id === id);
       const text = label !== undefined ? label.title : id;
-      return <div className="label-link" key={id}>{text}</div>;
+      return (
+        <div className="label-link" key={id}>
+          <a href={`/?labels=${id}`}>{text}</a>
+        </div>
+      );
     });
   }
 
