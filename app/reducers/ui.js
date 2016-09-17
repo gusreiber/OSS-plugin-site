@@ -69,6 +69,7 @@ export const ui = (state = initialState, action) => {
     }
     case ACTION_TYPES.TOGGLE_LABEL: {
       const label = action.label;
+      const categoryId = action.categoryId;
       const { activeCategories, activeLabels } = state;
       const checked = activeLabels.find((active) => active === label.id) !== undefined;
       if (checked) {
