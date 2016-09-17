@@ -22,8 +22,12 @@ export default class ActiveCategory extends React.PureComponent {
   }
 
   render() {
+    const { category } = this.props;
+    if (category === undefined) {
+      return null;
+    }
     return (
-      <a className="nav-link" onClick={this.handleOnClick}>{this.props.category.title}</a>
+      <a className="nav-link" onClick={this.handleOnClick}>{category.title}</a>
     );
   }
 

@@ -22,6 +22,9 @@ export default class ActiveLabel extends React.PureComponent {
 
   render() {
     const { label } = this.props;
+    if (label === undefined) {
+      return null;
+    }
     const text = label.title !== null ? label.title : label.id;
     return (
       <a className="nav-link" onClick={this.handleOnClick}>{text}</a>
