@@ -3,6 +3,8 @@ import Api from '../commons/api';
 
 export const ACTION_TYPES = keymirror({
   // == UI related
+  // Parse query params
+  PARSE_QUERY_PARAMS: null,
   // Query string
   CLEAR_QUERY: null,
   SET_QUERY: null,
@@ -25,6 +27,19 @@ export const ACTION_TYPES = keymirror({
   // == Data related
   SET_DATA: null
 });
+
+export function parseQueryParams(queryParams) {
+  return (dispatch) => {
+    const action = {
+      type: ACTION_TYPES.PARSE_QUERY_PARAMS,
+      queryParams: queryParams
+    };
+    dispatch(action);
+    if (Object.keys(queryParams).length > 0) {
+      dispatch(search());
+    }
+  };
+}
 
 export const clearQuery = () => {
   return {

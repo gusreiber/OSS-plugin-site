@@ -7,7 +7,7 @@ import Footer from './Footer';
 import SearchBox from './SearchBox';
 import SearchResults from './SearchResults';
 import Views from './Views';
-import { search } from '../actions';
+import { parseQueryParams, search } from '../actions';
 
 class Main extends React.PureComponent {
 
@@ -18,6 +18,7 @@ class Main extends React.PureComponent {
 
   static propTypes = {
     isFiltered: PropTypes.bool.isRequired,
+    parseQueryParams: PropTypes.func.isRequired,
     showFilter: PropTypes.bool.isRequired,
     showResults: PropTypes.bool.isRequired,
     search: PropTypes.func.isRequired,
@@ -27,6 +28,41 @@ class Main extends React.PureComponent {
   handleOnSubmit(event) {
     event.preventDefault();
     this.props.search({ resetPage: true });
+  }
+
+  componentDidMount() {
+    // Support query params:
+    // categories - comma separated list of filtered categories
+    // labels - comma separated list of filtered labels
+    // q - search query
+    // page - specific page
+    // sort - sort by
+    // view - tiles, table, etc.
+    const parseQueryParams = () => {
+      const queryParams = this.props.location.query;
+      const activeCategories = queryParams.categories ? queryParams.categories.split(',') : undefined;
+      const activeLabels = queryParams.labels ? queryParams.labels.split(',') : undefined;
+      const page = queryParams.page ? Number(queryParams.page) : undefined;
+      const query = queryParams.q;
+      const sort = queryParams.sort;
+      const view = queryParams.view;
+      const data = {
+        activeCategories: activeCategories,
+        activeLabels: activeLabels,
+        page: page,
+        query: query,
+        sort: sort,
+        view: view
+      };
+      Object.keys(data).forEach((key) => {
+        if (typeof data[key] === 'undefined') {
+          delete data[key];
+        }
+      });
+      return data;
+    };
+    const queryParams = parseQueryParams();
+    this.props.parseQueryParams(queryParams);
   }
 
   render() {
@@ -70,6 +106,9 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
+    parseQueryParams: (queryParams) => {
+      dispatch(parseQueryParams(queryParams));
+    },
     search: (opts) => {
       dispatch(search(opts));
     }

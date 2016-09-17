@@ -25,6 +25,13 @@ const initialState = {
 
 export const ui = (state = initialState, action) => {
   switch (action.type) {
+    case ACTION_TYPES.PARSE_QUERY_PARAMS: {
+      const queryParams = action.queryParams;
+      if (Object.keys(queryParams).length == 0) {
+        return state;
+      }
+      return Object.assign({}, state, queryParams);
+    }
     case ACTION_TYPES.CLEAR_QUERY:
       return Object.assign({}, state, {
         query: ''
