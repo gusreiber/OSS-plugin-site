@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react';
 import classNames from 'classnames';
-import styles from './Main.css';
+import styles from '../styles/Main.css';
 import PluginLink from './PluginLink';
 
 export default class Footer extends React.PureComponent {

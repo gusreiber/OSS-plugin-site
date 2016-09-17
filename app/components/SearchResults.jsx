@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react';
-import styles from './Main.css';
+import styles from '../styles/Main.css';
 import classNames from 'classnames';
 import ActiveFilters from './ActiveFilters';
 import Pagination from './Pagination';

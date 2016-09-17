@@ -1,6 +1,6 @@
 import React from 'react';
 import { withRouter } from 'react-router';
-import Api from '../api';
+import Api from '../commons/api';
 import Dashboard from './Dashboard';
 
 let state = {

@@ -1,4 +1,4 @@
-import env from './commons/env';
+import env from './env';
 
 import fetch from 'isomorphic-fetch';
 import querystring from 'querystring';

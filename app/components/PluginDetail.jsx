@@ -2,9 +2,9 @@ import React from 'react';
 import ModalView, {Body, Header} from 'react-header-modal';
 import { browserHistory } from 'react-router';
 import moment from 'moment';
-import Api from '../api';
+import Api from '../commons/api';
 import LineChart from './LineChart';
-import { cleanTitle } from '../helper';
+import { cleanTitle } from '../commons/helper';
 
 export default class PluginDetail extends React.PureComponent {
 

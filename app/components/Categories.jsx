@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react';
 import classNames from 'classnames';
-import styles from './Main.css';
+import styles from '../styles/Main.css';
 import Category from './Category';
 
 export default class Categories extends React.PureComponent {

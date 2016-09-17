@@ -1,9 +1,9 @@
 import React, { PropTypes } from 'react';
 import { Link } from 'react-router';
 import classNames from 'classnames';
-import styles from './Main.css';
+import styles from '../styles/Main.css';
 import Icon from './Icon';
-import { cleanTitle } from '../helper';
+import { cleanTitle } from '../commons/helper';
 
 export default class Plugin extends React.PureComponent {
 
