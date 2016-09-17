@@ -1,7 +1,6 @@
 import React, { PropTypes } from 'react';
 import ModalView, {Body, Header} from 'react-header-modal';
 import { browserHistory } from 'react-router';
-import keydown from 'react-keydown';
 import moment from 'moment';
 import Api from '../api';
 import LineChart from './LineChart';
@@ -31,7 +30,6 @@ export default class PluginDetail extends React.PureComponent {
     });
   }
 
-  @keydown('esc')
   closeDialog(event) {
     event && event.preventDefault();
     browserHistory.goBack();
