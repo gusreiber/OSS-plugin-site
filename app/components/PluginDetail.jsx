@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import ModalView, {Body, Header} from 'react-header-modal';
-import { browserHistory } from 'react-router';
+import { browserHistory, Link } from 'react-router';
 import moment from 'moment';
 import Api from '../commons/api';
 import LineChart from './LineChart';
@@ -44,7 +44,7 @@ class PluginDetail extends React.PureComponent {
       const required = !dependency.optional ? '(required)' : '';
       return (
         <div key={dependency.name}>
-          <a href={`/${dependency.name}`}>{dependency.name} v.{dependency.version} {required}</a>
+          <Link to={`/${dependency.name}`}>{dependency.name} v.{dependency.version} {required}</Link>
         </div>
       );
     });
@@ -56,7 +56,7 @@ class PluginDetail extends React.PureComponent {
       const text = label !== undefined ? label.title : id;
       return (
         <div className="label-link" key={id}>
-          <a href={`/?labels=${id}`}>{text}</a>
+          <Link to={`/?labels=${id}`}>{text}</Link>
         </div>
       );
     });
