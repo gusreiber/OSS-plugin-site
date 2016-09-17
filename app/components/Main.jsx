@@ -51,7 +51,7 @@ class Main extends React.Component {
       const queryParams = parseQueryParams();
       const merged = Object.assign({}, this.state, queryParams);
       return merged;
-    }
+    };
 
     // Support query params:
     // categories - comma separated list of filtered categories
@@ -82,7 +82,7 @@ class Main extends React.Component {
         }
       });
       return data;
-    }
+    };
 
     Api.getInitialData().then((data) => {
       const { categories, labels, installed, trend, updated } = data;
@@ -167,7 +167,7 @@ class Main extends React.Component {
     this.setState({
       isFetching: true
     });
-    const { activeCategories, activeLabels, limit, query, sort, view } = this.state;
+    const { activeCategories, activeLabels, limit, query, sort } = this.state;
     const page = opts.resetPage ? 1 : this.state.page;
     Api.getPlugins(query, activeCategories, activeLabels, sort, page, limit)
       .then(data => {

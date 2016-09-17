@@ -29,7 +29,7 @@ export default class View extends React.PureComponent {
   }
 
   render() {
-    const { isActive, updateView, view } = this.props;
+    const { isActive, view } = this.props;
     const icon = this.buildIcon(view);
     return (
       <button className={classNames('btn btn-secondary', { active: isActive })} onClick={this.handleOnClick}>

@@ -17,7 +17,7 @@ export default class Label extends React.PureComponent {
     toggleLabel: PropTypes.func.isRequired
   }
 
-  handleOnChange(event) {
+  handleOnChange() {
     this.props.toggleLabel(this.props.label, this.props.category);
   }
 

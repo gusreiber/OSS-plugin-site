@@ -1,4 +1,4 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
 import ModalView, {Body, Header} from 'react-header-modal';
 import { browserHistory } from 'react-router';
 import moment from 'moment';
@@ -84,7 +84,7 @@ export default class PluginDetail extends React.PureComponent {
                     <div className="col-md-4">
                       <p>
                         Installs: {plugin.stats.currentInstalls}<br />
-                        Last released: <span  title={moment(plugin.releaseTimestamp).format("dddd, MMMM Do YYYY")}>{moment(plugin.releaseTimestamp).fromNow()}</span><br/>
+                        Last released: <span  title={moment(plugin.releaseTimestamp).format('dddd, MMMM Do YYYY')}>{moment(plugin.releaseTimestamp).fromNow()}</span><br/>
                       </p>
                     </div>
                     <div className="col-md-4 maintainers">

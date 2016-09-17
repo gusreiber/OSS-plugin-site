@@ -2,7 +2,16 @@ import React from 'react';
 import { Line } from 'react-chartjs';
 import moment from 'moment';
 
-function chartData(labels,data) {
+function calculateHeight(total) {
+  if (total > 100000) return 275;
+  if (total > 50000) return 250;
+  if (total > 25000) return 225;
+  if (total > 10000) return 200;
+  if (total > 5000) return 175;
+  return 150;
+}
+
+function chartData(labels, data) {
   const lastValue = data[data.length-1];
   let maxValue = null;
   let minValue = null;
@@ -12,8 +21,8 @@ function chartData(labels,data) {
   else if (lastValue < 1000) maxValue = 2000;
   else if (lastValue < 2500) maxValue = 5000;
   else if (lastValue < 7500) maxValue = 10000;
-  
-  if(lastValue > 5000) minValue = 0;
+
+  if (lastValue > 5000) minValue = 0;
 
   return {
     labels: labels,
@@ -70,34 +79,31 @@ const styles = {
   }
 };
 
-class LineChart extends React.Component {
+export default class LineChart extends React.PureComponent {
+
+  static propTypes = {
+    total: React.PropTypes.number,
+    installations: React.PropTypes.array
+  };
 
   constructor(props) {
     super(props);
-    const life = props.total;
-    let insts = props.installations;
+    const { installations, total } = this.props;
     const labels = [];
     const data = [];
-    let height = 150;
-    if(life > 100000) height = 275;
-    else if (life > 50000) height = 250;
-    else if (life > 25000) height = 225;
-    else if (life > 10000) height = 200;
-    else if (life > 5000) height = 175;
-    else if (life > 1000) height = 150;
-    if(insts) {
-      insts.sort((a,b) => {
+    const height = calculateHeight(total);
+    if (installations) {
+      installations.sort((a,b) => {
         a = a.timestamp;
         b = b.timestamp;
         return a < b ? -1 : (a > b ? 1 : 0);
       });
-      insts = insts.slice(insts.length - 12, insts.length);
-      insts.map((inst) => {
-        labels.push(moment(inst.timestamp).format('MMM'));
-        data.push(inst.total);
+      const length = installations.length;
+      installations.slice(length - 12, length).forEach((installation) => {
+        labels.push(moment(installation.timestamp).format('MMM'));
+        data.push(installation.total);
       });
     }
-
     this.state = {
       data: chartData(labels,data),
       height: height
@@ -113,11 +119,5 @@ class LineChart extends React.Component {
       </div>
     );
   }
+
 }
-
-LineChart.propTypes = {
-  total: React.PropTypes.number,
-  installations: React.PropTypes.array
-};
-
-export default LineChart;

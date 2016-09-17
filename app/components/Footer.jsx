@@ -46,7 +46,7 @@ export default class Footer extends React.PureComponent {
               <fieldset>
                 <legend>Most installed</legend>
                 { this.props.installed.map((plugin) => {
-                  return <PluginLink key={plugin.name} name={plugin.name} title={plugin.title} />
+                  return <PluginLink key={plugin.name} name={plugin.name} title={plugin.title} />;
                 })}
               </fieldset>
             </div>
@@ -54,7 +54,7 @@ export default class Footer extends React.PureComponent {
               <fieldset>
                 <legend>Recently updated</legend>
                 { this.props.updated.map((plugin) => {
-                  return <PluginLink key={plugin.name} name={plugin.name} title={plugin.title} />
+                  return <PluginLink key={plugin.name} name={plugin.name} title={plugin.title} />;
                 })}
               </fieldset>
             </div>
@@ -62,7 +62,7 @@ export default class Footer extends React.PureComponent {
               <fieldset>
                 <legend>Recently installed</legend>
                 { this.props.trend.map((plugin) => {
-                  return <PluginLink key={plugin.name} name={plugin.name} title={plugin.title} />
+                  return <PluginLink key={plugin.name} name={plugin.name} title={plugin.title} />;
                 })}
               </fieldset>
             </div>

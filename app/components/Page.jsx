@@ -30,7 +30,7 @@ export default class Page extends React.PureComponent {
       <li className={classNames('page-item', { active: this.props.isCurrent })}>
         <a className="page-link" aria-label={this.props.className} onClick={this.handleOnClick} dangerouslySetInnerHTML={{__html: this.props.display }} />
       </li>
-    )
+    );
   }
 
 }

@@ -17,6 +17,7 @@ export default class ActiveCategory extends React.PureComponent {
   };
 
   handleOnClick(event) {
+    event.preventDefault();
     this.props.toggleCategory(this.props.category);
   }
 

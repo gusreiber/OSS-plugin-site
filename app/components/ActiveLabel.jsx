@@ -16,6 +16,7 @@ export default class ActiveLabel extends React.PureComponent {
   };
 
   handleOnClick(event) {
+    event.preventDefault();
     this.props.toggleLabel(this.props.label);
   }
 

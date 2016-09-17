@@ -32,7 +32,7 @@ export default class SearchBox extends React.PureComponent {
   }
 
   render() {
-    const { query, showFilter, toggleFilter } = this.props;
+    const { query, showFilter } = this.props;
     return (
       <fieldset className={classNames(styles.SearchBox, 'form-inline SearchBox')}>
         <div className={classNames(styles.searchBox, 'form-group')}>
