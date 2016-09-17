@@ -1,56 +1,79 @@
-import React from 'react';
-import { withRouter } from 'react-router';
-import Api from '../commons/api';
-import Dashboard from './Dashboard';
+import React, { PropTypes } from 'react';
+import { connect } from 'react-redux';
+import styles from '../styles/Main.css';
+import classNames from 'classnames';
+import Filters from './Filters';
+import Footer from './Footer';
+import SearchBox from './SearchBox';
+import SearchResults from './SearchResults';
+import Views from './Views';
+import { search } from '../actions';
 
-class Main extends React.Component {
+class Main extends React.PureComponent {
 
-  // ======== Life cycle methods ======== //
-
-  componentWillMount() {
-
+  constructor(props) {
+    super(props);
+    this.handleOnSubmit = this.handleOnSubmit.bind(this);
   }
 
-  componentWillUnmount() {
+  static propTypes = {
+    isFiltered: PropTypes.bool.isRequired,
+    showFilter: PropTypes.bool.isRequired,
+    showResults: PropTypes.bool.isRequired,
+    search: PropTypes.func.isRequired,
+    view: PropTypes.string.isRequired
+  };
+
+  handleOnSubmit(event) {
+    event.preventDefault();
+    this.props.search({ resetPage: true });
   }
 
   render() {
     return (
-      <div>
-        <Dashboard />
+      <div className={classNames(styles.ItemFinder, this.props.view, { showResults: this.props.showResults }, { isFiltered: this.props.isFiltered }, 'item-finder')}>
+        <form ref="form" action="#" id="plugin-search-form"
+            className={classNames(styles.HomeHeader, { showFilter: this.props.showFilter }, 'HomeHeader jumbotron')}
+            onSubmit={this.handleOnSubmit}>
+          <h1><span className="logo">project</span>Voltron</h1>
+          <p className="tagline">The strength of many, shared by all.</p>
+          <nav className={classNames(styles.navbar, 'navbar')}>
+            <div className="nav navbar-nav">
+              <SearchBox handleOnSubmit={this.handleOnSubmit} />
+              <Views />
+            </div>
+          </nav>
+          <Filters />
+          <p>
+            Extend your Jenkins environment with any of the 1000+ community added plugins.
+            Better yet, join the community and contribute your own.
+          </p>
+        </form>
+        <SearchResults />
+        <Footer />
       </div>
     );
   }
 
-  // ======== Class methods ======== //
-
-  clearQuery() {
-  }
-
-  search(opts = { resetPage: false }) {
-  }
-
-  selectSort(sort) {
-  }
-
-  toggleCategory(category) {
-  }
-
-  toggleFilter(opts = { forceOpen: false, forceClose: false }) {
-  }
-
-  toggleLabel(label, categoryId) {
-  }
-
-  updatePage(page) {
-  }
-
-  updateQuery(query) {
-  }
-
-  updateView(view) {
-  }
-
 }
 
-export default withRouter(Main);
+const mapStateToProps = (state) => {
+  const { ui } = state;
+  const { isFiltered, showFilter, showResults, view } = ui;
+  return {
+    isFiltered,
+    showFilter,
+    showResults,
+    view
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    search: (opts) => {
+      dispatch(search(opts));
+    }
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Main);
