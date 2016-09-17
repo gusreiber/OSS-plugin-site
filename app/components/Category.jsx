@@ -1,9 +1,11 @@
 import React, { PropTypes } from 'react';
+import { connect } from 'react-redux';
 import classNames from 'classnames';
 import styles from '../styles/Main.css';
 import Label from './Label';
+import { toggleCategory } from '../actions';
 
-export default class Category extends React.PureComponent {
+class Category extends React.PureComponent {
 
   constructor(props) {
     super(props);
@@ -12,7 +14,6 @@ export default class Category extends React.PureComponent {
 
   static propTypes = {
     activeCategories: PropTypes.arrayOf(PropTypes.string).isRequired,
-    activeLabels: PropTypes.arrayOf(PropTypes.string).isRequired,
     category: PropTypes.shape({
       id: PropTypes.string.isRequired,
       labels: PropTypes.arrayOf(PropTypes.string).isRequired,
@@ -22,8 +23,7 @@ export default class Category extends React.PureComponent {
       id: PropTypes.string.isRequired,
       title: PropTypes.string
     })).isRequired,
-    toggleCategory: PropTypes.func.isRequired,
-    toggleLabel: PropTypes.func.isRequired
+    toggleCategory: PropTypes.func.isRequired
   };
 
   handleOnChange() {
@@ -31,7 +31,7 @@ export default class Category extends React.PureComponent {
   }
 
   render() {
-    const { activeCategories, activeLabels, category, labels, toggleLabel } = this.props;
+    const { activeCategories, category, labels } = this.props;
     const matchedLabels = category.labels.map((id) => labels.find((label) => label.id === id));
     const checked = activeCategories.find((active) => active === category.id) !== undefined;
     return (
@@ -45,10 +45,8 @@ export default class Category extends React.PureComponent {
             return(
               <Label
                 key={label.id}
-                activeLabels={activeLabels}
                 category={category.id}
                 label={label}
-                toggleLabel={toggleLabel}
               />
             );
           })}
@@ -57,3 +55,23 @@ export default class Category extends React.PureComponent {
     );
   }
 }
+
+const mapStateToProps = (state) => {
+  const { ui, data } = state;
+  const { activeCategories } = ui;
+  const { labels } = data;
+  return {
+    activeCategories,
+    labels
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    toggleCategory: (category) => {
+      dispatch(toggleCategory(category));
+    }
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Category);

@@ -1,9 +1,10 @@
 import React, { PropTypes } from 'react';
+import { connect } from 'react-redux';
 import classNames from 'classnames';
 import styles from '../styles/Main.css';
 import PluginLink from './PluginLink';
 
-export default class Footer extends React.PureComponent {
+class Footer extends React.PureComponent {
 
   static propTypes = {
     categories: PropTypes.arrayOf(PropTypes.shape({
@@ -73,3 +74,17 @@ export default class Footer extends React.PureComponent {
   }
 
 }
+
+const mapStateToProps = (state) => {
+  const { data } = state;
+  const { categories, stats } = data;
+  const { installed, trend, updated } = stats;
+  return {
+    categories,
+    installed,
+    trend,
+    updated
+  };
+};
+
+export default connect(mapStateToProps)(Footer);

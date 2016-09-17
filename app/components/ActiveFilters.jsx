@@ -1,8 +1,10 @@
 import React, { PropTypes } from 'react';
+import { connect } from 'react-redux';
+import { clearQuery, toggleCategory, toggleLabel } from '../actions';
 import ActiveCategory from './ActiveCategory';
 import ActiveLabel from './ActiveLabel';
 
-export default class ActiveFilters extends React.PureComponent {
+class ActiveFilters extends React.PureComponent {
 
   static propTypes = {
     activeCategories: PropTypes.arrayOf(PropTypes.string).isRequired,
@@ -58,3 +60,32 @@ export default class ActiveFilters extends React.PureComponent {
   }
 
 }
+
+const mapStateToProps = (state) => {
+  const { ui, data} = state;
+  const { activeCategories, activeLabels, activeQuery } = ui;
+  const { categories, labels } = data;
+  return {
+    activeCategories,
+    activeLabels,
+    activeQuery,
+    categories,
+    labels
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    clearQuery: () => {
+      dispatch(clearQuery());
+    },
+    toggleCategory: (category) => {
+      dispatch(toggleCategory(category));
+    },
+    toggleLabel: (label) => {
+      dispatch(toggleLabel(label));
+    }
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(ActiveFilters);

@@ -1,34 +1,36 @@
 import React, { PropTypes } from 'react';
+import { connect } from 'react-redux';
 import styles from '../styles/Main.css';
 import classNames from 'classnames';
+import { toggleShowFilter, setQuery } from '../actions';
 
-export default class SearchBox extends React.PureComponent {
+class SearchBox extends React.PureComponent {
 
   constructor(props) {
     super(props);
     this.handleOnChange = this.handleOnChange.bind(this);
-    this.handleToggleFilter = this.handleToggleFilter.bind(this);
+    this.handleToggleShowFilter = this.handleToggleShowFilter.bind(this);
   }
 
   static propTypes = {
     handleOnSubmit: PropTypes.func.isRequired,
     query: PropTypes.string.isRequired,
     showFilter: PropTypes.bool.isRequired,
-    toggleFilter: PropTypes.func.isRequired,
-    updateQuery: PropTypes.func.isRequired
+    setQuery: PropTypes.func.isRequired,
+    toggleShowFilter: PropTypes.func.isRequired
   };
 
   handleOnChange(event) {
     event.preventDefault();
-    this.props.updateQuery(event.currentTarget.value);
+    this.props.setQuery(event.currentTarget.value);
   }
 
   // For some reason the input.onFocus was overriding a.onClick so use the
   // same function and detect the caller
-  handleToggleFilter(event) {
+  handleToggleShowFilter(event) {
     event.preventDefault();
     const forceOpen = event.currentTarget.name === 'query';
-    this.props.toggleFilter({ forceOpen: forceOpen });
+    this.props.toggleShowFilter({ forceOpen: forceOpen });
   }
 
   render() {
@@ -38,14 +40,14 @@ export default class SearchBox extends React.PureComponent {
         <div className={classNames(styles.searchBox, 'form-group')}>
           <label className={classNames(styles.searchLabel, 'input-group')}>
             <a className={classNames(styles.ShowFilter, styles.Fish, 'input-group-addon btn btn-primary ShowFilter')}
-              onClick={this.handleToggleFilter}
+              onClick={this.handleToggleShowFilter}
             >
               Browse <span>{showFilter ? '▼' : '◄' }</span>
             </a>
             <input name="query"
                 value={query}
                 onChange={this.handleOnChange}
-                onFocus={this.handleToggleFilter}
+                onFocus={this.handleToggleShowFilter}
                 className={classNames('form-control')}
                 placeholder="Find plugins..."
             />
@@ -60,3 +62,25 @@ export default class SearchBox extends React.PureComponent {
   }
 
 }
+
+const mapStateToProps = (state) => {
+  const { ui } = state;
+  const { query, showFilter } = ui;
+  return {
+    query,
+    showFilter
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    toggleShowFilter: (opts) => {
+      dispatch(toggleShowFilter(opts));
+    },
+    setQuery: (query) => {
+      dispatch(setQuery(query));
+    }
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(SearchBox);

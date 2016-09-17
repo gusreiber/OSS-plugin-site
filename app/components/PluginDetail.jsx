@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
+import { connect } from 'react-redux';
 import ModalView, {Body, Header} from 'react-header-modal';
 import { browserHistory } from 'react-router';
 import moment from 'moment';
@@ -6,12 +7,18 @@ import Api from '../commons/api';
 import LineChart from './LineChart';
 import { cleanTitle } from '../commons/helper';
 
-export default class PluginDetail extends React.PureComponent {
+class PluginDetail extends React.PureComponent {
 
-  constructor() {
-    super();
+  static propTypes = {
+    labels: PropTypes.arrayOf(PropTypes.shape({
+      id: PropTypes.string.isRequired,
+      title: PropTypes.string
+    })).isRequired
+  };
+
+  constructor(props) {
+    super(props);
     this.state = {
-      labels: [],
       plugin: null
     };
     this.closeDialog = this.closeDialog.bind(this);
@@ -19,13 +26,10 @@ export default class PluginDetail extends React.PureComponent {
 
   componentWillMount() {
     const name = this.props.params.pluginName;
-    Promise.all([
-      Api.getLabels(),
-      Api.getPlugin(name)
-    ]).then((data) => {
+    Api.getPlugin(name)
+      .then((data) => {
       this.setState({
-        labels: data[0],
-        plugin: data[1]
+        plugin: data
       });
     });
   }
@@ -48,7 +52,7 @@ export default class PluginDetail extends React.PureComponent {
 
   getLabels(labels) {
     return labels.map((id) => {
-      const label = this.state.labels.find((label) => label.id === id);
+      const label = this.props.labels.find((label) => label.id === id);
       const text = label !== undefined ? label.title : id;
       return (
         <div className="label-link" key={id}>
@@ -134,3 +138,13 @@ export default class PluginDetail extends React.PureComponent {
     );
   }
 }
+
+const mapStateToProps = (state) => {
+  const { data} = state;
+  const { labels } = data;
+  return {
+    labels
+  };
+};
+
+export default connect(mapStateToProps)(PluginDetail);

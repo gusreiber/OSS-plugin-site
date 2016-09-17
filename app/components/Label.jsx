@@ -1,6 +1,8 @@
 import React, { PropTypes } from 'react';
+import { connect } from 'react-redux';
+import { toggleLabel } from '../actions';
 
-export default class Label extends React.PureComponent {
+class Label extends React.PureComponent {
 
   constructor(props) {
     super(props);
@@ -35,3 +37,21 @@ export default class Label extends React.PureComponent {
   }
 
 }
+
+const mapStateToProps = (state) => {
+  const { ui } = state;
+  const { activeLabels } = ui;
+  return {
+    activeLabels
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    toggleLabel: (label) => {
+      dispatch(toggleLabel(label));
+    }
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Label);

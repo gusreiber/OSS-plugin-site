@@ -1,7 +1,8 @@
 import React, { PropTypes } from 'react';
+import { connect } from 'react-redux';
 import Plugin from './Plugin';
 
-export default class Plugins extends React.PureComponent {
+class Plugins extends React.PureComponent {
 
   static propTypes = {
     labels: PropTypes.arrayOf(PropTypes.shape({
@@ -24,3 +25,15 @@ export default class Plugins extends React.PureComponent {
   }
 
 }
+
+const mapStateToProps = (state) => {
+  const { ui, data} = state;
+  const { plugins } = ui;
+  const { labels } = data;
+  return {
+    labels,
+    plugins
+  };
+};
+
+export default connect(mapStateToProps)(Plugins);

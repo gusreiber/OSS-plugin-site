@@ -1,7 +1,9 @@
 import React, { PropTypes } from 'react';
+import { connect } from 'react-redux';
 import Pages from './Pages';
+import { setPage } from '../actions';
 
-export default class Pagination extends React.PureComponent {
+class Pagination extends React.PureComponent {
 
   static propTypes = {
     limit: PropTypes.number.isRequired,
@@ -36,3 +38,24 @@ export default class Pagination extends React.PureComponent {
   }
 
 }
+
+const mapStateToProps = (state) => {
+  const { ui, } = state;
+  const { limit, page, pages, total } = ui;
+  return {
+    limit,
+    page,
+    pages,
+    total
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    updatePage: (page) => {
+      dispatch(setPage(page));
+    }
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Pagination);

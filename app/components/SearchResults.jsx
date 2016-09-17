@@ -1,4 +1,5 @@
 import React, { PropTypes } from 'react';
+import { connect } from 'react-redux';
 import styles from '../styles/Main.css';
 import classNames from 'classnames';
 import ActiveFilters from './ActiveFilters';
@@ -6,33 +7,13 @@ import Pagination from './Pagination';
 import Plugins from './Plugins';
 import Spinner from './Spinner';
 
-export default class SearchResults extends React.PureComponent {
+class SearchResults extends React.PureComponent {
 
   static propTypes = {
-    activeCategories: PropTypes.arrayOf(PropTypes.string).isRequired,
-    activeLabels: PropTypes.arrayOf(PropTypes.string).isRequired,
-    activeQuery: PropTypes.string.isRequired,
-    categories: PropTypes.arrayOf(PropTypes.shape({
-      id: PropTypes.string.isRequired,
-      labels: PropTypes.arrayOf(PropTypes.string).isRequired,
-      title: PropTypes.string.isRequired
-    })).isRequired,
-    clearQuery: PropTypes.func.isRequired,
     isFetching: PropTypes.bool.isRequired,
-    labels: PropTypes.arrayOf(PropTypes.shape({
-      id: PropTypes.string.isRequired,
-      title: PropTypes.string
-    })).isRequired,
-    limit: PropTypes.number.isRequired,
-    page: PropTypes.number.isRequired,
-    pages: PropTypes.number.isRequired,
-    plugins: PropTypes.arrayOf(PropTypes.object).isRequired,
     showFilter: PropTypes.bool.isRequired,
     showResults: PropTypes.bool.isRequired,
-    toggleCategory: PropTypes.func.isRequired,
-    toggleLabel: PropTypes.func.isRequired,
-    total: PropTypes.number.isRequired,
-    updatePage: PropTypes.func.isRequired
+    total: PropTypes.number.isRequired
   }
 
   render() {
@@ -42,23 +23,8 @@ export default class SearchResults extends React.PureComponent {
         <div className={classNames(styles.ItemsList, `items-box col-md-${this.props.showFilter && this.props.showResults ? '10' : '12'}`)}>
           <nav className="page-controls">
             <ul className="nav navbar-nav">
-              <ActiveFilters
-                activeCategories={this.props.activeCategories}
-                activeLabels={this.props.activeLabels}
-                activeQuery={this.props.activeQuery}
-                categories={this.props.categories}
-                clearQuery={this.props.clearQuery}
-                labels={this.props.labels}
-                toggleCategory={this.props.toggleCategory}
-                toggleLabel={this.props.toggleLabel}
-              />
-              <Pagination
-                limit={this.props.limit}
-                page={this.props.page}
-                pages={this.props.pages}
-                total={this.props.total}
-                updatePage={this.props.updatePage}
-              />
+              <ActiveFilters />
+              <Pagination />
             </ul>
           </nav>
           <div className="padded-box">
@@ -66,7 +32,7 @@ export default class SearchResults extends React.PureComponent {
               <div className={classNames(styles.Grid, 'grid')}>
                 {this.props.isFetching && <Spinner />}
                 {!this.props.isFetching && this.props.total > 0 &&
-                  <Plugins labels={this.props.labels} plugins={this.props.plugins} />
+                  <Plugins />
                 }
                 {this.props.total === 0 && !this.props.isFetching &&
                   <div className="no-results">
@@ -84,3 +50,16 @@ export default class SearchResults extends React.PureComponent {
   }
 
 }
+
+const mapStateToProps = (state) => {
+  const { ui } = state;
+  const { isFetching, showFilter, showResults, total } = ui;
+  return {
+    isFetching,
+    showFilter,
+    showResults,
+    total
+  };
+};
+
+export default connect(mapStateToProps)(SearchResults);
