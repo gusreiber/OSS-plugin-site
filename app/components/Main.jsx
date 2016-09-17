@@ -42,6 +42,119 @@ class Main extends React.Component {
     this.updateView = this.updateView.bind(this);
   }
 
+  // ======== Life cycle methods ======== //
+
+  componentWillMount() {
+
+    // Extract state from internal save and query params (if any)
+    const extractState = () => {
+      const queryParams = parseQueryParams();
+      const merged = Object.assign({}, this.state, queryParams);
+      return merged;
+    }
+
+    // Support query params:
+    // categories - comma separated list of filtered categories
+    // labels - comma separated list of filtered labels
+    // q - search query
+    // page - specific page
+    // sort - sort by
+    // view - tiles, table, etc.
+    const parseQueryParams = () => {
+      const queryParams = this.props.location.query;
+      const activeCategories = queryParams.categories ? queryParams.categories.split(',') : undefined;
+      const activeLabels = queryParams.labels ? queryParams.labels.split(',') : undefined;
+      const page = queryParams.page ? Number(queryParams.page) : undefined;
+      const query = queryParams.q;
+      const sort = queryParams.sort;
+      const view = queryParams.view;
+      const data = {
+        activeCategories: activeCategories,
+        activeLabels: activeLabels,
+        page: page,
+        query: query,
+        sort: sort,
+        view: view
+      };
+      Object.keys(data).forEach((key) => {
+        if (typeof data[key] === 'undefined') {
+          delete data[key];
+        }
+      });
+      return data;
+    }
+
+    Api.getInitialData().then((data) => {
+      const { categories, labels, installed, trend, updated } = data;
+      this.setState({
+        categories: categories,
+        labels: labels,
+        installed: installed,
+        trend: trend,
+        updated: updated
+      }, () => {
+        const { activeCategories, activeLabels, page, query, sort, view } = extractState();
+        const forceSearch = activeCategories.length != 0 || activeLabels.length != 0 || query !== '';
+        this.setState({
+          activeCategories: activeCategories,
+          activeLabels: activeLabels,
+          page: page,
+          query: query,
+          sort: sort,
+          view: view
+        }, () => {
+          if (forceSearch) {
+            this.search();
+          }
+        });
+      });
+    });
+  }
+
+  componentWillUnmount() {
+    state = this.state;
+  }
+
+  render() {
+    return (
+      <div>
+        <Dashboard
+          activeCategories={this.state.activeCategories}
+          activeLabels={this.state.activeLabels}
+          activeQuery={this.state.activeQuery}
+          categories={this.state.categories}
+          clearQuery={this.clearQuery}
+          installed={this.state.installed}
+          isFetching={this.state.isFetching}
+          isFiltered={this.state.isFiltered}
+          labels={this.state.labels}
+          limit={this.state.limit}
+          page={this.state.page}
+          pages={this.state.pages}
+          plugins={this.state.plugins}
+          query={this.state.query}
+          search={this.search}
+          selectSort={this.selectSort}
+          showFilter={this.state.showFilter}
+          showResults={this.state.showResults}
+          sort={this.state.sort}
+          toggleCategory={this.toggleCategory}
+          toggleFilter={this.toogleFilter}
+          toggleLabel={this.toggleLabel}
+          total={this.state.total}
+          trend={this.state.trend}
+          updated={this.state.updated}
+          updatePage={this.updatePage}
+          updateQuery={this.updateQuery}
+          updateView={this.updateView}
+          view={this.state.view}
+        />
+      </div>
+    );
+  }
+
+  // ======== Class methods ======== //
+
   clearQuery() {
     this.setState({
       query: ''
@@ -139,16 +252,7 @@ class Main extends React.Component {
     }
   }
 
-  updateQuery(query) {
-    this.setState({
-      query: query
-    });
-  }
-
   updatePage(page) {
-    if (this.state.page === page) {
-      return;
-    }
     this.setState({
       page: page
     }, () => {
@@ -156,110 +260,16 @@ class Main extends React.Component {
     });
   }
 
+  updateQuery(query) {
+    this.setState({
+      query: query
+    });
+  }
+
   updateView(view) {
     this.setState({
       view: view
     });
-  }
-
-  componentWillMount() {
-    Api.getInitialData().then((data) => {
-      const { categories, labels, installed, trend, updated } = data;
-      this.setState({
-        categories: categories,
-        labels: labels,
-        installed: installed,
-        trend: trend,
-        updated: updated
-      }, () => {
-        const { activeCategories, activeLabels, page, query, sort, view } = this.extractState();
-        const forceSearch = activeCategories.length != 0 || activeLabels.length != 0 || query !== '';
-        this.setState({
-          activeCategories: activeCategories,
-          activeLabels: activeLabels,
-          page: page,
-          query: query,
-          sort: sort,
-          view: view
-        }, () => {
-          if (forceSearch) {
-            this.search();
-          }
-        });
-      });
-    });
-  }
-
-  componentWillUnmount() {
-    state = this.state;
-  }
-
-  extractState() {
-    const queryParams = this.parseQueryParams();
-    const merged = Object.assign({}, this.state, queryParams);
-    return merged;
-  }
-
-  parseQueryParams() {
-    const queryParams = this.props.location.query;
-    const activeCategories = queryParams.categories ? queryParams.categories.split(',') : undefined;
-    const activeLabels = queryParams.labels ? queryParams.labels.split(',') : undefined;
-    const page = queryParams.page ? Number(queryParams.page) : undefined;
-    const query = queryParams.q;
-    const sort = queryParams.sort;
-    const view = queryParams.view;
-    const data = {
-      activeCategories: activeCategories,
-      activeLabels: activeLabels,
-      page: page,
-      query: query,
-      sort: sort,
-      view: view
-    };
-    Object.keys(data).forEach((key) => {
-      if (typeof data[key] === 'undefined') {
-        delete data[key];
-      }
-    });
-    return data;
-  }
-
-  render() {
-    return (
-      <div>
-        <Dashboard
-          activeCategories={this.state.activeCategories}
-          activeLabels={this.state.activeLabels}
-          activeQuery={this.state.activeQuery}
-          categories={this.state.categories}
-          clearQuery={this.clearQuery}
-          installed={this.state.installed}
-          isFetching={this.state.isFetching}
-          isFiltered={this.state.isFiltered}
-          labels={this.state.labels}
-          limit={this.state.limit}
-          page={this.state.page}
-          pages={this.state.pages}
-          plugins={this.state.plugins}
-          query={this.state.query}
-          search={this.search}
-          selectSort={this.selectSort}
-          showFilter={this.state.showFilter}
-          showResults={this.state.showResults}
-          sort={this.state.sort}
-          toggleCategory={this.toggleCategory}
-          toggleFilter={this.toogleFilter}
-          toggleLabel={this.toggleLabel}
-          total={this.state.total}
-          trend={this.state.trend}
-          updated={this.state.updated}
-          updatePage={this.updatePage}
-          updateQuery={this.updateQuery}
-          updateView={this.updateView}
-          view={this.state.view}
-        />
-      </div>
-    );
   }
 
 }
