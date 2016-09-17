@@ -80,11 +80,12 @@ export function toggleCategory(category) {
   };
 }
 
-export function toggleLabel(label) {
+export function toggleLabel(label, categoryId) {
   return (dispatch) => {
     const action = {
       type: ACTION_TYPES.TOGGLE_LABEL,
-      label: label
+      label: label,
+      categoryId: categoryId
     };
     dispatch(action);
     dispatch(search());

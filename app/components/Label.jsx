@@ -48,8 +48,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    toggleLabel: (label) => {
-      dispatch(toggleLabel(label));
+    toggleLabel: (label, categoryId) => {
+      dispatch(toggleLabel(label, categoryId));
     }
   };
 };
