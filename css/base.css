@@ -14,7 +14,7 @@ body .showResults.item-finder .filters .row {border:none; padding:0}
 body .showResults.item-finder .filters .row > div {font-size:.75rem; padding:0 .5rem;  overflow:hidden;}
 body .showResults.item-finder .filters .row > div label {white-space:nowrap;}
 body .showResults.item-finder .filters .Cols3 {column-count:1; -moz-column-count:1;}
-.filters .show-all{display: none;
+.filters .show-all{
     border: none;
     background: #168BB9;
     font-family: lato;
@@ -438,7 +438,7 @@ body .item-finder.List a.item .Authors>div,
 body .item-finder.List a.item .Version,
 body .item-finder.List a.item .Labels>span,
 body .item-finder.List a.item .Authors>div{
-  
+
 }
 body .item-finder.Tiles a.item .Authors{
   position:absolute; bottom:1rem;

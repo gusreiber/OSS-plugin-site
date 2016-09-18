@@ -11,6 +11,7 @@ export const ACTION_TYPES = keymirror({
   // Fetching search results
   SET_IS_FETCHING: null,
   // Search results
+  CLEAR_CRITERIA: null,
   SET_SEARCH_RESULTS: null,
   // Sort
   SET_SORT: null,
@@ -69,6 +70,16 @@ export const setIsFetching = () => {
     type: ACTION_TYPES.SET_IS_FETCHING
   };
 };
+
+export function clearCriteria() {
+  return (dispatch) => {
+    const action = {
+      type: ACTION_TYPES.CLEAR_CRITERIA
+    };
+    dispatch(action);
+    dispatch(search({ resetPage: true }));
+  };
+}
 
 export const setSearchResults = (results) => {
   return {

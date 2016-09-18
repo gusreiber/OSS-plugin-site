@@ -3,23 +3,39 @@ import { connect } from 'react-redux';
 import classNames from 'classnames';
 import styles from '../styles/Main.css';
 import Category from './Category';
+import { clearCriteria } from '../actions';
 
 class Categories extends React.PureComponent {
 
+  constructor(props) {
+    super(props);
+    this.handleOnClick = this.handleOnClick.bind(this);
+  }
+
   static propTypes = {
+    anyCriteria: PropTypes.bool.isRequired,
     categories: PropTypes.arrayOf(PropTypes.shape({
       id: PropTypes.string.isRequired,
       labels: PropTypes.arrayOf(PropTypes.string).isRequired,
       title: PropTypes.string.isRequired
-    })).isRequired
+    })).isRequired,
+    clearCriteria: PropTypes.func.isRequired
   };
+
+  handleOnClick(event) {
+    event.preventDefault();
+    this.props.clearCriteria();
+  }
 
   render() {
     return (
       <fieldset className={classNames(styles.Categories)}>
         <legend>
           Categories
-          <button className={classNames('btn btn-secondary btn-sm show-all')} name="clear">Show all</button>
+          {this.props.anyCriteria && <button className={classNames('btn btn-secondary btn-sm show-all')}
+            name="showAll" onClick={this.handleOnClick}
+          >Show all</button>
+          }
         </legend>
         <ul className={classNames(styles.Cols3, 'Cols3')}>
           {this.props.categories.map((category) => {
@@ -37,11 +53,22 @@ class Categories extends React.PureComponent {
 }
 
 const mapStateToProps = (state) => {
-  const { data } = state;
+  const { ui, data } = state;
   const { categories } = data;
+  const { activeCategories, activeLabels, activeQuery } = ui;
+  const anyCriteria = activeCategories.length > 0 || activeLabels.length > 0 || activeQuery !== '';
   return {
+    anyCriteria,
     categories
   };
 };
 
-export default connect(mapStateToProps)(Categories);
+const mapDispatchToProps = (dispatch) => {
+  return {
+    clearCriteria: () => {
+      dispatch(clearCriteria());
+    }
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Categories);

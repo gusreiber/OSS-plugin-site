@@ -45,6 +45,12 @@ export const ui = (state = initialState, action) => {
       return Object.assign({}, state, {
         isFetching: true
       });
+    case ACTION_TYPES.CLEAR_CRITERIA:
+      return Object.assign({}, state, {
+        activeCategories: initialState.activeCategories,
+        activeLabels: initialState.activeLabels,
+        activeQuery: initialState.activeQuery
+      });
     case ACTION_TYPES.SET_SEARCH_RESULTS:
       return Object.assign({}, state, {
         activeQuery: state.query,
