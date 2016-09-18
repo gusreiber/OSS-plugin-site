@@ -55,8 +55,8 @@ class Categories extends React.PureComponent {
 const mapStateToProps = (state) => {
   const { ui, data } = state;
   const { categories } = data;
-  const { activeCategories, activeLabels, activeQuery } = ui;
-  const anyCriteria = activeCategories.length > 0 || activeLabels.length > 0 || activeQuery !== '';
+  const { activeCategories, activeLabels } = ui;
+  const anyCriteria = activeCategories.length > 0 || activeLabels.length > 0;
   return {
     anyCriteria,
     categories
