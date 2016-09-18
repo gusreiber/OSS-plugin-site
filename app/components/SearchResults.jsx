@@ -4,13 +4,18 @@ import styles from '../styles/Main.css';
 import classNames from 'classnames';
 import ActiveFilters from './ActiveFilters';
 import Pagination from './Pagination';
-import Plugins from './Plugins';
+import Plugin from './Plugin';
 import Spinner from './Spinner';
 
 class SearchResults extends React.PureComponent {
 
   static propTypes = {
     isFetching: PropTypes.bool.isRequired,
+    labels: PropTypes.arrayOf(PropTypes.shape({
+      id: PropTypes.string.isRequired,
+      title: PropTypes.string
+    })).isRequired,
+    plugins: PropTypes.arrayOf(PropTypes.object).isRequired,
     showFilter: PropTypes.bool.isRequired,
     showResults: PropTypes.bool.isRequired,
     total: PropTypes.number.isRequired
@@ -33,13 +38,16 @@ class SearchResults extends React.PureComponent {
               <div className={classNames(styles.Grid, 'grid')}>
                 {this.props.isFetching && <Spinner />}
                 {!this.props.isFetching && this.props.total > 0 &&
-                  <Plugins />
-                }
+                  this.props.plugins.map((plugin) => {
+                    return (
+                      <Plugin key={plugin.name} labels={this.props.labels} plugin={plugin} />
+                    );
+                })}
                 {this.props.total === 0 && !this.props.isFetching &&
                   <div className="no-results">
                     <h1>No results found</h1>
                     <p>
-                      You search did not return any results. 
+                      You search did not return any results.
                       Please try changing your search criteria or reloading the browser.
                     </p>
                   </div>
@@ -56,10 +64,13 @@ class SearchResults extends React.PureComponent {
 }
 
 const mapStateToProps = (state) => {
-  const { ui } = state;
-  const { isFetching, showFilter, showResults, total } = ui;
+  const { ui, data } = state;
+  const { isFetching, plugins, showFilter, showResults, total } = ui;
+  const { labels } = data;
   return {
     isFetching,
+    labels: labels,
+    plugins: plugins,
     showFilter,
     showResults,
     total

@@ -53,10 +53,12 @@ export default class Plugin extends React.PureComponent {
   }
 
   getLabels() {
-    return this.props.plugin.labels.map((id) => {
-      const label = this.props.labels.find((label) => label.id === id);
-      const name = label !== undefined ? label.title : id;
-      return <span key={id}>{name}</span>;
+    const labels = this.props.plugin.labels.map((id) => {
+      return this.props.labels.find((label) => label.id === id);
+    }).filter((label) => label !== undefined && label.title !== null);
+    return labels.map((label) => {
+      const text = label.title.replace(' development', '');
+      return <span key={label.id}>{text},</span>;
     });
   }
 
