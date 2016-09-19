@@ -1,27 +1,7 @@
 import { ACTION_TYPES } from '../actions';
+import initial from '../state';
 
-const initialState = {
-  activeCategories: [],
-  activeLabels: [],
-  activeQuery: '',
-  categories: [],
-  installed: [],
-  isFetching: false,
-  isFiltered: false,
-  labels: [],
-  limit: 50,
-  page: 1,
-  pages: 1,
-  plugins: [],
-  query: '',
-  showFilter: false,
-  showResults: false,
-  sort: 'relevance',
-  total: 0,
-  trend: [],
-  updated: [],
-  view: 'Tiles'
-};
+const initialState = initial.ui;
 
 export const ui = (state = initialState, action) => {
   switch (action.type) {

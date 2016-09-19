@@ -1,14 +1,7 @@
 import { ACTION_TYPES } from '../actions';
+import initial from '../state';
 
-const initialState = {
-  categories: [],
-  labels: [],
-  stats: {
-    installed: [],
-    trend: [],
-    updated: []
-  }
-};
+const initialState = initial.data;
 
 export const data = (state = initialState, action) => {
   switch (action.type) {
