@@ -29,7 +29,7 @@ export const ACTION_TYPES = keymirror({
   SET_DATA: null
 });
 
-export function parseQueryParams(queryParams) {
+export const parseQueryParams = (queryParams) => {
   return (dispatch) => {
     const action = {
       type: ACTION_TYPES.PARSE_QUERY_PARAMS,
@@ -40,9 +40,9 @@ export function parseQueryParams(queryParams) {
       dispatch(search());
     }
   };
-}
+};
 
-export function clearQuery() {
+export const clearQuery = () => {
   return (dispatch) => {
     const action = {
       type: ACTION_TYPES.CLEAR_QUERY
@@ -50,7 +50,7 @@ export function clearQuery() {
     dispatch(action);
     dispatch(search());
   };
-}
+};
 
 export const setQuery = (query) => {
   return {
@@ -71,7 +71,7 @@ export const setIsFetching = () => {
   };
 };
 
-export function clearCriteria() {
+export const clearCriteria = () => {
   return (dispatch) => {
     const action = {
       type: ACTION_TYPES.CLEAR_CRITERIA
@@ -79,7 +79,7 @@ export function clearCriteria() {
     dispatch(action);
     dispatch(search({ resetPage: true }));
   };
-}
+};
 
 export const setSearchResults = (results) => {
   return {
@@ -88,7 +88,7 @@ export const setSearchResults = (results) => {
   };
 };
 
-export function setSort(sort) {
+export const setSort = (sort) => {
   return (dispatch) => {
     const action = {
       type: ACTION_TYPES.SET_SORT,
@@ -97,9 +97,9 @@ export function setSort(sort) {
     dispatch(action);
     dispatch(search());
   };
-}
+};
 
-export function toggleCategory(category) {
+export const toggleCategory = (category) => {
   return (dispatch) => {
     const action = {
       type: ACTION_TYPES.TOGGLE_CATGORY,
@@ -108,9 +108,9 @@ export function toggleCategory(category) {
     dispatch(action);
     dispatch(search());
   };
-}
+};
 
-export function toggleLabel(label, categoryId) {
+export const toggleLabel = (label, categoryId) => {
   return (dispatch) => {
     const action = {
       type: ACTION_TYPES.TOGGLE_LABEL,
@@ -120,7 +120,7 @@ export function toggleLabel(label, categoryId) {
     dispatch(action);
     dispatch(search());
   };
-}
+};
 
 export const toggleShowFilter = (opts = { forceOpen: false }) => {
   return {
@@ -129,7 +129,7 @@ export const toggleShowFilter = (opts = { forceOpen: false }) => {
   };
 };
 
-export function setPage(page) {
+export const setPage = (page) => {
   return (dispatch) => {
     const action = {
       type: ACTION_TYPES.SET_PAGE,
@@ -138,7 +138,7 @@ export function setPage(page) {
     dispatch(action);
     dispatch(search());
   };
-}
+};
 
 export const setView = (view) => {
   return {
@@ -154,7 +154,7 @@ export const setData = (data) => {
   };
 };
 
-export function search(opts = { resetPage: false }) {
+export const search = (opts = { resetPage: false }) => {
   return (dispatch, getState) => {
     dispatch(setIsFetching());
     const state = getState().ui;
@@ -163,7 +163,7 @@ export function search(opts = { resetPage: false }) {
     Api.getPlugins(query, activeCategories, activeLabels, sort, page, limit)
       .then(results => dispatch(setSearchResults(results)));
   };
-}
+};
 
 export const loadInitialData = () => {
   return (dispatch) => {
