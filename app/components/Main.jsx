@@ -11,11 +11,6 @@ import { parseQueryParams, search } from '../actions';
 
 class Main extends React.PureComponent {
 
-  constructor(props) {
-    super(props);
-    this.handleOnSubmit = this.handleOnSubmit.bind(this);
-  }
-
   static propTypes = {
     isFiltered: PropTypes.bool.isRequired,
     parseQueryParams: PropTypes.func.isRequired,
@@ -25,7 +20,7 @@ class Main extends React.PureComponent {
     view: PropTypes.string.isRequired
   };
 
-  handleOnSubmit(event) {
+  handleOnSubmit = (event) => {
     event.preventDefault();
     this.props.search({ resetPage: true });
   }

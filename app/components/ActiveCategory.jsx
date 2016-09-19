@@ -2,11 +2,6 @@ import React, { PropTypes } from 'react';
 
 export default class ActiveCategory extends React.PureComponent {
 
-  constructor(props) {
-    super(props);
-    this.handleOnClick = this.handleOnClick.bind(this);
-  }
-
   static propTypes = {
     category: PropTypes.shape({
       id: PropTypes.string.isRequired,
@@ -16,7 +11,7 @@ export default class ActiveCategory extends React.PureComponent {
     toggleCategory: PropTypes.func.isRequired
   };
 
-  handleOnClick(event) {
+  handleOnClick = (event) => {
     event.preventDefault();
     this.props.toggleCategory(this.props.category);
   }

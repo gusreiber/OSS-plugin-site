@@ -6,12 +6,6 @@ import { toggleShowFilter, setQuery } from '../actions';
 
 class SearchBox extends React.PureComponent {
 
-  constructor(props) {
-    super(props);
-    this.handleOnChange = this.handleOnChange.bind(this);
-    this.handleToggleShowFilter = this.handleToggleShowFilter.bind(this);
-  }
-
   static propTypes = {
     handleOnSubmit: PropTypes.func.isRequired,
     query: PropTypes.string.isRequired,
@@ -20,14 +14,14 @@ class SearchBox extends React.PureComponent {
     toggleShowFilter: PropTypes.func.isRequired
   };
 
-  handleOnChange(event) {
+  handleOnChange = (event) => {
     event.preventDefault();
     this.props.setQuery(event.currentTarget.value);
   }
 
   // For some reason the input.onFocus was overriding a.onClick so use the
   // same function and detect the caller
-  handleToggleShowFilter(event) {
+  handleToggleShowFilter = (event) => {
     event.preventDefault();
     const forceOpen = event.currentTarget.name === 'query';
     this.props.toggleShowFilter({ forceOpen: forceOpen });

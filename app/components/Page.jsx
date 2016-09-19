@@ -3,11 +3,6 @@ import classNames from 'classnames';
 
 export default class Page extends React.PureComponent {
 
-  constructor(props) {
-    super(props);
-    this.handleOnClick = this.handleOnClick.bind(this);
-  }
-
   static propTypes = {
     className: PropTypes.string.isRequired,
     display: PropTypes.any.isRequired,
@@ -20,7 +15,7 @@ export default class Page extends React.PureComponent {
     isCurrent: false
   };
 
-  handleOnClick(event) {
+  handleOnClick = (event) => {
     event.preventDefault();
     this.props.updatePage(this.props.page);
   }

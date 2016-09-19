@@ -7,11 +7,6 @@ import { clearCriteria } from '../actions';
 
 class Categories extends React.PureComponent {
 
-  constructor(props) {
-    super(props);
-    this.handleOnClick = this.handleOnClick.bind(this);
-  }
-
   static propTypes = {
     anyCriteria: PropTypes.bool.isRequired,
     categories: PropTypes.arrayOf(PropTypes.shape({
@@ -22,7 +17,7 @@ class Categories extends React.PureComponent {
     clearCriteria: PropTypes.func.isRequired
   };
 
-  handleOnClick(event) {
+  handleOnClick = (event) => {
     event.preventDefault();
     this.props.clearCriteria();
   }

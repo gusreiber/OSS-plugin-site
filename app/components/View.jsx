@@ -3,18 +3,13 @@ import classNames from 'classnames';
 
 export default class View extends React.PureComponent {
 
-  constructor(props) {
-    super(props);
-    this.handleOnClick = this.handleOnClick.bind(this);
-  }
-
   static propTypes = {
     isActive: PropTypes.bool.isRequired,
     updateView: PropTypes.func.isRequired,
     view: PropTypes.string.isRequired
   };
 
-  buildIcon(view) {
+  buildIcon = (view) => {
     switch (view) {
       case 'Tiles': return 'icon-grid-alt';
       case 'List': return 'icon-list2';
@@ -23,7 +18,7 @@ export default class View extends React.PureComponent {
     }
   }
 
-  handleOnClick(event) {
+  handleOnClick = (event) => {
     event.preventDefault();
     this.props.updateView(this.props.view);
   }

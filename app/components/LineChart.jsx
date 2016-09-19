@@ -2,16 +2,16 @@ import React from 'react';
 import { Line } from 'react-chartjs';
 import moment from 'moment';
 
-function calculateHeight(total) {
+const calculateHeight = (total) => {
   if (total > 100000) return 275;
   if (total > 50000) return 250;
   if (total > 25000) return 225;
   if (total > 10000) return 200;
   if (total > 5000) return 175;
   return 150;
-}
+};
 
-function chartData(labels, data) {
+const chartData = (labels, data) => {
   const lastValue = data[data.length-1];
   let maxValue = null;
   let minValue = null;
@@ -50,7 +50,7 @@ function chartData(labels, data) {
       }
     ]
   };
-}
+};
 
 const options = {
   responsive: true,

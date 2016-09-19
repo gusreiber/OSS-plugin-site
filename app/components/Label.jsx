@@ -4,11 +4,6 @@ import { toggleLabel } from '../actions';
 
 class Label extends React.PureComponent {
 
-  constructor(props) {
-    super(props);
-    this.handleOnChange = this.handleOnChange.bind(this);
-  }
-
   static propTypes = {
     activeLabels: PropTypes.arrayOf(PropTypes.string).isRequired,
     category: PropTypes.string.isRequired,
@@ -19,7 +14,7 @@ class Label extends React.PureComponent {
     toggleLabel: PropTypes.func.isRequired
   }
 
-  handleOnChange() {
+  handleOnChange = () => {
     this.props.toggleLabel(this.props.label, this.props.category);
   }
 

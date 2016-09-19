@@ -7,11 +7,6 @@ import { toggleCategory } from '../actions';
 
 class Category extends React.PureComponent {
 
-  constructor(props) {
-    super(props);
-    this.handleOnChange = this.handleOnChange.bind(this);
-  }
-
   static propTypes = {
     activeCategories: PropTypes.arrayOf(PropTypes.string).isRequired,
     category: PropTypes.shape({
@@ -26,7 +21,7 @@ class Category extends React.PureComponent {
     toggleCategory: PropTypes.func.isRequired
   };
 
-  handleOnChange() {
+  handleOnChange = () => {
     this.props.toggleCategory(this.props.category);
   }
 

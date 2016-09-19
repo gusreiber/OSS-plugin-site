@@ -2,11 +2,6 @@ import React, { PropTypes } from 'react';
 
 export default class ActiveLabel extends React.PureComponent {
 
-  constructor(props) {
-    super(props);
-    this.handleOnClick = this.handleOnClick.bind(this);
-  }
-
   static propTypes = {
     label: PropTypes.shape({
       id: PropTypes.string.isRequired,
@@ -15,7 +10,7 @@ export default class ActiveLabel extends React.PureComponent {
     toggleLabel: PropTypes.func.isRequired
   };
 
-  handleOnClick(event) {
+  handleOnClick = (event) => {
     event.preventDefault();
     this.props.toggleLabel(this.props.label);
   }
