@@ -16,6 +16,7 @@ export const ACTION_TYPES = keymirror({
   // Sort
   SET_SORT: null,
   // Category
+  SET_CATEGORY: null,
   TOGGLE_CATGORY: null,
   // Label
   TOGGLE_LABEL: null,
@@ -94,6 +95,18 @@ export const setSort = (sort) => {
       type: ACTION_TYPES.SET_SORT,
       sort: sort
     };
+    dispatch(action);
+    dispatch(search());
+  };
+};
+
+export const setCategory = (categoryId) => {
+  return (dispatch) => {
+    const action = {
+      type: ACTION_TYPES.SET_CATEGORY,
+      categoryId: categoryId
+    };
+    dispatch(clearCriteria());
     dispatch(action);
     dispatch(search());
   };

@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import classNames from 'classnames';
 import styles from '../styles/Main.css';
 import PluginLink from './PluginLink';
+import { setCategory } from '../actions';
 
 class Footer extends React.PureComponent {
 
@@ -23,7 +24,14 @@ class Footer extends React.PureComponent {
     updated: PropTypes.arrayOf(PropTypes.shape({
       name: PropTypes.string.isRequired,
       title: PropTypes.string.isRequired
-    })).isRequired
+    })).isRequired,
+    setCategory: PropTypes.func.isRequired
+  }
+
+  handleOnClick = (event) => {
+    event.preventDefault();
+    const categoryId = event.target.getAttribute("data-id");
+    this.props.setCategory(categoryId);
   }
 
   render() {
@@ -37,7 +45,7 @@ class Footer extends React.PureComponent {
                 { this.props.categories.map((category) => {
                   return(
                     <div key={`cat-box-id-${category.id}`} className="Entry-box">
-                      {category.title}
+                      <a href="#" onClick={this.handleOnClick} data-id={category.id}>{category.title}</a>
                    </div>
                  );
                 })}
@@ -87,4 +95,12 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps)(Footer);
+const mapStateToDispatch = (dispatch) => {
+  return {
+    setCategory: (categoryId) => {
+      dispatch(setCategory(categoryId));
+    }
+  };
+}
+
+export default connect(mapStateToProps, mapStateToDispatch)(Footer);

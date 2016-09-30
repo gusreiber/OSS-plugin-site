@@ -46,6 +46,10 @@ export const ui = (state = initialState, action) => {
       return Object.assign({}, state, {
         sort: action.sort
       });
+    case ACTION_TYPES.SET_CATEGORY:
+      return Object.assign({}, state, {
+        activeCategories: [ action.categoryId ]
+      });
     case ACTION_TYPES.TOGGLE_CATGORY: {
       const category = action.category;
       const { activeCategories, activeLabels } = state;
