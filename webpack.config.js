@@ -17,10 +17,7 @@ const plugins = [
     filename: 'index.html',
     inject: true
   }),
-  new webpack.NoErrorsPlugin(),
-  new CopyWebpackPlugin([
-    { from: 'css', to: 'css' }
-  ])
+  new webpack.NoErrorsPlugin()
 ];
 
 const release = process.env.NODE_ENV === 'production';
@@ -41,6 +38,7 @@ if (release) {
       warnings: false
     }
   }));
+  plugins.push(new CopyWebpackPlugin([{ from: 'public' }]));
 } else {
   plugins.push(new webpack.DefinePlugin({
     'process.env': JSON.stringify({
