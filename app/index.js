@@ -1,5 +1,6 @@
 import React from 'react';
 import { Router, Route, browserHistory, IndexRoute } from 'react-router';
+import { syncHistoryWithStore } from 'react-router-redux';
 import { render } from 'react-dom';
 import { Provider } from 'react-redux';
 import App from './components/App';
@@ -10,11 +11,13 @@ import configureStore from './store/configureStore';
 
 const store = configureStore();
 
+const history = syncHistoryWithStore(browserHistory, store);
+
 store.dispatch(loadInitialData());
 
 render(
   <Provider store={store}>
-    <Router history={browserHistory}>
+    <Router history={history}>
       <Route path="/" component={App}>
         <IndexRoute component={Main} />
         <Route path="/:pluginName" component={PluginDetail} />

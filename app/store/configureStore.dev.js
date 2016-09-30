@@ -4,12 +4,13 @@ import createLogger from 'redux-logger';
 import reducer from '../reducers';
 import DevTools from '../components/DevTools';
 
-const configureStore = () => {
+const configureStore = initialState => {
 
   const loggerMiddleware = createLogger();
 
   return createStore(
     reducer,
+    initialState,
     compose(
       applyMiddleware(
         thunkMiddleware,
