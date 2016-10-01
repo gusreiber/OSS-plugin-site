@@ -181,10 +181,8 @@ export const search = (opts = { resetPage: false }) => {
 };
 
 export const getPlugin = (name) => {
-  return (dispatch) => {
-    Api.getPlugin(name).then(data => dispatch(setPlugin(data)));
-  }
-}
+  return (dispatch) => Api.getPlugin(name).then(data => dispatch(setPlugin(data)));
+};
 
 export const setPlugin = (plugin) => {
   return {
@@ -193,8 +191,6 @@ export const setPlugin = (plugin) => {
   };
 };
 
-export const loadInitialData = (callback) => {
-  return (dispatch) => {
-    Api.getInitialData().then(data => dispatch(setData(data))).then(callback);
-  };
+export const loadInitialData = () => {
+  return (dispatch) => Api.getInitialData().then(data => dispatch(setData(data)));
 };

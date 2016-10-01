@@ -10,7 +10,15 @@ import { cleanTitle } from '../commons/helper';
 
 class PluginDetail extends React.PureComponent {
 
+  // This is ultimately called in server.js to ensure the plugin is loaded prior to rendering
+  // so the plugin, including wiki content, is rendered in the response from the server. Thus
+  // making this SEO friendly.
+  static fetchData({ store, location, params, history }) {
+    return store.dispatch(getPlugin(params.pluginName));
+  }
+
   static propTypes = {
+    getPlugin: PropTypes.func.isRequired,
     labels: PropTypes.arrayOf(PropTypes.shape({
       id: PropTypes.string.isRequired,
       title: PropTypes.string
@@ -31,11 +39,18 @@ class PluginDetail extends React.PureComponent {
       }).isRequired,
       title: PropTypes.string.isRequired,
       wiki: PropTypes.shape({
+        content: PropTypes.string,
         url: PropTypes.string
-      }).isRequire,
+      }).isRequired,
       version: PropTypes.string
-    }).isRequired
+    })
   };
+
+  componentDidMount() {
+    if (this.props.plugin === null) {
+      this.props.getPlugin();
+     }
+   }
 
   closeDialog = (event) => {
     event && event.preventDefault();
@@ -74,7 +89,7 @@ class PluginDetail extends React.PureComponent {
   }
 
   render() {
-    const plugin = this.state.plugin;
+    const plugin = this.props.plugin;
     if (plugin === null) {
       return null;
     }
@@ -145,8 +160,9 @@ class PluginDetail extends React.PureComponent {
 }
 
 const mapStateToProps = (state) => {
-  const { data } = state;
-  const { labels, plugin } = data;
+  const { data, ui } = state;
+  const { labels } = data;
+  const { plugin } = ui;
   return {
     labels,
     plugin
@@ -154,7 +170,11 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = (dispatch, ownProps) => {
-  return dispatch(getPlugin(ownProps.params.pluginName));
+  return {
+    getPlugin: () => {
+      dispatch(getPlugin(ownProps.params.pluginName));
+    }
+  };
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(PluginDetail);

@@ -4,7 +4,6 @@ import path from 'path';
 import { match, RouterContext } from 'react-router';
 import { renderToString } from 'react-dom/server';
 import { Provider } from 'react-redux';
-import { loadInitialData } from './app/actions';
 import routes from './app/routes';
 import configureStore from './app/store/configureStore';
 
@@ -16,7 +15,7 @@ app.set('view engine', 'hbs');
 app.use('/assets/css', express.static('./public/css'));
 app.use('/assets/js', express.static('./dist/client'));
 
-app.get('*', (req, res) => {
+app.get('*', (req, res, next) => {
   match({ routes: routes, location: req.url }, (error, redirectLocation, renderProps) => {
     if (error) {
       console.error(`Error - ${error}`);
@@ -27,7 +26,12 @@ app.get('*', (req, res) => {
     } else if (renderProps) {
       console.error(`Found ${req.url}`);
       const store = configureStore();
-      const callback = () => {
+      const component = renderProps.components[renderProps.components.length - 1].WrappedComponent;
+      // Should the component have a static method `fetchData({ store, location, params, history })` then
+      // be prepared to call it.
+      const fetchData = (component && component.fetchData) || (() => Promise.resolve());
+      const { location, params, history } = renderProps;
+      fetchData({ store, location, params, history }).then(() => {
         const rendered = renderToString(
           <Provider store={store}>
             <RouterContext {...renderProps} />
@@ -38,8 +42,7 @@ app.get('*', (req, res) => {
           rendered: rendered,
           reduxState: finalState
         });
-      }
-      store.dispatch(loadInitialData(callback));
+      }).catch((err) => next(err));
     } else {
       console.error(`${req.url} not found`);
       return res.status(404).send('Not found')

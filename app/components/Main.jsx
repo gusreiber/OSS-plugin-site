@@ -7,9 +7,16 @@ import Footer from './Footer';
 import SearchBox from './SearchBox';
 import SearchResults from './SearchResults';
 import Views from './Views';
-import { parseQueryParams, search } from '../actions';
+import { loadInitialData, parseQueryParams, search } from '../actions';
 
 class Main extends React.PureComponent {
+
+  // This is ultimately called in server.js to ensure the initial data is loaded prior to serving
+  // up the response. Thus making this SEO friendly and avoids an unnecssary async call after
+  // handing off to the browser.
+  static fetchData({ store, location, params, history }) {
+    return store.dispatch(loadInitialData());
+  }
 
   static propTypes = {
     isFiltered: PropTypes.bool.isRequired,
