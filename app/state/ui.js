@@ -2,11 +2,8 @@ export const ui = {
   activeCategories: [],
   activeLabels: [],
   activeQuery: '',
-  categories: [],
-  installed: [],
   isFetching: false,
   isFiltered: false,
-  labels: [],
   limit: 50,
   page: 1,
   pages: 1,
@@ -16,7 +13,5 @@ export const ui = {
   showResults: false,
   sort: 'relevance',
   total: 0,
-  trend: [],
-  updated: [],
   view: 'Tiles'
 };
