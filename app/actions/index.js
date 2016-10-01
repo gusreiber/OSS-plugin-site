@@ -26,6 +26,8 @@ export const ACTION_TYPES = keymirror({
   SET_PAGE: null,
   // View
   SET_VIEW: null,
+  // Plugin
+  SET_PLUGIN: null,
   // == Data related
   SET_DATA: null
 });
@@ -178,8 +180,21 @@ export const search = (opts = { resetPage: false }) => {
   };
 };
 
-export const loadInitialData = () => {
+export const getPlugin = (name) => {
   return (dispatch) => {
-    Api.getInitialData().then(data => dispatch(setData(data)));
+    Api.getPlugin(name).then(data => dispatch(setPlugin(data)));
+  }
+}
+
+export const setPlugin = (plugin) => {
+  return {
+    type: ACTION_TYPES.SET_PLUGIN,
+    plugin: plugin
+  };
+};
+
+export const loadInitialData = (callback) => {
+  return (dispatch) => {
+    Api.getInitialData().then(data => dispatch(setData(data))).then(callback);
   };
 };

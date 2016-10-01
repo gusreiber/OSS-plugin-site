@@ -1,28 +1,19 @@
 import React from 'react';
-import { Router, Route, browserHistory, IndexRoute } from 'react-router';
+import { Router, browserHistory } from 'react-router';
 import { syncHistoryWithStore } from 'react-router-redux';
 import { render } from 'react-dom';
 import { Provider } from 'react-redux';
-import App from './components/App';
-import Main from './components/Main';
-import PluginDetail from './components/PluginDetail';
-import { loadInitialData } from './actions';
 import configureStore from './store/configureStore';
+import routes from './routes';
 
-const store = configureStore();
+const initialState = window.__REDUX_STATE__;
+const store = configureStore(initialState);
 
 const history = syncHistoryWithStore(browserHistory, store);
 
-store.dispatch(loadInitialData());
-
 render(
   <Provider store={store}>
-    <Router history={history}>
-      <Route path="/" component={App}>
-        <IndexRoute component={Main} />
-        <Route path="/:pluginName" component={PluginDetail} />
-      </Route>
-    </Router>
+    <Router history={history} routes={routes} />
   </Provider>,
   document.getElementById('grid-box')
 );

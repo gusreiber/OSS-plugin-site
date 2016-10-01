@@ -1,0 +1,331 @@
+<html>
+  <head>
+    <title>Jenkins Plugins List</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://fonts.googleapis.com/css?family=Ubuntu:700,300|Titillium+Web:200" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Lato:400,300,700,900,400italic" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,700" rel="stylesheet" type="text/css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-alpha.2/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+    <link href="/assets/css/base.css" rel="stylesheet" type="text/css">
+    <link href="/assets/css/font-icons.css" rel="stylesheet" type="text/css">
+    <!-- bootstrap - latest version of CSS -->
+    <link href="https://cloud.githubusercontent.com/assets/29597/11697043/848147de-9e6c-11e5-90a3-529a48a6fca3.png" rel="icon" type="image/png">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.1.1/js/tether.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-alpha.2/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment.min.js"></script>
+    <script>
+      window.__REDUX_STATE__ = {{{reduxState}}};
+    </script>
+  </head>
+  <body>
+    <nav class="navbar navbar-dark bg-inverse" id="ji-toolbar" style="position:relative">
+      <a class="fixed navbar-brand" href="/" id="home-logo">
+        Jenkins
+      </a>
+      <ul class="nav navbar-nav">
+        <li class="nav-item fixed">
+          <div class="btn-group" id="download-menu">
+            <a aria-expanded="false" aria-haspopup="true" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+              Downloads
+            </a>
+            <div class="dropdown-menu">
+              <div class="row">
+                <div class="col-md-6 text-xs-center">
+                  <h3>
+                    LTS Release
+                  </h3>
+                  <p>
+                    LTS (Long-Term Support) releases are chosen every 12 weeks from the
+                    stream of regular releases as the stable release for that time period.
+                  </p>
+                </div>
+                <div class="col-md-6 text-xs-center">
+                  <h3>
+                    Weekly Release
+                  </h3>
+                  <p>
+                    A new release is produced weekly to deliver bug fixes and features to
+                    users and plugin developers.
+                  </p>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6 text-xs-center">
+                  <div class="btn-group">
+                    <a class="btn btn-primary chromeOnly" href="http://mirrors.jenkins-ci.org/war-stable/latest/jenkins.war">
+                      <i class="icon-box-add"></i>
+                      2.7.1
+                      .war
+                    </a>
+                    <button aria-expanded="false" aria-haspopup="true" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" data-trigger="hover"></button>
+                    <div class="dropdown-menu">
+                      <a class="dropdown-item" href="https://registry.hub.docker.com/u/jenkinsci/jenkins/">
+                        <span class="icon"></span>
+                        <span class="title">
+                          Docker
+                        </span>
+                      </a>
+                      <a class="dropdown-item" href="http://www.freshports.org/devel/jenkins-lts">
+                        <span class="icon"></span>
+                        <span class="title">
+                          FreeBSD
+                        </span>
+                      </a>
+                      <a class="dropdown-item" href="https://packages.gentoo.org/packages/dev-util/jenkins-bin">
+                        <span class="icon"></span>
+                        <span class="title">
+                          Gentoo
+                        </span>
+                      </a>
+                      <a class="dropdown-item" href="/content/thank-you-downloading-os-x-installer#stable">
+                        <span class="icon"></span>
+                        <span class="title">
+                          Mac OS X
+                        </span>
+                      </a>
+                      <a class="dropdown-item" href="http://openports.se/devel/jenkins/stable">
+                        <span class="icon"></span>
+                        <span class="title">
+                          OpenBSD
+                        </span>
+                      </a>
+                      <a class="dropdown-item" href="http://pkg.jenkins-ci.org/opensuse-stable/">
+                        <span class="icon"></span>
+                        <span class="title">
+                          openSUSE
+                        </span>
+                      </a>
+                      <a class="dropdown-item" href="http://pkg.jenkins-ci.org/redhat-stable/">
+                        <span class="icon"></span>
+                        <span class="title">
+                          Red Hat/Fedora/CentOS
+                        </span>
+                      </a>
+                      <a class="dropdown-item" href="http://pkg.jenkins-ci.org/debian-stable/">
+                        <span class="icon"></span>
+                        <span class="title">
+                          Ubuntu/Debian
+                        </span>
+                      </a>
+                      <a class="dropdown-item" href="/content/thank-you-downloading-windows-installer#stable">
+                        <span class="icon"></span>
+                        <span class="title">
+                          Windows
+                        </span>
+                      </a>
+                    </div>
+                  </div>
+                  <p class="details">
+                    <a class="item" href="/changelog-stable">Changelog</a>
+                    |
+                    <a class="item" href="http://mirrors.jenkins-ci.org/war-stable/">Past Releases</a>
+                  </p>
+                </div>
+                <div class="col-md-6 text-xs-center">
+                  <div class="btn-group">
+                    <a class="btn btn-primary chromeOnly" href="http://mirrors.jenkins-ci.org/war/latest/jenkins.war">
+                      <i class="icon-box-add"></i>
+                      2.14
+                      .war
+                    </a>
+                    <button aria-expanded="false" aria-haspopup="true" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" data-trigger="hover"></button>
+                    <div class="dropdown-menu">
+                      <a class="dropdown-item" href="https://registry.hub.docker.com/u/jenkinsci/jenkins/">
+                        <span class="icon"></span>
+                        <span class="title">
+                          Docker
+                        </span>
+                      </a>
+                      <a class="dropdown-item" href="http://www.freshports.org/devel/jenkins">
+                        <span class="icon"></span>
+                        <span class="title">
+                          FreeBSD
+                        </span>
+                      </a>
+                      <a class="dropdown-item" href="https://packages.gentoo.org/packages/dev-util/jenkins-bin">
+                        <span class="icon"></span>
+                        <span class="title">
+                          Gentoo
+                        </span>
+                      </a>
+                      <a class="dropdown-item" href="/content/thank-you-downloading-os-x-installer">
+                        <span class="icon"></span>
+                        <span class="title">
+                          Mac OS X
+                        </span>
+                      </a>
+                      <a class="dropdown-item" href="http://openports.se/devel/jenkins/devel">
+                        <span class="icon"></span>
+                        <span class="title">
+                          OpenBSD
+                        </span>
+                      </a>
+                      <a class="dropdown-item" href="http://pkg.jenkins-ci.org/opensuse/">
+                        <span class="icon"></span>
+                        <span class="title">
+                          openSUSE
+                        </span>
+                      </a>
+                      <a class="dropdown-item" href="http://pkg.jenkins-ci.org/redhat/">
+                        <span class="icon"></span>
+                        <span class="title">
+                          Red Hat/Fedora/CentOS
+                        </span>
+                      </a>
+                      <a class="dropdown-item" href="http://pkg.jenkins-ci.org/debian/">
+                        <span class="icon"></span>
+                        <span class="title">
+                          Ubuntu/Debian
+                        </span>
+                      </a>
+                      <a class="dropdown-item" href="/content/thank-you-downloading-windows-installer">
+                        <span class="icon"></span>
+                        <span class="title">
+                          Windows
+                        </span>
+                      </a>
+                    </div>
+                  </div>
+                  <p class="details">
+                    <a class="item" href="/changelog">Changelog</a>
+                    |
+                    <a class="item" href="http://mirrors.jenkins-ci.org/war/">Past Releases</a>
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/node">
+            Blog
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/doc">
+            Documentation
+          </a>
+        </li>
+        <li class="nav-item active">
+          <a class="nav-link" href="/">
+            Plugins
+          </a>
+        </li>
+        <li class="nav-item dropdown">
+          <a aria-expanded="false" aria-haspopup="true" class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button">
+            Use-cases
+          </a>
+          <div class="dropdown-menu">
+            <a class="dropdown-item feature" href="/solutions/android">
+              Android
+            </a>
+            <a class="dropdown-item feature" href="/solutions/c">
+              C/C++
+            </a>
+            <a class="dropdown-item feature" href="/solutions/docker">
+              Docker
+            </a>
+            <a class="dropdown-item feature" href="/solutions/embedded">
+              Embedded
+            </a>
+            <a class="dropdown-item feature" href="/solutions/github">
+              GitHub
+            </a>
+            <a class="dropdown-item feature" href="/solutions/java">
+              Java
+            </a>
+            <a class="dropdown-item feature" href="/solutions/pipeline">
+              Continuous Delivery
+            </a>
+            <a class="dropdown-item feature" href="/solutions/python">
+              Python
+            </a>
+            <a class="dropdown-item feature" href="/solutions/ruby">
+              Ruby
+            </a>
+          </div>
+        </li>
+        <li class="nav-item dropdown">
+          <a aria-expanded="false" aria-haspopup="true" class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button">
+            Participate
+          </a>
+          <div class="dropdown-menu">
+            <a class="dropdown-item" href="/content/mailing-lists" title="Browse Jenkins mailing list archives and/or subscribe to lists">
+              Mailing Lists
+            </a>
+            <a class="dropdown-item" href="/content/chat" title="Chat with the rest of the Jenkins community on IRC">
+              Chat
+            </a>
+            <a class="dropdown-item" href="https://twitter.com/jenkinsci" title="Check out @jenkinsci on Twitter">
+              Twitter
+            </a>
+            <a class="dropdown-item" href="/content/event-calendar" title="Calendar for Jenkins events">
+              Events
+            </a>
+            <a class="dropdown-item" href="https://wiki.jenkins-ci.org/display/JENKINS/Office+Hours" title="Hangouts-based online meeting">
+              Office Hours
+            </a>
+            <a class="dropdown-item" href="https://reddit.com/r/jenkinsci" title="Latest Jenkins related news on /r/jenkinsci">
+              /r/jenkinsci
+            </a>
+          </div>
+        </li>
+        <li class="dropdown nav-item">
+          <a aria-expanded="false" aria-haspopup="true" class="nav-link dropdown-toggle" data-toggle="dropdown" href="/projects" role="button">
+            Sub-projects
+          </a>
+          <div class="dropdown-menu">
+            <a class="dropdown-item feature" href="/projects/">
+              Overview
+            </a>
+            <a class="dropdown-item feature" href="/projects/blueocean/">
+              Blue Ocean
+            </a>
+            <a class="dropdown-item feature" href="/projects/gsoc/">
+              Google Summer of Code
+            </a>
+            <a class="dropdown-item feature" href="/projects/jam/">
+              Jenkins Area Meetups
+            </a>
+          </div>
+        </li>
+        <li class="nav-item dropdown">
+          <a aria-expanded="false" aria-haspopup="true" class="nav-link dropdown-toggle" data-toggle="dropdown" href="/projects" role="button">
+            Resources
+          </a>
+          <div class="dropdown-menu">
+            <a class="dropdown-item feature" href="https://accounts.jenkins.io/" title="Create/manage your account for accessing wiki, issue tracker, etc">
+              Account Management
+            </a>
+            <a class="dropdown-item feature" href="https://issues.jenkins-ci.org/">
+              Issue Tracker
+            </a>
+            <a class="dropdown-item feature" href="https://wiki.jenkins-ci.org/">
+              Wiki
+            </a>
+          </div>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/security">
+            Security
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/press">
+            Press
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/conduct">
+            Conduct
+          </a>
+        </li>
+      </ul>
+    </nav>
+    <div id="grid-box"><div>{{{rendered}}}</div></div>
+    <script src="/assets/js/main.js"></script>
+  </body>
+</html>

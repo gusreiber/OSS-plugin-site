@@ -4,19 +4,14 @@ const cssnext = require('postcss-cssnext');
 
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
 
-const BUILD_DIR = path.resolve(__dirname, 'dist');
+const ROOT_DIR = path.resolve(__dirname, '.');
+const BUILD_DIR = path.resolve(__dirname, 'dist', 'client');
 const APP_DIR = path.resolve(__dirname, 'app');
 const NODE_MODULES = path.resolve(__dirname, 'node_modules');
 
 const plugins = [
   new ExtractTextPlugin('[name].css'),
-  new HtmlWebpackPlugin({
-    template: path.resolve(__dirname, 'index.html'),
-    filename: 'index.html',
-    inject: true
-  }),
   new webpack.NoErrorsPlugin()
 ];
 
@@ -38,7 +33,7 @@ if (release) {
       warnings: false
     }
   }));
-  plugins.push(new CopyWebpackPlugin([{ from: 'public' }]));
+  plugins.push(new webpack.optimize.OccurrenceOrderPlugin());
 } else {
   plugins.push(new webpack.DefinePlugin({
     'process.env': JSON.stringify({
@@ -50,6 +45,7 @@ if (release) {
 }
 
 const config = {
+  context: ROOT_DIR,
   debug: !release,
   devtool: 'source-map',
   entry: [

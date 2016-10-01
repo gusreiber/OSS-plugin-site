@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import ModalView, {Body, Header} from 'react-header-modal';
 import { browserHistory, Link } from 'react-router';
 import moment from 'moment';
+import { getPlugin } from '../actions';
 import Api from '../commons/api';
 import LineChart from './LineChart';
 import { cleanTitle } from '../commons/helper';
@@ -13,28 +14,30 @@ class PluginDetail extends React.PureComponent {
     labels: PropTypes.arrayOf(PropTypes.shape({
       id: PropTypes.string.isRequired,
       title: PropTypes.string
-    })).isRequired
+    })).isRequired,
+    plugin: PropTypes.shape({
+      excerpt: PropTypes.string,
+      labels: PropTypes.arrayOf(PropTypes.string),
+      maintainers: PropTypes.arrayOf(PropTypes.shape({
+        email: PropTypes.string,
+        id: PropTypes.string,
+        name: PropTypes.string
+      })),
+      name: PropTypes.string.isRequired,
+      requiredCore: PropTypes.string,
+      sha1: PropTypes.string,
+      stats: PropTypes.shape({
+        currentInstalls: PropTypes.number
+      }).isRequired,
+      title: PropTypes.string.isRequired,
+      wiki: PropTypes.shape({
+        url: PropTypes.string
+      }).isRequire,
+      version: PropTypes.string
+    }).isRequired
   };
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      plugin: null
-    };
-    this.closeDialog = this.closeDialog.bind(this);
-  }
-
-  componentWillMount() {
-    const name = this.props.params.pluginName; // eslint-disable-line react/prop-types
-    Api.getPlugin(name)
-      .then((data) => {
-      this.setState({
-        plugin: data
-      });
-    });
-  }
-
-  closeDialog(event) {
+  closeDialog = (event) => {
     event && event.preventDefault();
     browserHistory.goBack();
   }
@@ -142,11 +145,16 @@ class PluginDetail extends React.PureComponent {
 }
 
 const mapStateToProps = (state) => {
-  const { data} = state;
-  const { labels } = data;
+  const { data } = state;
+  const { labels, plugin } = data;
   return {
-    labels
+    labels,
+    plugin
   };
 };
 
-export default connect(mapStateToProps)(PluginDetail);
+const mapDispatchToProps = (dispatch, ownProps) => {
+  return dispatch(getPlugin(ownProps.params.pluginName));
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(PluginDetail);

@@ -4,6 +4,9 @@
   "description": "Boilerplate for kick starting a React Project with ES6 (Babel) and Hot reloader using Webpack.",
   "main": "index.js",
   "scripts": {
+    "build": "run-s clean build:client build:server",
+    "build:client": "webpack --config webpack.config.client.entry.js --colors --display-error-details",
+    "build:server": "webpack --config webpack.config.server.entry.js --colors --display-error-details",
     "start": "webpack-dev-server --config webpack.config.js --content-base public --port 5000 --inline --hot --progress --colors --display-error-details --history-api-fallback",
     "deploy": "NODE_ENV=production webpack --config webpack.config.js --progress --colors --display-error-details",
     "lint": "eslint app/**/*.js*",
@@ -59,6 +62,7 @@
     "chart.js": "^1.1.1",
     "classnames": "^2.2.5",
     "es6-promise": "^3.2.1",
+    "hbs": "^4.0.1",
     "keymirror": "^0.1.1",
     "moment": "^2.14.1",
     "querystring": "^0.2.0",
@@ -107,6 +111,7 @@
     "redux-devtools-dock-monitor": "^1.1.1",
     "redux-devtools-log-monitor": "^1.0.11",
     "style-loader": "^0.13.1",
+    "universal-webpack": "^0.1.40",
     "webpack": "^1.13.1",
     "webpack-dev-server": "^1.14.1"
   }
