@@ -9,8 +9,7 @@
     "build:server": "webpack --config webpack.config.server.entry.js --colors --display-error-details",
     "start": "webpack-dev-server --config webpack.config.js --content-base public --port 5000 --inline --hot --progress --colors --display-error-details --history-api-fallback",
     "deploy": "NODE_ENV=production webpack --config webpack.config.js --progress --colors --display-error-details",
-    "lint": "eslint app/**/*.js*",
-    "lint:fix": "npm run lint -- --fix",
+    "lint": "eslint --ext .js --ext .jsx .",
     "test": "mocha",
     "test:watch": "mocha --watch --reporter min",
     "clean": "rm -rf dist"

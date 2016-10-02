@@ -4,7 +4,6 @@ import ModalView, {Body, Header} from 'react-header-modal';
 import { browserHistory, Link } from 'react-router';
 import moment from 'moment';
 import { getPlugin } from '../actions';
-import Api from '../commons/api';
 import LineChart from './LineChart';
 import { cleanTitle } from '../commons/helper';
 
@@ -13,7 +12,7 @@ class PluginDetail extends React.PureComponent {
   // This is ultimately called in server.js to ensure the plugin is loaded prior to rendering
   // so the plugin, including wiki content, is rendered in the response from the server. Thus
   // making this SEO friendly.
-  static fetchData({ store, location, params, history }) {
+  static fetchData({ store, location, params, history }) {  // eslint-disable-line no-unused-vars
     return store.dispatch(getPlugin(params.pluginName));
   }
 

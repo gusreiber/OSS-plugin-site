@@ -14,7 +14,7 @@ class Main extends React.PureComponent {
   // This is ultimately called in server.js to ensure the initial data is loaded prior to serving
   // up the response. Thus making this SEO friendly and avoids an unnecssary async call after
   // handing off to the browser.
-  static fetchData({ store, location, params, history }) {
+  static fetchData({ store, location, params, history }) { // eslint-disable-line no-unused-vars
     return store.dispatch(loadInitialData());
   }
 

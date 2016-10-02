@@ -30,7 +30,7 @@ class Footer extends React.PureComponent {
 
   handleOnClick = (event) => {
     event.preventDefault();
-    const categoryId = event.target.getAttribute("data-id");
+    const categoryId = event.target.getAttribute('data-id');
     this.props.setCategory(categoryId);
   }
 
@@ -101,6 +101,6 @@ const mapStateToDispatch = (dispatch) => {
       dispatch(setCategory(categoryId));
     }
   };
-}
+};
 
 export default connect(mapStateToProps, mapStateToDispatch)(Footer);
