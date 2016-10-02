@@ -2,13 +2,12 @@ const webpack = require('webpack');
 const path = require('path');
 const cssnext = require('postcss-cssnext');
 
-const CopyWebpackPlugin = require('copy-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
-const ROOT_DIR = path.resolve(__dirname, '.');
-const BUILD_DIR = path.resolve(__dirname, 'dist', 'client');
-const APP_DIR = path.resolve(__dirname, 'app');
-const NODE_MODULES = path.resolve(__dirname, 'node_modules');
+const ROOT_DIR = path.resolve(__dirname, '..');
+const BUILD_DIR = path.resolve(__dirname, '..', 'dist', 'client');
+const APP_DIR = path.resolve(__dirname, '..', 'app');
+const NODE_MODULES = path.resolve(__dirname, '..', 'node_modules');
 
 const plugins = [
   new ExtractTextPlugin('[name].css'),

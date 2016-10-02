@@ -5,8 +5,8 @@
   "main": "index.js",
   "scripts": {
     "build": "run-s clean build:client build:server",
-    "build:client": "webpack --config webpack.config.client.entry.js --colors --display-error-details",
-    "build:server": "webpack --config webpack.config.server.entry.js --colors --display-error-details",
+    "build:client": "webpack --config ./webpack/webpack.config.client.entry.js --colors --display-error-details",
+    "build:server": "webpack --config ./webpack/webpack.config.server.entry.js --colors --display-error-details",
     "start": "webpack-dev-server --config webpack.config.js --content-base public --port 5000 --inline --hot --progress --colors --display-error-details --history-api-fallback",
     "deploy": "NODE_ENV=production webpack --config webpack.config.js --progress --colors --display-error-details",
     "lint": "eslint --ext .js --ext .jsx .",
