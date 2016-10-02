@@ -12,7 +12,7 @@
     "lint": "eslint --ext .js --ext .jsx .",
     "test": "mocha",
     "test:watch": "mocha --watch --reporter min",
-    "clean": "rm -rf dist"
+    "clean": "rimraf dist"
   },
   "repository": {
     "type": "git",
@@ -109,6 +109,7 @@
     "redux-devtools": "^3.3.1",
     "redux-devtools-dock-monitor": "^1.1.1",
     "redux-devtools-log-monitor": "^1.0.11",
+    "rimraf": "^2.5.4",
     "style-loader": "^0.13.1",
     "universal-webpack": "^0.1.40",
     "webpack": "^1.13.1",
