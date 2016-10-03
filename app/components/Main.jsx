@@ -20,6 +20,7 @@ class Main extends React.PureComponent {
 
   static propTypes = {
     isFiltered: PropTypes.bool.isRequired,
+    loadInitialData: PropTypes.func.isRequired,
     parseQueryParams: PropTypes.func.isRequired,
     showFilter: PropTypes.bool.isRequired,
     showResults: PropTypes.bool.isRequired,
@@ -33,6 +34,9 @@ class Main extends React.PureComponent {
   }
 
   componentDidMount() {
+    // This is only called if not using server side rendering. Otherwise fetchData is used.
+    this.props.loadInitialData();
+
     // Support query params:
     // categories - comma separated list of filtered categories
     // labels - comma separated list of filtered labels
@@ -116,6 +120,9 @@ const mapDispatchToProps = (dispatch) => {
     },
     search: (opts) => {
       dispatch(search(opts));
+    },
+    loadInitialData: () => {
+      dispatch(loadInitialData());
     }
   };
 };

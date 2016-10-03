@@ -8,11 +8,12 @@ import configureStore from './app/store/configureStore';
 
 const app = express();
 const port = 5000;
+const jsPath = '/assets/js';
 
 app.set('x-powered-by', false);
 app.set('view engine', 'hbs');
-app.use('/assets/css', express.static('./public/css'));
-app.use('/assets/js', express.static('./dist/client'));
+app.use(express.static('./public'));
+app.use(jsPath, express.static('./dist/client'));
 
 app.get('*', (req, res, next) => {
   match({ routes: routes, location: req.url }, (error, redirectLocation, renderProps) => {
@@ -32,14 +33,17 @@ app.get('*', (req, res, next) => {
       const { location, params, history } = renderProps;
       fetchData({ store, location, params, history }).then(() => {
         const rendered = renderToString(
-          <Provider store={store}>
-            <RouterContext {...renderProps} />
-          </Provider>
+          <div>
+            <Provider store={store}>
+              <RouterContext {...renderProps} />
+            </Provider>
+          </div>
         );
         const finalState = JSON.stringify(store.getState()).replace(/</g, '\\x3c');
         return res.status(200).render('index', {
           rendered: rendered,
-          reduxState: finalState
+          reduxState: finalState,
+          jsPath: jsPath
         });
       }).catch((err) => next(err));
     } else {

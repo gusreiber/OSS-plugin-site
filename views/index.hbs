@@ -16,9 +16,11 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.1.1/js/tether.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-alpha.2/js/bootstrap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment.min.js"></script>
+    {{#if reduxState}}
     <script>
       window.__REDUX_STATE__ = {{{reduxState}}};
     </script>
+    {{/if}}
   </head>
   <body>
     <nav class="navbar navbar-dark bg-inverse" id="ji-toolbar" style="position:relative">
@@ -325,7 +327,7 @@
         </li>
       </ul>
     </nav>
-    <div id="grid-box"><div>{{{rendered}}}</div></div>
-    <script src="/assets/js/main.js"></script>
+    <div id="grid-box">{{{rendered}}}></div>
+    <script type="text/javascript" src="{{jsPath}}/main.js"></script>
   </body>
 </html>
