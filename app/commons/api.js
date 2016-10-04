@@ -36,6 +36,9 @@ export default class Api {
         trend: data[3],
         updated: data[4]
       };
+    }).catch((err) => {
+      console.error("Problem getting initial data");
+      console.error(err);
     });
   }
 
@@ -46,6 +49,9 @@ export default class Api {
       .then(this.parseJSON)
       .then(data => {
         return data.categories;
+      }).catch((err) => {
+        console.error("Problem getting categories from API");
+        console.error(err);
       });
   }
 
@@ -56,6 +62,9 @@ export default class Api {
       .then(this.parseJSON)
       .then(data => {
         return data.labels;
+      }).catch((err) => {
+        console.error("Problem getting labels from API");
+        console.error(err);
       });
   }
 
@@ -66,6 +75,9 @@ export default class Api {
       .then(this.parseJSON)
       .then(data => {
         return data;
+      }).catch((err) => {
+        console.error("Problem getting plugin '%s' from API", name);
+        console.error(err);
       });
   }
 
@@ -84,6 +96,9 @@ export default class Api {
       .then(this.parseJSON)
       .then(data => {
         return data;
+      }).catch((err) => {
+        console.error("Problem getting plugins from API");
+        console.error(err);
       });
   }
 
@@ -94,6 +109,9 @@ export default class Api {
       .then(this.parseJSON)
       .then(data => {
         return data.plugins;
+      }).catch((err) => {
+        console.error("Problem getting installed plugins from API");
+        console.error(err);
       });
   }
 
@@ -104,6 +122,9 @@ export default class Api {
       .then(this.parseJSON)
       .then(data => {
         return data.plugins;
+      }).catch((err) => {
+        console.error("Problem getting updated plugins from API");
+        console.error(err);
       });
   }
 
@@ -114,6 +135,9 @@ export default class Api {
       .then(this.parseJSON)
       .then(data => {
         return data.plugins;
+      }).catch((err) => {
+        console.error("Problem getting trend plugins from API");
+        console.error(err);
       });
   }
 
