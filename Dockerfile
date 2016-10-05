@@ -1,13 +1,17 @@
-FROM node:6-slim
+FROM node:6.7-slim
 
 RUN mkdir /plugins
 COPY ./.babelrc /plugins
-COPY ./index.html /plugins
 COPY ./package.json /plugins
-COPY ./webpack.config.js /plugins
+COPY ./server.js /plugins/server.js
 COPY ./app/ /plugins/app/
-COPY ./css/ /plugins/css/
+COPY ./public/ /plugins/public
+COPY ./views/ /plugins/views
+COPY ./webpack /plugins/webpack
 WORKDIR /plugins
 
-RUN npm install
-RUN npm run deploy
+RUN npm install -q
+
+CMD npm run server
+
+EXPOSE 5000
