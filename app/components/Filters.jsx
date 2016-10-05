@@ -4,6 +4,8 @@ import classNames from 'classnames';
 import styles from '../styles/Main.css';
 import Categories from './Categories';
 import Sort from './Sort';
+import { showFilter, showResults } from '../selectors';
+import { createSelector } from 'reselect';
 
 class Filters extends React.PureComponent {
 
@@ -31,13 +33,10 @@ class Filters extends React.PureComponent {
   }
 }
 
-const mapStateToProps = (state) => {
-  const { ui } = state;
-  const { showFilter, showResults } = ui;
-  return {
-    showFilter,
-    showResults
-  };
-};
+const selectors = createSelector(
+  [ showFilter, showResults ],
+  ( showFilter, showResults ) =>
+  ({ showFilter, showResults })
+);
 
-export default connect(mapStateToProps)(Filters);
+export default connect(selectors)(Filters);

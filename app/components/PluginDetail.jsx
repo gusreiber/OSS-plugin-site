@@ -6,6 +6,8 @@ import moment from 'moment';
 import Api from '../commons/api';
 import LineChart from './LineChart';
 import { cleanTitle } from '../commons/helper';
+import { labels } from '../selectors';
+import { createSelector } from 'reselect';
 
 class PluginDetail extends React.PureComponent {
 
@@ -141,12 +143,10 @@ class PluginDetail extends React.PureComponent {
   }
 }
 
-const mapStateToProps = (state) => {
-  const { data} = state;
-  const { labels } = data;
-  return {
-    labels
-  };
-};
+const selectors = createSelector(
+  [ labels ],
+  ( labels ) =>
+  ({ labels })
+);
 
-export default connect(mapStateToProps)(PluginDetail);
+export default connect(selectors)(PluginDetail);

@@ -1,6 +1,8 @@
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { actions } from '../actions';
+import { activeLabels } from '../selectors';
+import { createSelector } from 'reselect';
 
 class Label extends React.PureComponent {
 
@@ -33,12 +35,10 @@ class Label extends React.PureComponent {
 
 }
 
-const mapStateToProps = (state) => {
-  const { ui } = state;
-  const { activeLabels } = ui;
-  return {
-    activeLabels
-  };
-};
+const selectors = createSelector(
+  [ activeLabels ],
+  ( activeLabels ) =>
+  ({ activeLabels })
+);
 
-export default connect(mapStateToProps, actions)(Label);
+export default connect(selectors, actions)(Label);

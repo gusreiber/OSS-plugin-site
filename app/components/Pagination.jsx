@@ -2,6 +2,8 @@ import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import Pages from './Pages';
 import { actions } from '../actions';
+import { limit, page, pages, total } from '../selectors';
+import { createSelector } from 'reselect';
 
 class Pagination extends React.PureComponent {
 
@@ -39,15 +41,10 @@ class Pagination extends React.PureComponent {
 
 }
 
-const mapStateToProps = (state) => {
-  const { ui, } = state;
-  const { limit, page, pages, total } = ui;
-  return {
-    limit,
-    page,
-    pages,
-    total
-  };
-};
+const selectors = createSelector(
+  [ limit, page, pages, total ],
+  ( limit, page, pages, total ) =>
+  ({ limit, page, pages, total })
+);
 
-export default connect(mapStateToProps, actions)(Pagination);
+export default connect(selectors, actions)(Pagination);

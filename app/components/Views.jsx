@@ -1,7 +1,9 @@
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { actions } from '../actions';
+import { view } from '../selectors';
 import View from './View';
+import { createSelector } from 'reselect';
 
 const views = ['Tiles', 'List', 'Table'];
 
@@ -31,12 +33,10 @@ class Views extends React.PureComponent {
 
 }
 
-const mapStateToProps = (state) => {
-  const { ui } = state;
-  const { view } = ui;
-  return {
-    view
-  };
-};
+const selectors = createSelector(
+  [ view ],
+  ( view ) =>
+  ({ view })
+);
 
-export default connect(mapStateToProps, actions)(Views);
+export default connect(selectors, actions)(Views);

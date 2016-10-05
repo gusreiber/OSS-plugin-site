@@ -1,8 +1,10 @@
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { actions } from '../actions';
+import { activeCategories, activeLabels, activeQuery, categories, labels } from '../selectors';
 import ActiveCategory from './ActiveCategory';
 import ActiveLabel from './ActiveLabel';
+import { createSelector } from 'reselect';
 
 class ActiveFilters extends React.PureComponent {
 
@@ -63,17 +65,10 @@ class ActiveFilters extends React.PureComponent {
 
 }
 
-const mapStateToProps = (state) => {
-  const { ui, data} = state;
-  const { activeCategories, activeLabels, activeQuery } = ui;
-  const { categories, labels } = data;
-  return {
-    activeCategories,
-    activeLabels,
-    activeQuery,
-    categories,
-    labels
-  };
-};
+const selectors = createSelector(
+  [ activeCategories, activeLabels, activeQuery, categories, labels ],
+  ( activeCategories, activeLabels, activeQuery, categories, labels ) =>
+  ({ activeCategories, activeLabels, activeQuery, categories, labels })
+);
 
-export default connect(mapStateToProps, actions)(ActiveFilters);
+export default connect(selectors, actions)(ActiveFilters);

@@ -4,6 +4,8 @@ import classNames from 'classnames';
 import styles from '../styles/Main.css';
 import Category from './Category';
 import { actions } from '../actions';
+import { activeCategories, activeLabels, categories } from '../selectors';
+import { createSelector } from 'reselect';
 
 class Categories extends React.PureComponent {
 
@@ -47,15 +49,13 @@ class Categories extends React.PureComponent {
   }
 }
 
-const mapStateToProps = (state) => {
-  const { ui, data } = state;
-  const { categories } = data;
-  const { activeCategories, activeLabels } = ui;
-  const anyCriteria = activeCategories.length > 0 || activeLabels.length > 0;
-  return {
-    anyCriteria,
+const selectors = createSelector(
+  [ activeCategories, activeLabels, categories ],
+  ( activeCategories, activeLabels, categories ) =>
+  ({
+    anyCriteria: activeCategories.length > 0 || activeLabels.length > 0,
     categories
-  };
-};
+  })
+);
 
-export default connect(mapStateToProps, actions)(Categories);
+export default connect(selectors, actions)(Categories);

@@ -3,6 +3,8 @@ import { connect } from 'react-redux';
 import styles from '../styles/Main.css';
 import classNames from 'classnames';
 import { actions } from '../actions';
+import { query, showFilter } from '../selectors';
+import { createSelector } from 'reselect';
 
 class SearchBox extends React.PureComponent {
 
@@ -58,13 +60,10 @@ class SearchBox extends React.PureComponent {
 
 }
 
-const mapStateToProps = (state) => {
-  const { ui } = state;
-  const { query, showFilter } = ui;
-  return {
-    query,
-    showFilter
-  };
-};
+const selectors = createSelector(
+  [ query, showFilter ],
+  ( query, showFilter ) =>
+  ({ query, showFilter })
+);
 
-export default connect(mapStateToProps, actions)(SearchBox);
+export default connect(selectors, actions)(SearchBox);

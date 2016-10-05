@@ -8,6 +8,8 @@ import SearchBox from './SearchBox';
 import SearchResults from './SearchResults';
 import Views from './Views';
 import { actions } from '../actions';
+import { isFiltered, showFilter, showResults, view } from '../selectors';
+import { createSelector } from 'reselect';
 
 class Main extends React.PureComponent {
 
@@ -91,15 +93,10 @@ class Main extends React.PureComponent {
 
 }
 
-const mapStateToProps = (state) => {
-  const { ui } = state;
-  const { isFiltered, showFilter, showResults, view } = ui;
-  return {
-    isFiltered,
-    showFilter,
-    showResults,
-    view
-  };
-};
+const selectors = createSelector(
+  [ isFiltered, showFilter, showResults, view ],
+  ( isFiltered, showFilter, showResults, view ) =>
+  ({ isFiltered, showFilter, showResults, view })
+);
 
-export default connect(mapStateToProps, actions)(Main);
+export default connect(selectors, actions)(Main);

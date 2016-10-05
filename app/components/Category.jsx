@@ -4,6 +4,8 @@ import classNames from 'classnames';
 import styles from '../styles/Main.css';
 import Label from './Label';
 import { actions } from '../actions';
+import { activeCategories, labels } from '../selectors';
+import { createSelector } from 'reselect';
 
 class Category extends React.PureComponent {
 
@@ -52,14 +54,10 @@ class Category extends React.PureComponent {
   }
 }
 
-const mapStateToProps = (state) => {
-  const { ui, data } = state;
-  const { activeCategories } = ui;
-  const { labels } = data;
-  return {
-    activeCategories,
-    labels
-  };
-};
+const selectors = createSelector(
+  [ activeCategories, labels ],
+  ( activeCategories, labels ) =>
+  ({ activeCategories, labels })
+);
 
-export default connect(mapStateToProps, actions)(Category);
+export default connect(selectors, actions)(Category);
