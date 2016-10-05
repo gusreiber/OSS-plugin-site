@@ -2,7 +2,7 @@ import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import styles from '../styles/Main.css';
 import classNames from 'classnames';
-import { toggleShowFilter, setQuery } from '../actions';
+import { actions } from '../actions';
 
 class SearchBox extends React.PureComponent {
 
@@ -67,15 +67,4 @@ const mapStateToProps = (state) => {
   };
 };
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    toggleShowFilter: (opts) => {
-      dispatch(toggleShowFilter(opts));
-    },
-    setQuery: (query) => {
-      dispatch(setQuery(query));
-    }
-  };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(SearchBox);
+export default connect(mapStateToProps, actions)(SearchBox);

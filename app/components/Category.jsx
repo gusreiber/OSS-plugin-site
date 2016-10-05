@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import classNames from 'classnames';
 import styles from '../styles/Main.css';
 import Label from './Label';
-import { toggleCategory } from '../actions';
+import { actions } from '../actions';
 
 class Category extends React.PureComponent {
 
@@ -62,12 +62,4 @@ const mapStateToProps = (state) => {
   };
 };
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    toggleCategory: (category) => {
-      dispatch(toggleCategory(category));
-    }
-  };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(Category);
+export default connect(mapStateToProps, actions)(Category);

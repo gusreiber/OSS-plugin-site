@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
-import { setView } from '../actions';
+import { actions } from '../actions';
 import View from './View';
 
 const views = ['Tiles', 'List', 'Table'];
@@ -8,7 +8,7 @@ const views = ['Tiles', 'List', 'Table'];
 class Views extends React.PureComponent {
 
   static propTypes = {
-    updateView: PropTypes.func.isRequired,
+    setView: PropTypes.func.isRequired,
     view: PropTypes.string.isRequired
   };
 
@@ -20,7 +20,7 @@ class Views extends React.PureComponent {
             <View
               key={index}
               isActive={view === this.props.view}
-              updateView={this.props.updateView}
+              updateView={this.props.setView}
               view={view}
             />
           );
@@ -39,12 +39,4 @@ const mapStateToProps = (state) => {
   };
 };
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    updateView: (view) => {
-      dispatch(setView(view));
-    }
-  };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(Views);
+export default connect(mapStateToProps, actions)(Views);

@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import classNames from 'classnames';
 import styles from '../styles/Main.css';
 import Category from './Category';
-import { clearCriteria } from '../actions';
+import { actions } from '../actions';
 
 class Categories extends React.PureComponent {
 
@@ -58,12 +58,4 @@ const mapStateToProps = (state) => {
   };
 };
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    clearCriteria: () => {
-      dispatch(clearCriteria());
-    }
-  };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(Categories);
+export default connect(mapStateToProps, actions)(Categories);

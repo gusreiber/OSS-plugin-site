@@ -30,156 +30,127 @@ export const ACTION_TYPES = keymirror({
   SET_DATA: null
 });
 
-export const parseQueryParams = (queryParams) => {
-  return (dispatch) => {
-    const action = {
-      type: ACTION_TYPES.PARSE_QUERY_PARAMS,
-      queryParams: queryParams
+export const actions = {
+
+  parseQueryParams: (queryParams) => {
+    return (dispatch) => {
+      const action = {
+        type: ACTION_TYPES.PARSE_QUERY_PARAMS,
+        queryParams: queryParams
+      };
+      dispatch(action);
+      if (Object.keys(queryParams).length > 0) {
+        return dispatch(actions.search());
+      }
     };
-    dispatch(action);
-    if (Object.keys(queryParams).length > 0) {
-      dispatch(search());
-    }
-  };
-};
+  },
 
-export const clearQuery = () => {
-  return (dispatch) => {
-    const action = {
-      type: ACTION_TYPES.CLEAR_QUERY
+  clearQuery: () => {
+    return (dispatch) => {
+      const action = {
+        type: ACTION_TYPES.CLEAR_QUERY
+      };
+      dispatch(action);
+      return dispatch(actions.search());
     };
-    dispatch(action);
-    dispatch(search());
-  };
-};
+  },
 
-export const setQuery = (query) => {
-  return {
-    type: ACTION_TYPES.SET_QUERY,
-    query: query
-  };
-};
+  setQuery: (query) => ({ type: ACTION_TYPES.SET_QUERY, query: query }),
 
-export const clearIsFetching = () => {
-  return {
-    type: ACTION_TYPES.CLEAR_IS_FETCHING
-  };
-};
+  clearIsFetching: () => ({ type: ACTION_TYPES.CLEAR_IS_FETCHING }),
 
-export const setIsFetching = () => {
-  return {
-    type: ACTION_TYPES.SET_IS_FETCHING
-  };
-};
+  setIsFetching: () => ({ type: ACTION_TYPES.SET_IS_FETCHING }),
 
-export const clearCriteria = () => {
-  return (dispatch) => {
-    const action = {
-      type: ACTION_TYPES.CLEAR_CRITERIA
+  clearCriteria: () => {
+    return (dispatch) => {
+      const action = {
+        type: ACTION_TYPES.CLEAR_CRITERIA
+      };
+      dispatch(action);
+      return dispatch(actions.search({ resetPage: true }));
     };
-    dispatch(action);
-    dispatch(search({ resetPage: true }));
-  };
-};
+  },
 
-export const setSearchResults = (results) => {
-  return {
-    type: ACTION_TYPES.SET_SEARCH_RESULTS,
-    results: results
-  };
-};
+  setSearchResults: (results) => ({ type: ACTION_TYPES.SET_SEARCH_RESULTS, results: results }),
 
-export const setSort = (sort) => {
-  return (dispatch) => {
-    const action = {
-      type: ACTION_TYPES.SET_SORT,
-      sort: sort
+  setSort: (sort) => {
+    return (dispatch) => {
+      const action = {
+        type: ACTION_TYPES.SET_SORT,
+        sort: sort
+      };
+      dispatch(action);
+      return dispatch(actions.search());
     };
-    dispatch(action);
-    dispatch(search());
-  };
-};
+  },
 
-export const setCategory = (categoryId) => {
-  return (dispatch) => {
-    const action = {
-      type: ACTION_TYPES.SET_CATEGORY,
-      categoryId: categoryId
+  setCategory: (categoryId) => {
+    return (dispatch) => {
+      const action = {
+        type: ACTION_TYPES.SET_CATEGORY,
+        categoryId: categoryId
+      };
+      dispatch(actions.clearCriteria());
+      dispatch(action);
+      return dispatch(actions.search());
     };
-    dispatch(clearCriteria());
-    dispatch(action);
-    dispatch(search());
-  };
-};
+  },
 
-export const toggleCategory = (category) => {
-  return (dispatch) => {
-    const action = {
-      type: ACTION_TYPES.TOGGLE_CATGORY,
-      category: category
+  toggleCategory: (category) => {
+    return (dispatch) => {
+      const action = {
+        type: ACTION_TYPES.TOGGLE_CATGORY,
+        category: category
+      };
+      dispatch(action);
+      return dispatch(actions.search());
     };
-    dispatch(action);
-    dispatch(search());
-  };
-};
+  },
 
-export const toggleLabel = (label, categoryId) => {
-  return (dispatch) => {
-    const action = {
-      type: ACTION_TYPES.TOGGLE_LABEL,
-      label: label,
-      categoryId: categoryId
+  toggleLabel: (label, categoryId) => {
+    return (dispatch) => {
+      const action = {
+        type: ACTION_TYPES.TOGGLE_LABEL,
+        label: label,
+        categoryId: categoryId
+      };
+      dispatch(action);
+      return dispatch(actions.search());
     };
-    dispatch(action);
-    dispatch(search());
-  };
-};
+  },
 
-export const toggleShowFilter = (opts = { forceOpen: false }) => {
-  return {
-    type: ACTION_TYPES.TOGGLE_SHOW_FILTER,
-    opts: opts
-  };
-};
+  toggleShowFilter: (opts = { forceOpen: false }) => ({ type: ACTION_TYPES.TOGGLE_SHOW_FILTER, opts: opts }),
 
-export const setPage = (page) => {
-  return (dispatch) => {
-    const action = {
-      type: ACTION_TYPES.SET_PAGE,
-      page: page
+  setPage: (page) => {
+    return (dispatch) => {
+      const action = {
+        type: ACTION_TYPES.SET_PAGE,
+        page: page
+      };
+      dispatch(action);
+      return dispatch(actions.search());
     };
-    dispatch(action);
-    dispatch(search());
-  };
-};
+  },
 
-export const setView = (view) => {
-  return {
-    type: ACTION_TYPES.SET_VIEW,
-    view: view
-  };
-};
+  setView: (view) => ({ type: ACTION_TYPES.SET_VIEW, view: view }),
 
-export const setData = (data) => {
-  return {
-    type: ACTION_TYPES.SET_DATA,
-    data: data
-  };
-};
+  setData: (data) => ({ type: ACTION_TYPES.SET_DATA, data: data }),
 
-export const search = (opts = { resetPage: false }) => {
-  return (dispatch, getState) => {
-    dispatch(setIsFetching());
-    const state = getState().ui;
-    const { activeCategories, activeLabels, limit, query, sort } = state;
-    const page = opts.resetPage ? 1 : state.page;
-    Api.getPlugins(query, activeCategories, activeLabels, sort, page, limit)
-      .then(results => dispatch(setSearchResults(results)));
-  };
-};
+  search: (opts = { resetPage: false }) => {
+    return (dispatch, getState) => {
+      dispatch(actions.setIsFetching());
+      const state = getState().ui;
+      const { activeCategories, activeLabels, limit, query, sort } = state;
+      const page = opts.resetPage ? 1 : state.page;
+      return Api.getPlugins(query, activeCategories, activeLabels, sort, page, limit)
+        .then(results => dispatch(actions.setSearchResults(results)));
+    };
+  },
 
-export const loadInitialData = () => {
-  return (dispatch) => {
-    Api.getInitialData().then(data => dispatch(setData(data)));
-  };
+  loadInitialData: () => {
+    return (dispatch) => {
+      return Api.getInitialData().then(data => dispatch(actions.setData(data)));
+    };
+  }
+
 };

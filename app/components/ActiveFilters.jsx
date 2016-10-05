@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
-import { clearQuery, toggleCategory, toggleLabel } from '../actions';
+import { actions } from '../actions';
 import ActiveCategory from './ActiveCategory';
 import ActiveLabel from './ActiveLabel';
 
@@ -76,18 +76,4 @@ const mapStateToProps = (state) => {
   };
 };
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    clearQuery: () => {
-      dispatch(clearQuery());
-    },
-    toggleCategory: (category) => {
-      dispatch(toggleCategory(category));
-    },
-    toggleLabel: (label) => {
-      dispatch(toggleLabel(label));
-    }
-  };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(ActiveFilters);
+export default connect(mapStateToProps, actions)(ActiveFilters);

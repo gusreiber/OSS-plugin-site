@@ -7,7 +7,7 @@ import Footer from './Footer';
 import SearchBox from './SearchBox';
 import SearchResults from './SearchResults';
 import Views from './Views';
-import { parseQueryParams, search } from '../actions';
+import { actions } from '../actions';
 
 class Main extends React.PureComponent {
 
@@ -102,15 +102,4 @@ const mapStateToProps = (state) => {
   };
 };
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    parseQueryParams: (queryParams) => {
-      dispatch(parseQueryParams(queryParams));
-    },
-    search: (opts) => {
-      dispatch(search(opts));
-    }
-  };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(Main);
+export default connect(mapStateToProps, actions)(Main);
