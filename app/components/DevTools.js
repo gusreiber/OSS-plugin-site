@@ -9,4 +9,4 @@ export default createDevTools(
                defaultIsVisible={false}>
     <LogMonitor />
   </DockMonitor>
-)
+);
