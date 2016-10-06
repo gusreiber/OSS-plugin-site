@@ -14,6 +14,7 @@ import { createSelector } from 'reselect';
 class Main extends React.PureComponent {
 
   static propTypes = {
+    clearFirstVisit: PropTypes.func.isRequired,
     isFiltered: PropTypes.bool.isRequired,
     parseQueryParams: PropTypes.func.isRequired,
     showFilter: PropTypes.bool.isRequired,
@@ -28,6 +29,7 @@ class Main extends React.PureComponent {
   }
 
   componentDidMount() {
+    this.props.clearFirstVisit();
     // Support query params:
     // categories - comma separated list of filtered categories
     // labels - comma separated list of filtered labels

@@ -6,12 +6,15 @@ import moment from 'moment';
 import Api from '../commons/api';
 import LineChart from './LineChart';
 import { cleanTitle } from '../commons/helper';
-import { labels } from '../selectors';
+import { actions } from '../actions';
+import { firstVisit, labels } from '../selectors';
 import { createSelector } from 'reselect';
 
 class PluginDetail extends React.PureComponent {
 
   static propTypes = {
+    clearFirstVisit: PropTypes.func.isRequired,
+    firstVisit: PropTypes.bool.isRequired,
     labels: PropTypes.arrayOf(PropTypes.shape({
       id: PropTypes.string.isRequired,
       title: PropTypes.string
@@ -38,7 +41,12 @@ class PluginDetail extends React.PureComponent {
 
   closeDialog(event) {
     event && event.preventDefault();
-    browserHistory.goBack();
+    if (this.props.firstVisit) {
+      this.props.clearFirstVisit();
+      browserHistory.push('/');
+    } else {
+      browserHistory.goBack();
+    }
   }
 
   getDependencies(dependencies) {
@@ -144,9 +152,9 @@ class PluginDetail extends React.PureComponent {
 }
 
 const selectors = createSelector(
-  [ labels ],
-  ( labels ) =>
-  ({ labels })
+  [ firstVisit, labels ],
+  ( firstVisit, labels ) =>
+  ({ firstVisit, labels })
 );
 
-export default connect(selectors)(PluginDetail);
+export default connect(selectors, actions)(PluginDetail);

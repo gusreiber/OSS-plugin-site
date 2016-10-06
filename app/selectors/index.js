@@ -6,6 +6,7 @@ const data = (state) => state.data;
 export const activeCategories = createSelector([ui], ui => ui.activeCategories);
 export const activeLabels = createSelector([ui], ui => ui.activeLabels);
 export const activeQuery = createSelector([ui], ui => ui.activeQuery);
+export const firstVisit = createSelector([ui], ui => ui.firstVisit);
 export const isFetching = createSelector([ui], ui => ui.isFetching);
 export const isFiltered = createSelector([ui], ui => ui.isFiltered);
 export const limit = createSelector([ui], ui => ui.limit);
