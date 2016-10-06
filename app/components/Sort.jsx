@@ -1,7 +1,9 @@
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { RadioGroup, Radio } from 'react-radio-group';
-import { setSort } from '../actions';
+import { actions } from '../actions';
+import { sort } from '../selectors';
+import { createSelector } from 'reselect';
 
 class Sort extends React.PureComponent {
 
@@ -28,20 +30,10 @@ class Sort extends React.PureComponent {
 
 }
 
-const mapStateToProps = (state) => {
-  const { ui } = state;
-  const { sort } = ui;
-  return {
-    sort
-  };
-};
+const selectors = createSelector(
+  [ sort ],
+  ( sort ) =>
+  ({ sort })
+);
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    setSort: (sort) => {
-      dispatch(setSort(sort));
-    }
-  };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(Sort);
+export default connect(selectors, actions)(Sort);

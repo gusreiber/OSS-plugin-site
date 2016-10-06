@@ -6,6 +6,8 @@ import ActiveFilters from './ActiveFilters';
 import Pagination from './Pagination';
 import Plugin from './Plugin';
 import Spinner from './Spinner';
+import { isFetching, labels, plugins, showFilter, showResults, total } from '../selectors';
+import { createSelector } from 'reselect';
 
 class SearchResults extends React.PureComponent {
 
@@ -63,18 +65,10 @@ class SearchResults extends React.PureComponent {
 
 }
 
-const mapStateToProps = (state) => {
-  const { ui, data } = state;
-  const { isFetching, plugins, showFilter, showResults, total } = ui;
-  const { labels } = data;
-  return {
-    isFetching,
-    labels: labels,
-    plugins: plugins,
-    showFilter,
-    showResults,
-    total
-  };
-};
+const selectors = createSelector(
+  [ isFetching, labels, plugins, showFilter, showResults, total ],
+  ( isFetching, labels, plugins, showFilter, showResults, total ) =>
+  ({ isFetching, labels, plugins, showFilter, showResults, total })
+);
 
-export default connect(mapStateToProps)(SearchResults);
+export default connect(selectors)(SearchResults);

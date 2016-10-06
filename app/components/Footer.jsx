@@ -3,7 +3,9 @@ import { connect } from 'react-redux';
 import classNames from 'classnames';
 import styles from '../styles/Main.css';
 import PluginLink from './PluginLink';
-import { setCategory } from '../actions';
+import { actions } from '../actions';
+import { categories, installed, trend, updated } from '../selectors';
+import { createSelector } from 'reselect';
 
 class Footer extends React.PureComponent {
 
@@ -83,24 +85,10 @@ class Footer extends React.PureComponent {
 
 }
 
-const mapStateToProps = (state) => {
-  const { data } = state;
-  const { categories, stats } = data;
-  const { installed, trend, updated } = stats;
-  return {
-    categories,
-    installed,
-    trend,
-    updated
-  };
-};
+const selectors = createSelector(
+  [ categories, installed, trend, updated ],
+  ( categories, installed, trend, updated ) =>
+  ({ categories, installed, trend, updated })
+);
 
-const mapStateToDispatch = (dispatch) => {
-  return {
-    setCategory: (categoryId) => {
-      dispatch(setCategory(categoryId));
-    }
-  };
-};
-
-export default connect(mapStateToProps, mapStateToDispatch)(Footer);
+export default connect(selectors, actions)(Footer);

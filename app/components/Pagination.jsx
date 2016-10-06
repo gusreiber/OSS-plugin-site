@@ -1,7 +1,9 @@
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import Pages from './Pages';
-import { setPage } from '../actions';
+import { actions } from '../actions';
+import { limit, page, pages, total } from '../selectors';
+import { createSelector } from 'reselect';
 
 class Pagination extends React.PureComponent {
 
@@ -10,11 +12,11 @@ class Pagination extends React.PureComponent {
     page: PropTypes.number.isRequired,
     pages: PropTypes.number.isRequired,
     total: PropTypes.number.isRequired,
-    updatePage: PropTypes.func.isRequired
+    setPage: PropTypes.func.isRequired
   }
 
   render() {
-    const { limit, page, pages, total, updatePage } = this.props;
+    const { limit, page, pages, total, setPage } = this.props;
     const start = (limit * page) - (limit - 1);
     const end = limit * page <= total ? limit * page : total;
     return (
@@ -30,7 +32,7 @@ class Pagination extends React.PureComponent {
             current={page}
             pages={pages}
             pagesToDisplay={5}
-            updatePage={updatePage}
+            updatePage={setPage}
           />
         }
       </li>
@@ -39,23 +41,10 @@ class Pagination extends React.PureComponent {
 
 }
 
-const mapStateToProps = (state) => {
-  const { ui, } = state;
-  const { limit, page, pages, total } = ui;
-  return {
-    limit,
-    page,
-    pages,
-    total
-  };
-};
+const selectors = createSelector(
+  [ limit, page, pages, total ],
+  ( limit, page, pages, total ) =>
+  ({ limit, page, pages, total })
+);
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    updatePage: (page) => {
-      dispatch(setPage(page));
-    }
-  };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(Pagination);
+export default connect(selectors, actions)(Pagination);

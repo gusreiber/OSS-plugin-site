@@ -7,7 +7,9 @@ import Footer from './Footer';
 import SearchBox from './SearchBox';
 import SearchResults from './SearchResults';
 import Views from './Views';
-import { loadInitialData, parseQueryParams, search } from '../actions';
+import { actions } from '../actions';
+import { isFiltered, showFilter, showResults, view } from '../selectors';
+import { createSelector } from 'reselect';
 
 class Main extends React.PureComponent {
 
@@ -15,7 +17,7 @@ class Main extends React.PureComponent {
   // up the response. Thus making this SEO friendly and avoids an unnecssary async call after
   // handing off to the browser.
   static fetchData({ store, location, params, history }) { // eslint-disable-line no-unused-vars
-    return store.dispatch(loadInitialData());
+    return store.dispatch(actions.loadInitialData());
   }
 
   static propTypes = {
@@ -102,29 +104,10 @@ class Main extends React.PureComponent {
 
 }
 
-const mapStateToProps = (state) => {
-  const { ui } = state;
-  const { isFiltered, showFilter, showResults, view } = ui;
-  return {
-    isFiltered,
-    showFilter,
-    showResults,
-    view
-  };
-};
+const selectors = createSelector(
+  [ isFiltered, showFilter, showResults, view ],
+  ( isFiltered, showFilter, showResults, view ) =>
+  ({ isFiltered, showFilter, showResults, view })
+);
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    parseQueryParams: (queryParams) => {
-      dispatch(parseQueryParams(queryParams));
-    },
-    search: (opts) => {
-      dispatch(search(opts));
-    },
-    loadInitialData: () => {
-      dispatch(loadInitialData());
-    }
-  };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(Main);
+export default connect(selectors, actions)(Main);

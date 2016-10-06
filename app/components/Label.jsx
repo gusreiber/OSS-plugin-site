@@ -1,6 +1,8 @@
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
-import { toggleLabel } from '../actions';
+import { actions } from '../actions';
+import { activeLabels } from '../selectors';
+import { createSelector } from 'reselect';
 
 class Label extends React.PureComponent {
 
@@ -33,20 +35,10 @@ class Label extends React.PureComponent {
 
 }
 
-const mapStateToProps = (state) => {
-  const { ui } = state;
-  const { activeLabels } = ui;
-  return {
-    activeLabels
-  };
-};
+const selectors = createSelector(
+  [ activeLabels ],
+  ( activeLabels ) =>
+  ({ activeLabels })
+);
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    toggleLabel: (label, categoryId) => {
-      dispatch(toggleLabel(label, categoryId));
-    }
-  };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(Label);
+export default connect(selectors, actions)(Label);

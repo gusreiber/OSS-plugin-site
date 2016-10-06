@@ -1,14 +1,16 @@
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
-import { setView } from '../actions';
+import { actions } from '../actions';
+import { view } from '../selectors';
 import View from './View';
+import { createSelector } from 'reselect';
 
 const views = ['Tiles', 'List', 'Table'];
 
 class Views extends React.PureComponent {
 
   static propTypes = {
-    updateView: PropTypes.func.isRequired,
+    setView: PropTypes.func.isRequired,
     view: PropTypes.string.isRequired
   };
 
@@ -20,7 +22,7 @@ class Views extends React.PureComponent {
             <View
               key={index}
               isActive={view === this.props.view}
-              updateView={this.props.updateView}
+              updateView={this.props.setView}
               view={view}
             />
           );
@@ -31,20 +33,10 @@ class Views extends React.PureComponent {
 
 }
 
-const mapStateToProps = (state) => {
-  const { ui } = state;
-  const { view } = ui;
-  return {
-    view
-  };
-};
+const selectors = createSelector(
+  [ view ],
+  ( view ) =>
+  ({ view })
+);
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    updateView: (view) => {
-      dispatch(setView(view));
-    }
-  };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(Views);
+export default connect(selectors, actions)(Views);

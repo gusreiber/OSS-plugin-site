@@ -3,7 +3,9 @@ import { connect } from 'react-redux';
 import classNames from 'classnames';
 import styles from '../styles/Main.css';
 import Label from './Label';
-import { toggleCategory } from '../actions';
+import { actions } from '../actions';
+import { activeCategories, labels } from '../selectors';
+import { createSelector } from 'reselect';
 
 class Category extends React.PureComponent {
 
@@ -52,22 +54,10 @@ class Category extends React.PureComponent {
   }
 }
 
-const mapStateToProps = (state) => {
-  const { ui, data } = state;
-  const { activeCategories } = ui;
-  const { labels } = data;
-  return {
-    activeCategories,
-    labels
-  };
-};
+const selectors = createSelector(
+  [ activeCategories, labels ],
+  ( activeCategories, labels ) =>
+  ({ activeCategories, labels })
+);
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    toggleCategory: (category) => {
-      dispatch(toggleCategory(category));
-    }
-  };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(Category);
+export default connect(selectors, actions)(Category);

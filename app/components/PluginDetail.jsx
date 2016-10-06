@@ -3,9 +3,11 @@ import { connect } from 'react-redux';
 import ModalView, {Body, Header} from 'react-header-modal';
 import { browserHistory, Link } from 'react-router';
 import moment from 'moment';
-import { getPlugin } from '../actions';
+import { actions } from '../actions';
 import LineChart from './LineChart';
 import { cleanTitle } from '../commons/helper';
+import { labels, plugin } from '../selectors';
+import { createSelector } from 'reselect';
 
 class PluginDetail extends React.PureComponent {
 
@@ -13,7 +15,7 @@ class PluginDetail extends React.PureComponent {
   // so the plugin, including wiki content, is rendered in the response from the server. Thus
   // making this SEO friendly.
   static fetchData({ store, location, params, history }) {  // eslint-disable-line no-unused-vars
-    return store.dispatch(getPlugin(params.pluginName));
+    return store.dispatch(actions.getPlugin(params.pluginName));
   }
 
   static propTypes = {
@@ -47,7 +49,7 @@ class PluginDetail extends React.PureComponent {
 
   componentDidMount() {
     if (this.props.plugin === null) {
-      this.props.getPlugin();
+      this.props.getPlugin(this.props.params.pluginName);
      }
    }
 
@@ -158,22 +160,10 @@ class PluginDetail extends React.PureComponent {
   }
 }
 
-const mapStateToProps = (state) => {
-  const { data, ui } = state;
-  const { labels } = data;
-  const { plugin } = ui;
-  return {
-    labels,
-    plugin
-  };
-};
+const selectors = createSelector(
+  [ labels, plugin ],
+  ( labels, plugin ) =>
+  ({ labels, plugin })
+);
 
-const mapDispatchToProps = (dispatch, ownProps) => {
-  return {
-    getPlugin: () => {
-      dispatch(getPlugin(ownProps.params.pluginName));
-    }
-  };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(PluginDetail);
+export default connect(selectors, actions)(PluginDetail);
