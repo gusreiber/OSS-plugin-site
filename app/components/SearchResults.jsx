@@ -6,13 +6,13 @@ import ActiveFilters from './ActiveFilters';
 import Pagination from './Pagination';
 import Plugin from './Plugin';
 import Spinner from './Spinner';
-import { isFetching, labels, plugins, showFilter, showResults, total } from '../selectors';
+import { isSearching, labels, plugins, showFilter, showResults, total } from '../selectors';
 import { createSelector } from 'reselect';
 
 class SearchResults extends React.PureComponent {
 
   static propTypes = {
-    isFetching: PropTypes.bool.isRequired,
+    isSearching: PropTypes.bool.isRequired,
     labels: PropTypes.arrayOf(PropTypes.shape({
       id: PropTypes.string.isRequired,
       title: PropTypes.string
@@ -38,14 +38,14 @@ class SearchResults extends React.PureComponent {
           <div className="padded-box">
             <div id="cb-item-finder-grid-box" className={classNames(styles.GridBox, 'grid-box')}>
               <div className={classNames(styles.Grid, 'grid')}>
-                {this.props.isFetching && <Spinner />}
-                {!this.props.isFetching && this.props.total > 0 &&
+                {this.props.isSearching && <Spinner />}
+                {!this.props.isSearching && this.props.total > 0 &&
                   this.props.plugins.map((plugin) => {
                     return (
                       <Plugin key={plugin.name} labels={this.props.labels} plugin={plugin} />
                     );
                 })}
-                {this.props.total === 0 && !this.props.isFetching &&
+                {this.props.total === 0 && !this.props.isSearching &&
                   <div className="no-results">
                     <h1>No results found</h1>
                     <p>
@@ -66,9 +66,9 @@ class SearchResults extends React.PureComponent {
 }
 
 const selectors = createSelector(
-  [ isFetching, labels, plugins, showFilter, showResults, total ],
-  ( isFetching, labels, plugins, showFilter, showResults, total ) =>
-  ({ isFetching, labels, plugins, showFilter, showResults, total })
+  [ isSearching, labels, plugins, showFilter, showResults, total ],
+  ( isSearching, labels, plugins, showFilter, showResults, total ) =>
+  ({ isSearching, labels, plugins, showFilter, showResults, total })
 );
 
 export default connect(selectors)(SearchResults);

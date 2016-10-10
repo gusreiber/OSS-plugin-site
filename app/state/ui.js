@@ -3,7 +3,7 @@ export const ui = {
   activeLabels: [],
   activeQuery: '',
   firstVisit: true,
-  isFetching: false,
+  isSearching: false,
   isFiltered: false,
   limit: 50,
   page: 1,
