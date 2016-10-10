@@ -4,27 +4,40 @@ import { match, RouterContext } from 'react-router';
 import { renderToString } from 'react-dom/server';
 import { Provider } from 'react-redux';
 import routes from './app/routes';
+import chalk from 'chalk';
 import configureStore from './app/store/configureStore';
+import compression from 'compression';
+import helmet from 'helmet';
+import hpp from 'hpp';
+import morgan from 'morgan';
 
 const app = express();
 const port = 5000;
 const jsPath = '/assets/js';
 
-app.set('x-powered-by', false);
-app.set('view engine', 'hbs');
+// Using helmet to secure Express with various HTTP headers
+app.use(helmet());
+// Prevent HTTP parameter pollution.
+app.use(hpp());
+// Compress all requests
+app.use(compression());
+// Use morgan for http request debug (only show error)
+app.use(morgan('dev', { skip: (req, res) => res.statusCode < 400 }));
+
 app.use(express.static('./public'));
 app.use(jsPath, express.static('./dist/client'));
+
+app.set('view engine', 'hbs');
 
 app.get('*', (req, res, next) => {
   match({ routes: routes, location: req.url }, (error, redirectLocation, renderProps) => {
     if (error) {
-      console.error(`Error - ${error}`);  // eslint-disable-line no-console
-      return res.status(500).send(error.message);
+      res.status(500).send(error.message);
     } else if (redirectLocation) {
-      console.info(`Redirect - ${redirectLocation.pathname}/${redirectLocation.search}`); // eslint-disable-line no-console
-      return res.redirect(302, redirectLocation.pathname + redirectLocation.search);
-    } else if (renderProps) {
-      console.info(`Found ${req.url}`); // eslint-disable-line no-console
+      res.redirect(302, redirectLocation.pathname + redirectLocation.search);
+    } else if (!renderProps) {
+      res.sendStatus(404);
+    } else {
       const store = configureStore();
       const component = renderProps.components[renderProps.components.length - 1].WrappedComponent;
       // Should the component have a static method `fetchData({ store, location, params, history })` then
@@ -40,23 +53,23 @@ app.get('*', (req, res, next) => {
           </div>
         );
         const finalState = JSON.stringify(store.getState()).replace(/</g, '\\x3c');
-        return res.status(200).render('index', {
+        res.status(200).render('index', {
           rendered: rendered,
           reduxState: finalState,
           jsPath: jsPath
         });
-      }).catch((err) => next(err));
-    } else {
-      console.error(`${req.url} not found`);  // eslint-disable-line no-console
-      return res.status(404).send('Not found');
+      }).catch((err) => {
+        console.error(chalk.red(error));
+        res.sendStatus(404);
+      });
     }
   });
 });
 
 app.listen(port, (error) => {
   if (error) {
-    console.error(error); // eslint-disable-line no-console
+    console.error(chalk.red(error)); // eslint-disable-line no-console
   } else {
-    console.info(`==>  Listening on port ${port}. Open up http://localhost:${port}/ in your browser.`); // eslint-disable-line no-console
+    console.info(chalk.green(`==>  Listening on port ${port}`)); // eslint-disable-line no-console
   }
 });
