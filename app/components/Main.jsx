@@ -21,6 +21,7 @@ class Main extends React.PureComponent {
   }
 
   static propTypes = {
+    clearFirstVisit: PropTypes.func.isRequired,
     isFiltered: PropTypes.bool.isRequired,
     loadInitialData: PropTypes.func.isRequired,
     parseQueryParams: PropTypes.func.isRequired,
@@ -38,7 +39,7 @@ class Main extends React.PureComponent {
   componentDidMount() {
     // This is only called if not using server side rendering. Otherwise fetchData is used.
     this.props.loadInitialData();
-
+    this.props.clearFirstVisit();
     // Support query params:
     // categories - comma separated list of filtered categories
     // labels - comma separated list of filtered labels

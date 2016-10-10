@@ -3,10 +3,10 @@ import { connect } from 'react-redux';
 import ModalView, {Body, Header} from 'react-header-modal';
 import { browserHistory, Link } from 'react-router';
 import moment from 'moment';
-import { actions } from '../actions';
 import LineChart from './LineChart';
 import { cleanTitle } from '../commons/helper';
-import { labels, plugin } from '../selectors';
+import { firstVisit, labels, plugin } from '../selectors';
+import { actions } from '../actions';
 import { createSelector } from 'reselect';
 
 class PluginDetail extends React.PureComponent {
@@ -20,6 +20,8 @@ class PluginDetail extends React.PureComponent {
 
   static propTypes = {
     getPlugin: PropTypes.func.isRequired,
+    clearFirstVisit: PropTypes.func.isRequired,
+    firstVisit: PropTypes.bool.isRequired,
     labels: PropTypes.arrayOf(PropTypes.shape({
       id: PropTypes.string.isRequired,
       title: PropTypes.string
@@ -55,7 +57,12 @@ class PluginDetail extends React.PureComponent {
 
   closeDialog = (event) => {
     event && event.preventDefault();
-    browserHistory.goBack();
+    if (this.props.firstVisit) {
+      this.props.clearFirstVisit();
+      browserHistory.push('/');
+    } else {
+      browserHistory.goBack();
+    }
   }
 
   getDependencies(dependencies) {
@@ -161,9 +168,9 @@ class PluginDetail extends React.PureComponent {
 }
 
 const selectors = createSelector(
-  [ labels, plugin ],
-  ( labels, plugin ) =>
-  ({ labels, plugin })
+  [ firstVisit, labels, plugin ],
+  ( firstVisit, labels, plugin ) =>
+  ({ firstVisit, labels, plugin })
 );
 
 export default connect(selectors, actions)(PluginDetail);

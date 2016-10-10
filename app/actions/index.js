@@ -28,6 +28,8 @@ export const ACTION_TYPES = keymirror({
   SET_VIEW: null,
   // Plugin
   SET_PLUGIN: null,
+  // First visit
+  CLEAR_FIRST_VISIT: null,
   // == Data related
   SET_DATA: null
 });
@@ -159,6 +161,8 @@ export const actions = {
     return (dispatch) => {
       return Api.getInitialData().then(data => dispatch(actions.setData(data)));
     };
-  }
+  },
+
+  clearFirstVisit: () => ({ type: ACTION_TYPES.CLEAR_FIRST_VISIT })
 
 };

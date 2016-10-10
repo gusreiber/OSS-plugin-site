@@ -103,6 +103,14 @@ export const ui = (state = initialState, action) => {
       return Object.assign({}, state, {
         view: action.view
       });
+    case ACTION_TYPES.CLEAR_FIRST_VISIT:
+      if (state.firstVisit) {
+        return Object.assign({}, state, {
+          firstVisit: false
+        });
+      } else {
+        return state;
+      }
     default:
       return state;
   }
