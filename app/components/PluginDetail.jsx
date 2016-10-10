@@ -7,39 +7,49 @@ import Api from '../commons/api';
 import LineChart from './LineChart';
 import { cleanTitle } from '../commons/helper';
 import { actions } from '../actions';
-import { firstVisit, labels } from '../selectors';
+import { firstVisit, labels, plugin } from '../selectors';
 import { createSelector } from 'reselect';
 
 class PluginDetail extends React.PureComponent {
 
   static propTypes = {
+    getPlugin: PropTypes.func.isRequired,
     clearFirstVisit: PropTypes.func.isRequired,
     firstVisit: PropTypes.bool.isRequired,
     labels: PropTypes.arrayOf(PropTypes.shape({
       id: PropTypes.string.isRequired,
       title: PropTypes.string
-    })).isRequired
+    })).isRequired,
+    plugin: PropTypes.shape({
+      excerpt: PropTypes.string,
+      labels: PropTypes.arrayOf(PropTypes.string),
+      maintainers: PropTypes.arrayOf(PropTypes.shape({
+        email: PropTypes.string,
+        id: PropTypes.string,
+        name: PropTypes.string
+      })),
+      name: PropTypes.string.isRequired,
+      requiredCore: PropTypes.string,
+      sha1: PropTypes.string,
+      stats: PropTypes.shape({
+        currentInstalls: PropTypes.number
+      }).isRequired,
+      title: PropTypes.string.isRequired,
+      wiki: PropTypes.shape({
+        content: PropTypes.string,
+        url: PropTypes.string
+      }).isRequired,
+      version: PropTypes.string
+    })
   };
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      plugin: null
-    };
-    this.closeDialog = this.closeDialog.bind(this);
+  componentDidMount() {
+    if (this.props.plugin === null) {
+      this.props.getPlugin(this.props.params.pluginName);
+     }
   }
 
-  componentWillMount() {
-    const name = this.props.params.pluginName; // eslint-disable-line react/prop-types
-    Api.getPlugin(name)
-      .then((data) => {
-      this.setState({
-        plugin: data
-      });
-    });
-  }
-
-  closeDialog(event) {
+  closeDialog = (event) => {
     event && event.preventDefault();
     if (this.props.firstVisit) {
       this.props.clearFirstVisit();
@@ -81,7 +91,7 @@ class PluginDetail extends React.PureComponent {
   }
 
   render() {
-    const plugin = this.state.plugin;
+    const plugin = this.props.plugin;
     if (plugin === null) {
       return null;
     }
@@ -152,9 +162,9 @@ class PluginDetail extends React.PureComponent {
 }
 
 const selectors = createSelector(
-  [ firstVisit, labels ],
-  ( firstVisit, labels ) =>
-  ({ firstVisit, labels })
+  [ firstVisit, labels, plugin ],
+  ( firstVisit, labels, plugin ) =>
+  ({ firstVisit, labels, plugin })
 );
 
 export default connect(selectors, actions)(PluginDetail);

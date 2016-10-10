@@ -8,6 +8,7 @@ export const ui = {
   limit: 50,
   page: 1,
   pages: 1,
+  plugin: null,
   plugins: [],
   query: '',
   showFilter: false,

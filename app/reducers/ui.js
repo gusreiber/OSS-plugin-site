@@ -95,6 +95,10 @@ export const ui = (state = initialState, action) => {
       return Object.assign({}, state, {
         page: action.page
       });
+    case ACTION_TYPES.SET_PLUGIN:
+      return Object.assign({}, state, {
+        plugin: action.plugin
+      });
     case ACTION_TYPES.SET_VIEW:
       return Object.assign({}, state, {
         view: action.view

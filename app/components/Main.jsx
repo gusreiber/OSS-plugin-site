@@ -16,6 +16,7 @@ class Main extends React.PureComponent {
   static propTypes = {
     clearFirstVisit: PropTypes.func.isRequired,
     isFiltered: PropTypes.bool.isRequired,
+    loadInitialData: PropTypes.func.isRequired,
     parseQueryParams: PropTypes.func.isRequired,
     showFilter: PropTypes.bool.isRequired,
     showResults: PropTypes.bool.isRequired,
@@ -29,6 +30,7 @@ class Main extends React.PureComponent {
   }
 
   componentDidMount() {
+    this.props.loadInitialData();
     this.props.clearFirstVisit();
     // Support query params:
     // categories - comma separated list of filtered categories

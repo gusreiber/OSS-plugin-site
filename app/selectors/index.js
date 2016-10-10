@@ -12,6 +12,7 @@ export const isFiltered = createSelector([ui], ui => ui.isFiltered);
 export const limit = createSelector([ui], ui => ui.limit);
 export const page = createSelector([ui], ui => ui.page);
 export const pages = createSelector([ui], ui => ui.pages);
+export const plugin = createSelector([ui], ui => ui.plugin);
 export const plugins = createSelector([ui], ui => ui.plugins);
 export const query = createSelector([ui], ui => ui.query);
 export const showFilter = createSelector([ui], ui => ui.showFilter);

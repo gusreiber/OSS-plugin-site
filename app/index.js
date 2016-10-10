@@ -6,14 +6,11 @@ import { Provider } from 'react-redux';
 import App from './components/App';
 import Main from './components/Main';
 import PluginDetail from './components/PluginDetail';
-import { actions } from './actions';
 import configureStore from './store/configureStore';
 
 const store = configureStore();
 
 const history = syncHistoryWithStore(browserHistory, store);
-
-store.dispatch(actions.loadInitialData());
 
 render(
   <Provider store={store}>
