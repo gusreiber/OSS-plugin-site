@@ -60,6 +60,8 @@ body .showResults.item-finder .filters .Cols3 {column-count:1; -moz-column-count
 .dependencies .required .req{
     color:#900;
 }
+.empty {opacity:.33}
+
 
 body a {color:#069}
 body a:visited {color:#7ac}

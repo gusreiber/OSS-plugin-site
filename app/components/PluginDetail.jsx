@@ -71,6 +71,10 @@ class PluginDetail extends React.PureComponent {
   }
 
   getDependencies(dependencies) {
+    if (!dependencies || dependencies.length === 0) {
+      return (<div className="empty">No dependencies found</div>);
+    }
+
     return dependencies.sort((a, b) => a.optional === b.optional ? 0 : (a.optional ? 1 : -1)).map((dependency) => {
       const required = !dependency.optional ? 'required' : 'optional';
       return (
@@ -82,6 +86,9 @@ class PluginDetail extends React.PureComponent {
   }
 
   getLabels(labels) {
+    if (!labels || labels.length === 0) {
+      return (<div className="empty">This plugin has no labels</div>);
+    }
     return labels.map((id) => {
       const label = this.props.labels.find((label) => label.id === id);
       const text = label !== undefined ? label.title : id;
