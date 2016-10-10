@@ -21,9 +21,9 @@ export const ui = (state = initialState, action) => {
       return Object.assign({}, state, {
         query: action.query
     });
-    case ACTION_TYPES.SET_IS_FETCHING:
+    case ACTION_TYPES.SET_IS_SEARCHING:
       return Object.assign({}, state, {
-        isFetching: true
+        isSearching: true
       });
     case ACTION_TYPES.CLEAR_CRITERIA:
       return Object.assign({}, state, {
@@ -34,7 +34,7 @@ export const ui = (state = initialState, action) => {
     case ACTION_TYPES.SET_SEARCH_RESULTS:
       return Object.assign({}, state, {
         activeQuery: state.query,
-        isFetching: false,
+        isSearching: false,
         page: action.results.page,
         pages: action.results.pages,
         plugins: action.results.plugins,

@@ -9,7 +9,7 @@ export const ACTION_TYPES = keymirror({
   CLEAR_QUERY: null,
   SET_QUERY: null,
   // Fetching search results
-  SET_IS_FETCHING: null,
+  SET_IS_SEARCHING: null,
   // Search results
   CLEAR_CRITERIA: null,
   SET_SEARCH_RESULTS: null,
@@ -61,9 +61,7 @@ export const actions = {
 
   setQuery: (query) => ({ type: ACTION_TYPES.SET_QUERY, query: query }),
 
-  clearIsFetching: () => ({ type: ACTION_TYPES.CLEAR_IS_FETCHING }),
-
-  setIsFetching: () => ({ type: ACTION_TYPES.SET_IS_FETCHING }),
+  setIsSearching: () => ({ type: ACTION_TYPES.SET_IS_SEARCHING }),
 
   clearCriteria: () => {
     return (dispatch) => {
@@ -142,7 +140,7 @@ export const actions = {
 
   search: (opts = { resetPage: false }) => {
     return (dispatch, getState) => {
-      dispatch(actions.setIsFetching());
+      dispatch(actions.setIsSearching());
       const state = getState().ui;
       const { activeCategories, activeLabels, limit, query, sort } = state;
       const page = opts.resetPage ? 1 : state.page;
