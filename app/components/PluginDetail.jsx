@@ -72,10 +72,10 @@ class PluginDetail extends React.PureComponent {
 
   getDependencies(dependencies) {
     return dependencies.sort((a, b) => a.optional === b.optional ? 0 : (a.optional ? 1 : -1)).map((dependency) => {
-      const required = !dependency.optional ? '(required)' : '';
+      const required = !dependency.optional ? 'required' : 'optional';
       return (
-        <div key={dependency.name}>
-          <Link to={`/${dependency.name}`}>{dependency.name} v.{dependency.version} {required}</Link>
+        <div key={dependency.name} className={required}>
+          <Link to={`/${dependency.name}`}>{dependency.name} v.{dependency.version} <span className="req">({required})</span></Link>
         </div>
       );
     });

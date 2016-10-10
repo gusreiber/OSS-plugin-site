@@ -51,6 +51,16 @@ body .showResults.item-finder .filters .Cols3 {column-count:1; -moz-column-count
 #plugin-search-form .nav > .btn-group {display:none;}
 #plugin-search-form .nav-box {display:inline-block; text-align:left;}
 
+
+.dependencies .req{
+    font-size: .67rem;
+    opacity: .67;
+}
+
+.dependencies .required .req{
+    color:#900;
+}
+
 body a {color:#069}
 body a:visited {color:#7ac}
 body a:hover {color:#09c}
