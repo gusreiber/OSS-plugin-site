@@ -99,6 +99,10 @@ export const ui = (state = initialState, action) => {
       return Object.assign({}, state, {
         plugin: action.plugin
       });
+    case ACTION_TYPES.CLEAR_PLUGIN:
+      return Object.assign({}, state, {
+        plugin: null
+      });
     case ACTION_TYPES.SET_VIEW:
       return Object.assign({}, state, {
         view: action.view

@@ -28,6 +28,7 @@ export const ACTION_TYPES = keymirror({
   SET_VIEW: null,
   // Plugin
   SET_PLUGIN: null,
+  CLEAR_PLUGIN: null,
   // First visit
   CLEAR_FIRST_VISIT: null,
   // == Data related
@@ -148,6 +149,8 @@ export const actions = {
         .then(results => dispatch(actions.setSearchResults(results)));
     };
   },
+
+  clearPlugin: () => ({ type: ACTION_TYPES.CLEAR_PLUGIN }),
 
   getPlugin: (name) => {
     return (dispatch) => Api.getPlugin(name).then(data => dispatch(actions.setPlugin(data)));

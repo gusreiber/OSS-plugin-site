@@ -19,6 +19,7 @@ class PluginDetail extends React.PureComponent {
   }
 
   static propTypes = {
+    clearPlugin: PropTypes.func.isRequired,
     getPlugin: PropTypes.func.isRequired,
     clearFirstVisit: PropTypes.func.isRequired,
     firstVisit: PropTypes.bool.isRequired,
@@ -53,6 +54,10 @@ class PluginDetail extends React.PureComponent {
     if (this.props.plugin === null) {
       this.props.getPlugin(this.props.params.pluginName);
     }
+  }
+
+  componentWillUnmount() {
+    this.props.clearPlugin();
   }
 
   closeDialog = (event) => {
