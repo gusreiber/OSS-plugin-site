@@ -6,314 +6,129 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 <body>
+<style>
+#header {
+    background-color: #335060;
+        font-family: Helvetica, Arial, sans-serif;
+    font-size: 13px;
+    line-height: 1.4em;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+#header div {
+    display: inline-block;
+    height: inherit;
+}
+#header .logo {
+    margin-left: 0;
+    background: url(/css/img/cloudbees-logo_header.png) no-repeat 10px center;
+    background-size: 70px;
+}
+#jenkins-home-link {
+    color: #fff;
+    font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
+    font-size: 18px;
+    text-decoration: none;
+    font-weight: bold;
+    line-height: 40px;
+    padding-left: 86px;
+    padding-right: 10px;
+    display: block;
+    position: relative;
+    height: 40px;
+}
+#search-box {
+    background: url(/css/img/cloudbees-search.png) 3px center no-repeat #fff;
+    font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
+    font-size: 14px;
+    height: 28px;
+    padding-left: 27px;
+    position: static;
+    border: none;
+    line-height: 28px;
+    margin-right: 5px;
+    outline: none;
+    border-radius: 0;
+    box-shadow: none;
+}
+#header .searchbox {
+    float: right;
+    margin: 0;
+}
+#header .searchbox, #header .login {
+    float: right;
+    padding: 6px 11px;
+}
+#search-box-completion {
+    text-align: left;
+    width: 25em;
+    position: absolute;
+    z-index: 1000;
+}
+#header .login a, #header .login a:visited {
+    color: white;
+    text-decoration: none;
+}
+#header .login {
+    float: right;
+    padding: 6px 11px;
+    position: relative;
+    top: 6px;
+    color: white;
+    margin-right: 10px;
+}
+#header .searchbox, #header .login {
+    float: right;
+    padding: 6px 11px;
+}
+.top-sticker, #top-sticker {
+    width: 100%;
+    z-index: 1;
+    position:absolute !important;
+}
+#breadcrumbs {
+    list-style-type: none;
+    padding: 0 0 0 8px;
+    margin: 0;
+    height: 2em;
+    border-bottom: 1px solid #d3d7cf;
+    font-size:13px;
+}
+#breadcrumbBar, #footer-container, .top-sticker-inner {
+    background-color: #f6faf2;
+}
+#breadcrumbs LI {
+    float: left;
+    line-height: 2em;
+    height: 2em;
+    color: #555753;
+}
+#breadcrumbs LI A:link, #breadcrumbs LI A:visited {
+    text-decoration: none;
+    color: #555753;
+}
+A.model-link.inside, #breadcrumbs A.inside {
+    padding-right: 16px;
+}
+#breadcrumbs LI A {
+    display: block;
+    padding-left: 0.75em;
+    line-height: 2em;
+}
+#breadcrumbs LI.children {
+    cursor: pointer;
+}
 
-<nav class="navbar navbar-dark bg-inverse" id="ji-toolbar" style="position:relative">
-<a class="fixed navbar-brand" href="/" id="home-logo">
-Jenkins
-</a>
-<ul class="nav navbar-nav">
-<li class="nav-item fixed">
-<div class="btn-group" id="download-menu">
-<a aria-expanded="false" aria-haspopup="true" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
-Downloads
-</a>
-<!-- starting partial downloadlist.html.haml -->
-<div class="dropdown-menu">
-<div class="row">
-<div class="col-md-6 text-xs-center">
-<h3>
-LTS Release
-</h3>
-<p>
-LTS (Long-Term Support) releases are chosen every 12 weeks from the
-stream of regular releases as the stable release for that time period.
-</p>
-</div>
-<div class="col-md-6 text-xs-center">
-<h3>
-Weekly Release
-</h3>
-<p>
-A new release is produced weekly to deliver bug fixes and features to
-users and plugin developers.
-</p>
-</div>
-</div>
-<div class="row">
-<div class="col-md-6 text-xs-center">
-<div class="btn-group">
-<a class="btn btn-primary chromeOnly" href="http://mirrors.jenkins-ci.org/war-stable/latest/jenkins.war">
-<i class="icon-box-add"></i>
-2.7.1
-.war
-</a>
-<button aria-expanded="false" aria-haspopup="true" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" data-trigger="hover"></button>
-<div class="dropdown-menu">
-<a class="dropdown-item" href="https://registry.hub.docker.com/u/jenkinsci/jenkins/">
-<span class="icon"></span>
-<span class="title">
-Docker
-</span>
-</a>
-<a class="dropdown-item" href="http://www.freshports.org/devel/jenkins-lts">
-<span class="icon"></span>
-<span class="title">
-FreeBSD
-</span>
-</a>
-<a class="dropdown-item" href="https://packages.gentoo.org/packages/dev-util/jenkins-bin">
-<span class="icon"></span>
-<span class="title">
-Gentoo
-</span>
-</a>
-<a class="dropdown-item" href="/content/thank-you-downloading-os-x-installer#stable">
-<span class="icon"></span>
-<span class="title">
-Mac OS X
-</span>
-</a>
-<a class="dropdown-item" href="http://openports.se/devel/jenkins/stable">
-<span class="icon"></span>
-<span class="title">
-OpenBSD
-</span>
-</a>
-<a class="dropdown-item" href="http://pkg.jenkins-ci.org/opensuse-stable/">
-<span class="icon"></span>
-<span class="title">
-openSUSE
-</span>
-</a>
-<a class="dropdown-item" href="http://pkg.jenkins-ci.org/redhat-stable/">
-<span class="icon"></span>
-<span class="title">
-Red Hat/Fedora/CentOS
-</span>
-</a>
-<a class="dropdown-item" href="http://pkg.jenkins-ci.org/debian-stable/">
-<span class="icon"></span>
-<span class="title">
-Ubuntu/Debian
-</span>
-</a>
-<a class="dropdown-item" href="/content/thank-you-downloading-windows-installer#stable">
-<span class="icon"></span>
-<span class="title">
-Windows
-</span>
-</a>
-</div>
-</div>
-<p class="details">
-<a class="item" href="/changelog-stable">Changelog</a>
-|
-<a class="item" href="http://mirrors.jenkins-ci.org/war-stable/">Past Releases</a>
-</p>
-</div>
-<div class="col-md-6 text-xs-center">
-<div class="btn-group">
-<a class="btn btn-primary chromeOnly" href="http://mirrors.jenkins-ci.org/war/latest/jenkins.war">
-<i class="icon-box-add"></i>
-2.14
-.war
-</a>
-<button aria-expanded="false" aria-haspopup="true" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" data-trigger="hover"></button>
-<div class="dropdown-menu">
-<a class="dropdown-item" href="https://registry.hub.docker.com/u/jenkinsci/jenkins/">
-<span class="icon"></span>
-<span class="title">
-Docker
-</span>
-</a>
-<a class="dropdown-item" href="http://www.freshports.org/devel/jenkins">
-<span class="icon"></span>
-<span class="title">
-FreeBSD
-</span>
-</a>
-<a class="dropdown-item" href="https://packages.gentoo.org/packages/dev-util/jenkins-bin">
-<span class="icon"></span>
-<span class="title">
-Gentoo
-</span>
-</a>
-<a class="dropdown-item" href="/content/thank-you-downloading-os-x-installer">
-<span class="icon"></span>
-<span class="title">
-Mac OS X
-</span>
-</a>
-<a class="dropdown-item" href="http://openports.se/devel/jenkins/devel">
-<span class="icon"></span>
-<span class="title">
-OpenBSD
-</span>
-</a>
-<a class="dropdown-item" href="http://pkg.jenkins-ci.org/opensuse/">
-<span class="icon"></span>
-<span class="title">
-openSUSE
-</span>
-</a>
-<a class="dropdown-item" href="http://pkg.jenkins-ci.org/redhat/">
-<span class="icon"></span>
-<span class="title">
-Red Hat/Fedora/CentOS
-</span>
-</a>
-<a class="dropdown-item" href="http://pkg.jenkins-ci.org/debian/">
-<span class="icon"></span>
-<span class="title">
-Ubuntu/Debian
-</span>
-</a>
-<a class="dropdown-item" href="/content/thank-you-downloading-windows-installer">
-<span class="icon"></span>
-<span class="title">
-Windows
-</span>
-</a>
-</div>
-</div>
-<p class="details">
-<a class="item" href="/changelog">Changelog</a>
-|
-<a class="item" href="http://mirrors.jenkins-ci.org/war/">Past Releases</a>
-</p>
-</div>
-</div>
-</div>
-
-<!-- ending partial downloadlist.html.haml -->
-</div>
-</li>
-<li class="nav-item">
-<a class="nav-link" href="/node">
-Blog
-</a>
-</li>
-<li class="nav-item">
-<a class="nav-link" href="/doc">
-Documentation
-</a>
-</li>
-<li class="nav-item active">
-<a class="nav-link" href="/">
-Plugins
-</a>
-</li>
-<li class="nav-item dropdown">
-<a aria-expanded="false" aria-haspopup="true" class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button">
-Use-cases
-</a>
-<div class="dropdown-menu">
-<a class="dropdown-item feature" href="/solutions/android">
-Android
-</a>
-<a class="dropdown-item feature" href="/solutions/c">
-C/C++
-</a>
-<a class="dropdown-item feature" href="/solutions/docker">
-Docker
-</a>
-<a class="dropdown-item feature" href="/solutions/embedded">
-Embedded
-</a>
-<a class="dropdown-item feature" href="/solutions/github">
-GitHub
-</a>
-<a class="dropdown-item feature" href="/solutions/java">
-Java
-</a>
-<a class="dropdown-item feature" href="/solutions/pipeline">
-Continuous Delivery
-</a>
-<a class="dropdown-item feature" href="/solutions/python">
-Python
-</a>
-<a class="dropdown-item feature" href="/solutions/ruby">
-Ruby
-</a>
-</div>
-</li>
-<li class="nav-item dropdown">
-<a aria-expanded="false" aria-haspopup="true" class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button">
-Participate
-</a>
-<div class="dropdown-menu">
-<a class="dropdown-item" href="/content/mailing-lists" title="Browse Jenkins mailing list archives and/or subscribe to lists">
-Mailing Lists
-</a>
-<a class="dropdown-item" href="/content/chat" title="Chat with the rest of the Jenkins community on IRC">
-Chat
-</a>
-<a class="dropdown-item" href="https://twitter.com/jenkinsci" title="Check out @jenkinsci on Twitter">
-Twitter
-</a>
-<a class="dropdown-item" href="/content/event-calendar" title="Calendar for Jenkins events">
-Events
-</a>
-<a class="dropdown-item" href="https://wiki.jenkins-ci.org/display/JENKINS/Office+Hours" title="Hangouts-based online meeting">
-Office Hours
-</a>
-<a class="dropdown-item" href="https://reddit.com/r/jenkinsci" title="Latest Jenkins related news on /r/jenkinsci">
-/r/jenkinsci
-</a>
-</div>
-</li>
-<li class="dropdown nav-item">
-<a aria-expanded="false" aria-haspopup="true" class="nav-link dropdown-toggle" data-toggle="dropdown" href="/projects" role="button">
-Sub-projects
-</a>
-<div class="dropdown-menu">
-<a class="dropdown-item feature" href="/projects/">
-Overview
-</a>
-<a class="dropdown-item feature" href="/projects/blueocean/">
-Blue Ocean
-</a>
-<a class="dropdown-item feature" href="/projects/gsoc/">
-Google Summer of Code
-</a>
-<a class="dropdown-item feature" href="/projects/jam/">
-Jenkins Area Meetups
-</a>
-</div>
-</li>
-<li class="nav-item dropdown">
-<a aria-expanded="false" aria-haspopup="true" class="nav-link dropdown-toggle" data-toggle="dropdown" href="/projects" role="button">
-Resources
-</a>
-<div class="dropdown-menu">
-<a class="dropdown-item feature" href="https://accounts.jenkins.io/" title="Create/manage your account for accessing wiki, issue tracker, etc">
-Account Management
-</a>
-<a class="dropdown-item feature" href="https://issues.jenkins-ci.org/">
-Issue Tracker
-</a>
-<a class="dropdown-item feature" href="https://wiki.jenkins-ci.org/">
-Wiki
-</a>
-</div>
-</li>
-<li class="nav-item">
-<a class="nav-link" href="/security">
-Security
-</a>
-</li>
-<li class="nav-item">
-<a class="nav-link" href="/press">
-Press
-</a>
-</li>
-<li class="nav-item">
-<a class="nav-link" href="/conduct">
-Conduct
-</a>
-</li>
-</ul>
-</nav>
+#breadcrumbs LI.children, #breadcrumbs LI.separator {
+    width: 16px;
+    background-image: url(/css/img/menu_right_arrow2.png);
+    background-position: center center;
+    background-repeat: no-repeat;
+}
+</style>
+<div id="page-head"><div id="header"><div class="logo"><a id="jenkins-home-link" href="/">CloudBees Jenkins Operations Center</a></div><div class="login">&nbsp;<span style="white-space:nowrap"><a href="/user/greiber" class="model-link inside inverse"><b>greiber</b></a>
+                    |
+                    <a href="/logout"><b>log out</b></a></span></div><div class="searchbox hidden-xs"><form method="get" name="search" action="/pluginManager/search/" style="position:relative;" class="no-json" path=""><div id="search-box-minWidth" style="font-family: Arial, &quot;Helvetica Neue&quot;, Helvetica, sans-serif; font-size: 14px; font-style: normal; font-weight: normal;"></div><div id="search-box-sizer" style="font-family: Arial, &quot;Helvetica Neue&quot;, Helvetica, sans-serif; font-size: 14px; font-style: normal; font-weight: normal;"></div><div id="searchform" class="yui-ac"><input name="q" placeholder="search" id="search-box" class="has-default-text yui-ac-input defaulted" autocomplete="off" path="/q" style="width: 255px;">&nbsp;<a href="http://wiki.jenkins-ci.org/display/JENKINS/Search+Box"><img src="/css/img/help.png" style="width: 16px; height: 16px; " class="icon-help icon-sm"></a><div id="search-box-completion" class="yui-ac-container" style="width: 255px; left: 0px; top: 30px;"><div class="yui-ac-content" style="display: none; width: 255px;"><div class="yui-ac-hd" style="display: none;"></div><div class="yui-ac-bd"><ul><li style="display: none;"></li><li style="display: none;"></li><li style="display: none;"></li><li style="display: none;"></li><li style="display: none;"></li><li style="display: none;"></li><li style="display: none;"></li><li style="display: none;"></li><li style="display: none;"></li><li style="display: none;"></li></ul></div><div class="yui-ac-ft" style="display: none;"></div></div></div></div><div><input type="hidden" name="Jenkins-Crumb" value="2463a8f0bc5a062c7077c90de502ae5c" path="/Jenkins-Crumb"></div></form></div></div><div id="breadcrumbBar"><div style="height: 26px;"></div><div class="top-sticker noedge" style="position: fixed; top: 40px; left: 0px;"><div class="top-sticker-edge"></div><div class="top-sticker-inner"><div id="right-top-nav"></div><ul id="breadcrumbs"><li class="item"><a href="/" class="model-link inside breadcrumbBarAnchor">Jenkins</a></li><li href="/" class="children"></li><li class="item"><a href="/pluginManager/" class=" inside breadcrumbBarAnchor">Plugin Manager</a></li><li class="separator"></li></ul><div id="breadcrumb-menu-target"></div></div></div></div></div>
 
 
         <div id='grid-box'></div>

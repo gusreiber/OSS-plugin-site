@@ -2,6 +2,7 @@
 import {
   actions,
   totalSize,
+  installedPlugins,
   labels,
   categories,
   installed,
@@ -34,6 +35,7 @@ export class Application extends Component {
       this.props.generateTrendData();
       this.isHome = true;
     }
+    this.props.generateInstalledPluginsData();
     this.props.generateLabelData();
     this.props.generateCategoryData();
   }
@@ -66,6 +68,7 @@ export class Application extends Component {
       searchOptions,
       isFetching,
       isHome,
+      installedPlugins,
       labels,
       categories,
       installed,
@@ -78,9 +81,8 @@ export class Application extends Component {
       if(!installed || !updated || !trend) return null;
     }
     else{
-      if(!categories || !labels) return null;
+      if(!categories || !labels || !installedPlugins) return null;
     }
-    
     return (<div>
       <Widget
         labels={labels}
@@ -103,6 +105,7 @@ export class Application extends Component {
 Application.propTypes = {
   location: object.isRequired,
   generatePluginData: func.isRequired,
+  generateInstalledPluginsData: any,
   generateLabelData: func.isRequired,
   generateCategoryData: func.isRequired,
   generateInstalledData: func.isRequired,
@@ -121,11 +124,12 @@ Application.propTypes = {
 };
 
 const selectors = createSelector(
-  [ totalSize, isFetching,isHome, labels,categories,installed,updated,trend, filterVisibleList, searchOptions],
-  ( totalSize, isFetching,isHome, labels,categories,installed,updated,trend, filterVisibleList,  searchOptions) => ({
+  [ totalSize, isFetching,isHome, installedPlugins, labels,categories,installed,updated,trend, filterVisibleList, searchOptions],
+  ( totalSize, isFetching,isHome, installedPlugins, labels,categories,installed,updated,trend, filterVisibleList,  searchOptions) => ({
     totalSize,
     isFetching,
     isHome,
+    installedPlugins,
     labels,
     categories,
     installed,

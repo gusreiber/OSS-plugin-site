@@ -45,6 +45,7 @@ export const Plugin = Record({
   category: null,
   requiredCore: null,
   maintainers: [],
+  installedPlugins:[],
   labels: [],
   categories: [],
   installed: [],
@@ -65,6 +66,7 @@ export const State = Record({
   plugin: Plugin,
   isFetching: false,
   isHome:true,
+  installedPlugins:null,
   labels: null,
   categories: null,
   installed: null,
@@ -87,6 +89,7 @@ export const ACTION_TYPES = keymirror({
   SET_PLUGIN_DATA: null,
   CLEAR_PLUGIN_DATA: null,
   SET_LABEL_FILTER: null,
+  SET_INSTALLEDPLUGINS: null,
   SET_LABELS: null,
   SET_CATEGORIES: null,
   SET_INSTALLED: null,
@@ -114,6 +117,9 @@ export const actionHandlers = {
   },
   [ACTION_TYPES.SET_PLUGINS_DATA](state, { payload }){
     return state.set('plugins', payload);
+  },
+  [ACTION_TYPES.SET_INSTALLEDPLUGINS](state, { payload }){
+    return state.set('installedPlugins', payload);
   },
   [ACTION_TYPES.SET_LABELS](state, { payload }){
     return state.set('labels', payload);
@@ -171,7 +177,18 @@ export const actions = {
       });
     };
   },
-
+  generateInstalledPluginsData: () => {
+    return (dispatch) => {
+      return api.getJSON('/labels#/installedplugins',(error, data) => {
+        if (data && data.installedPlugins) {
+          dispatch({
+            type: ACTION_TYPES.SET_INSTALLEDPLUGINS,
+            payload: Immutable.List(data.installedPlugins)
+          });
+        }
+      });
+    };
+  },
   generateLabelData: () => {
     return (dispatch) => {
       return api.getJSON('/labels',(error, data) => {
@@ -263,6 +280,7 @@ export const actions = {
 
 export const resources = state => state.resources;
 export const plugins = createSelector([resources], resources => resources.plugins);
+export const installedPlugins = createSelector([resources], resources => resources.installedPlugins);
 export const labels = createSelector([resources], resources => resources.labels);
 export const categories = createSelector([resources], resources => resources.categories);
 export const maintainers = createSelector([resources], resources => resources.maintainers);

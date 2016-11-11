@@ -99,24 +99,54 @@ const api = {
     }
 
   },
-
+  getInstalledPlugins: function(){
+    const v = {installedPlugins:
+        [
+         'aws-java-sdk',
+         'async-http-client',
+         'cloudbees-assurance',
+         'bouncycastle-api',
+         'branch-api',
+         'aws-credentials',
+         'infradna-backup',
+         'cloudbees-jsync-archiver',
+         'cloudbees-folders-plus',
+         'cloudbees-groovy-view',
+         'cloudbees-ha',
+         'nectar-license',
+         'cloudbees-license',
+         'cloudbees-monitoring',
+         'cloudbees-nodes-plus',
+         'workflow-cps-checkpoint',
+         
+         
+         ]
+    };
+    return JSON.stringify(v);
+  },
   getJSON: function (route, partial, callback) {
+    const self = this;
     if (typeof partial === 'function') {
       callback = partial;
       partial = null;
     }
 
-
     function get(url) {
       const xhr = new XMLHttpRequest();
+      if(url.indexOf('/installedplugins') > -1) { 
+        url = url.replace('/installedplugins','/labels#/installedplugins');
+        
+      }
+      
       xhr.open('GET', url, true);
-
+      
       xhr.onreadystatechange = function () {
         let responseData = xhr.responseText;
         if (xhr.readyState !== 4) {
           return;
         }
-
+        if (url.indexOf('/installedplugins') > -1)
+          responseData = self.getInstalledPlugins();
         if (responseData) {
           try {
             responseData = JSON.parse(responseData);
@@ -142,7 +172,7 @@ const api = {
 
       xhr.send();
     }
-
+    
     this.replaceParams(route, (err, url) => {
       if (err) {
         return callback(err);
